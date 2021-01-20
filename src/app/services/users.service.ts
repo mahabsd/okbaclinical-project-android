@@ -11,29 +11,25 @@ export class UsersService {
   httpHeaders;
   options;
   constructor(private http: HttpClient) {
-    this.user = JSON.parse(localStorage.getItem('loggeduser'));    
-    this.httpHeaders = new HttpHeaders({
-      'Authorization': 'Bearer ' + this.user.token
-    });
-    this.options = { headers:this.httpHeaders }
+   
   }
  
   usersUrl: string = environment.basUrl;
  
   addUser(data) {
     //console.log(data);
-    return this.http.post(this.usersUrl + "users/user/add/", data, this.options );
+    return this.http.post(this.usersUrl + "users/user/add/", data );
   }
   getUser(id) {
-    return this.http.get(this.usersUrl + "users/user/" + id, this.options );
+    return this.http.get(this.usersUrl + "users/user/" + id,);
   }
   updateUser(id, data) {
-    return this.http.put(this.usersUrl + "users/user/update/"+ id, data, this.options );
+    return this.http.put(this.usersUrl + "users/user/update/"+ id, data, );
   }
   deleteUser(id) {
-    return this.http.delete(this.usersUrl + "users/user/delete/" + id, this.options );
+    return this.http.delete(this.usersUrl + "users/user/delete/" + id, );
   }
   getAllUsers() {
-    return this.http.get(this.usersUrl + "users/getAllusers", this.options );
+    return this.http.get(this.usersUrl + "users/getAllusers",  );
   }
 }
