@@ -31,6 +31,8 @@ export class LoginComponent {
       // console.log("Logged in!" + JSON.stringify(res));
       this.response = res
       
+
+      
       console.log(this.response.token);
       console.log(this.response);
       this.response.user.token = this.response.token;
