@@ -41,6 +41,7 @@ import { UserMenuComponent } from './theme/components/user-menu/user-menu.compon
 import { FavoritesComponent } from './theme/components/favorites/favorites.component';
 
 
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -75,7 +76,7 @@ import { FavoritesComponent } from './theme/components/favorites/favorites.compo
     ApplicationsComponent,
     MessagesComponent,
     UserMenuComponent,
-    FavoritesComponent
+    FavoritesComponent,
   ],
   entryComponents: [
     VerticalMenuComponent
