@@ -17,6 +17,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns'; 
 
+
 import { SharedModule } from './shared/shared.module';
 import { PipesModule } from './theme/pipes/pipes.module';
 import { AppRoutingModule } from './app.routing';
@@ -41,6 +42,8 @@ import { FavoritesComponent } from './theme/components/favorites/favorites.compo
 import { ActionnairesComponent } from './pages/actionnaires/actionnaires.component';
 import { ActionnaireDialogComponent } from './pages/Actionnaires/actionnaire-dialog/actionnaire-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from 'src/app/services/token.interceptor';
 
 
 @NgModule({
@@ -60,7 +63,8 @@ import { HttpClientModule } from '@angular/common/http';
     SharedModule,
     PipesModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    
   ],
   declarations: [
     AppComponent,
@@ -81,6 +85,7 @@ import { HttpClientModule } from '@angular/common/http';
     FavoritesComponent,
     ActionnairesComponent,
     ActionnaireDialogComponent,
+ 
 
   ],
   entryComponents: [
@@ -89,7 +94,12 @@ import { HttpClientModule } from '@angular/common/http';
   providers: [
     AppSettings,
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
-    { provide: OverlayContainer, useClass: CustomOverlayContainer }
+    { provide: OverlayContainer, useClass: CustomOverlayContainer },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [
     AppComponent
