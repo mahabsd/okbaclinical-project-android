@@ -4,6 +4,7 @@ export const verticalMenuItems = [
     new Menu (1, 'Dashboard', '/', null, 'dashboard', null, false, 0),
     new Menu (2, 'Users', '/users', null, 'supervisor_account', null, false, 0), 
     new Menu (19, 'Doctors', '/doctors', null, 'groups', null, false, 0), 
+    new Menu (18, 'Patients', '/patients', null, 'people', null, false, 0), 
     new Menu (3, 'UI Features', null, null, 'computer', null, true, 0),   
     new Menu (4, 'Buttons', '/ui/buttons', null, 'keyboard', null, false, 3),  
     new Menu (5, 'Cards', '/ui/cards', null, 'card_membership', null, false, 3), 
@@ -66,6 +67,7 @@ export const verticalMenuItems = [
     new Menu (200, 'External Link', null, 'http://themeseason.com', 'open_in_new', '_blank', false, 0),
 
 
+   
 ]
 
 export const horizontalMenuItems = [ 
@@ -127,4 +129,5 @@ export const horizontalMenuItems = [
     new Menu (67, 'Google', '/maps/googlemaps', null, 'location_on', null, false, 66),
     new Menu (68, 'Leaflet', '/maps/leafletmaps', null, 'my_location', null, false, 66),
 
+    new Menu (69, 'Patients', '/patients', null, 'supervisor_account', null, false, 0), 
 ]

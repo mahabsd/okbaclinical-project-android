@@ -5,6 +5,7 @@ import { PaginationPipe} from './pagination/pagination.pipe';
 import { ProfilePicturePipe } from './profilePicture/profilePicture.pipe';
 import { ChatPersonSearchPipe } from './search/chat-person-search.pipe';
 import { UserSearchPipe } from './search/user-search.pipe';
+import { PatientSearchPipe } from './search/patient-search.pipe';
 import { TruncatePipe } from './truncate/truncate.pipe';
 import { MailSearchPipe } from './search/mail-search.pipe';
 
@@ -17,6 +18,7 @@ import { MailSearchPipe } from './search/mail-search.pipe';
         ProfilePicturePipe,
         ChatPersonSearchPipe,
         UserSearchPipe,
+        PatientSearchPipe,
         TruncatePipe,
         MailSearchPipe
     ],
@@ -25,6 +27,7 @@ import { MailSearchPipe } from './search/mail-search.pipe';
         ProfilePicturePipe,
         ChatPersonSearchPipe,
         UserSearchPipe,
+        PatientSearchPipe,
         TruncatePipe,
         MailSearchPipe
     ]
