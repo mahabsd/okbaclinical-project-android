@@ -28,7 +28,6 @@ import { BlankComponent } from './pages/blank/blank.component';
 import { SearchComponent } from './pages/search/search.component';
 import { NotFoundComponent } from './pages/errors/not-found/not-found.component';
 import { ErrorComponent } from './pages/errors/error/error.component';
-
 import { TopInfoContentComponent } from './theme/components/top-info-content/top-info-content.component';
 import { SidenavComponent } from './theme/components/sidenav/sidenav.component';
 import { VerticalMenuComponent } from './theme/components/menu/vertical-menu/vertical-menu.component';
@@ -39,7 +38,9 @@ import { ApplicationsComponent } from './theme/components/applications/applicati
 import { MessagesComponent } from './theme/components/messages/messages.component';
 import { UserMenuComponent } from './theme/components/user-menu/user-menu.component';
 import { FavoritesComponent } from './theme/components/favorites/favorites.component';
-
+import { ActionnairesComponent } from './pages/actionnaires/actionnaires.component';
+import { ActionnaireDialogComponent } from './pages/Actionnaires/actionnaire-dialog/actionnaire-dialog.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -57,7 +58,8 @@ import { FavoritesComponent } from './theme/components/favorites/favorites.compo
     }),
     SharedModule,
     PipesModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   declarations: [
     AppComponent,
@@ -75,7 +77,10 @@ import { FavoritesComponent } from './theme/components/favorites/favorites.compo
     ApplicationsComponent,
     MessagesComponent,
     UserMenuComponent,
-    FavoritesComponent
+    FavoritesComponent,
+    ActionnairesComponent,
+    ActionnaireDialogComponent,
+
   ],
   entryComponents: [
     VerticalMenuComponent
