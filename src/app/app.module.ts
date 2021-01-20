@@ -42,6 +42,7 @@ import { ActionnairesComponent } from './pages/actionnaires/actionnaires.compone
 import { ActionnaireDialogComponent } from './pages/Actionnaires/actionnaire-dialog/actionnaire-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
 
+
 @NgModule({
   imports: [
     BrowserModule,

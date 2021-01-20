@@ -28,7 +28,9 @@ export const routes: Routes = [
             { path: 'profile', loadChildren: () => import ('./pages/profile/profile.module').then(m => m.ProfileModule), data: { breadcrumb: 'Profile' } }, 
             { path: 'blank', component: BlankComponent, data: { breadcrumb: 'Blank page' } },
             { path: 'search', component: SearchComponent, data: { breadcrumb: 'Search' } },
-            { path: 'search/:name', component: SearchComponent, data: { breadcrumb: 'Search' } }
+            { path: 'search/:name', component: SearchComponent, data: { breadcrumb: 'Search' } },
+            { path: 'doctors', loadChildren: () => import('./pages/doctors/doctors.module').then(m => m.DoctorsModule), data: { breadcrumb: 'Doctors' } },
+
         ]
     },
     { path: 'landing', loadChildren: () => import('./pages/landing/landing.module').then(m => m.LandingModule) },
