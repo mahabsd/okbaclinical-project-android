@@ -16,7 +16,9 @@ export class GuardserviceService  {
     localStorage.removeItem('token');
     this.isLoginSubject.next(false);
   }
-
+  public getToken(): string {
+    return localStorage.getItem('token');
+  }
 
  
   public isAuthenticated(): boolean {
