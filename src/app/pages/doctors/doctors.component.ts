@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AppSettings } from '../../app.settings';
 import { Settings } from '../../app.settings.model';
-import { Doctor, DoctorProfile, DoctorWork, DoctorContacts, DoctorSocial, DoctorSettings } from './doctor.model';
+import { Doctor, DoctorProfile, DoctorWork, DoctorContacts } from './doctor.model';
 import { DoctorsService } from './doctors.service';
 import { DoctorDialogComponent } from './doctor-dialog/doctor-dialog.component';
  
@@ -41,7 +41,7 @@ export class DoctorsComponent implements OnInit {
       this.doctorsService.updateDoctor(doctor).subscribe(doctor => this.getDoctors());
   }
   public deleteDoctor(doctor:Doctor){
-     this.doctorsService.deleteDoctor(doctor.id).subscribe(doctor => this.getDoctors());
+     this.doctorsService.deleteDoctor(doctor._id).subscribe(doctor => this.getDoctors());
   }
   
   public changeView(viewType){

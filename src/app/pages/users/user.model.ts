@@ -1,6 +1,7 @@
 export class User {
-  id: number;
+  _id: string;
   username: string;
+  lastName: string;
   password: string;  
   profile: UserProfile;
   work: UserWork;
@@ -15,12 +16,13 @@ export class UserProfile {
   birthday: Object;
   gender: string;
   image: string;
+  cin: string;
 }
 
 export class UserWork {
   company: string;
-  position: string;
-  salary: number;
+  roles: string;
+  soldeConge: string;
 }
 
 export class UserContacts{
@@ -36,6 +38,7 @@ export class UserSocial {
 }
 
 export class UserSettings{
+  status: string;
   isActive: boolean;
   isDeleted: boolean;
   registrationDate: Date;
