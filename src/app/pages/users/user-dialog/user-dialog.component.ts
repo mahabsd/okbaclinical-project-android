@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, Validators, FormControl} from '@angular/forms';
 import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings } from '../user.model';
 import { LoginService } from 'src/app/services/login.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-user-dialog',
@@ -28,9 +29,9 @@ export class UserDialogComponent implements OnInit {
   ];
   public roles;
   constructor(public dialogRef: MatDialogRef<UserDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public user: User,  public UserService: LoginService) {
+              @Inject(MAT_DIALOG_DATA) public user: User,  public UserService: LoginService , public snackBar: MatSnackBar) {
                 this.form = new FormGroup({
-                 _id:new FormControl(''),  
+                 _id:new FormControl(''),
                   username: new FormControl('', [Validators.required, Validators.minLength(5)]),
                   password: new FormControl('', [Validators.required]),
                   profile: new FormGroup({
@@ -57,7 +58,7 @@ export class UserDialogComponent implements OnInit {
                   }),
                   settings: new FormGroup({
                   // isActive: new FormControl(''),
-                    isDeleted: new FormControl(''),
+                   // isDeleted: new FormControl(''),
                      registrationDate: new FormControl(''),
                      joinedDate: new FormControl(''),
                      bgColor: new FormControl(''),
@@ -68,7 +69,7 @@ export class UserDialogComponent implements OnInit {
 
   ngOnInit() {
     if(this.user){
-      this.form.setValue(this.user);
+      this.form.patchValue(this.user);
     } 
     else{
       this.user = new User();
@@ -89,6 +90,20 @@ export class UserDialogComponent implements OnInit {
         console.log("hello users"+ this.roles);
     }
     )
+  }
+  openSnackBarAdd() {
+    let message = "User added successfully";
+    let action = "Annuler"
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
+  openSnackBarUpdate() {
+    let message = "User updated successfully"
+let action = "Annuler"
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
   close(): void {
     this.dialogRef.close();

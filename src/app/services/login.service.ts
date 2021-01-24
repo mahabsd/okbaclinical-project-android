@@ -34,4 +34,5 @@ export class LoginService {
   getAllRoles() {
     return this.http.get(this.usersUrl + "users/getAllRoles");
   }
+
 }

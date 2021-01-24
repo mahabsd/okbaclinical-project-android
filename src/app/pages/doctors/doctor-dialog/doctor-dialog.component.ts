@@ -1,7 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
-import { Doctor, DoctorProfile, DoctorWork, DoctorContacts } from '../doctor.model';
+import { Doctor, DoctorProfile, DoctorWork, DoctorContacts, DoctorSettings } from '../doctor.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-doctor-dialog',
@@ -27,10 +28,9 @@ export class DoctorDialogComponent implements OnInit {
     {value: 'gradient-lime', viewValue: 'Lime'}
   ];
   constructor(public dialogRef: MatDialogRef<DoctorDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public user: Doctor,
-              public fb: FormBuilder) {
+              @Inject(MAT_DIALOG_DATA) public doctor: Doctor, public snackBar: MatSnackBar) {
                 this.form = new FormGroup({
-                  _id:new FormControl(''),
+                  _id: new FormControl(''),
                    profile: new FormGroup({
                      name: new FormControl(''),
                      surname: new FormControl(''), 
@@ -38,28 +38,48 @@ export class DoctorDialogComponent implements OnInit {
                      image: new FormControl(''),
                    }),
                    work: new FormGroup({
-                     postion:new FormControl(''),
+                    position:new FormControl(''),
                    }),
                    contacts: new FormGroup({
                      email: new FormControl(''),
                      phone: new FormControl(''),
                      address: new FormControl(''),
                    }),
+                   settings: new FormGroup({
+                     // isActive: new FormControl(''),
+                     // isDeleted: new FormControl(''),
+                       bgColor: new FormControl(''),
+                    })
                  })
   }
 
   ngOnInit() {
-    if(this.user){
-      this.form.setValue(this.user);
+    if(this.doctor){
+      this.form.patchValue(this.doctor);
     } 
     else{
-      this.user = new Doctor();
-      this.user.profile = new DoctorProfile();
-      this.user.work = new DoctorWork();
-      this.user.contacts = new DoctorContacts();
+      this.doctor = new Doctor();
+      this.doctor.profile = new DoctorProfile();
+      this.doctor.work = new DoctorWork();
+      this.doctor.contacts = new DoctorContacts();
+      this.doctor.settings = new DoctorSettings();
+
     } 
   }
-
+  openSnackBarAdd() {
+    let message = "Doctor added successfully";
+    let action = "Annuler"
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
+  openSnackBarUpdate() {
+    let message = "Doctor updated successfully"
+let action = "Annuler"
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
   close(): void {
     this.dialogRef.close();
   }

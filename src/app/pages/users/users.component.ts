@@ -6,6 +6,7 @@ import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings } f
 import { UsersService } from 'src/app/services/users.service';
 import { LoginService } from 'src/app/services/login.service';
 import { UserDialogComponent } from './user-dialog/user-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -25,7 +26,8 @@ export class UsersComponent implements OnInit {
 
     constructor(public appSettings: AppSettings,
         public dialog: MatDialog,
-        public UserService: LoginService) {
+        public UserService: LoginService,
+        public snackBar: MatSnackBar) {
         this.settings = this.appSettings.settings;
     }
     
@@ -40,22 +42,26 @@ export class UsersComponent implements OnInit {
             this.users = res;
             console.log(this.users);
             console.log("hello users"+ this.users);
-        }
-        )
-    }
-    public addUser(user) {
-        this.UserService.addUser(user).subscribe(res =>{
-            console.log(res)
-            this.getUsers();
         })
     }
-    public updateUser(user) {
+    public addUser(user:User) {
+        this.UserService.addUser(user).subscribe(res =>
+            this.getUsers()
+        )
+    }
+    public updateUser(user:User) {
         this.UserService.updateUser(user._id, user).subscribe(user => this.getUsers());
     }
-    public deleteUser(user) {
+    public deleteUser(user:User) {
         this.UserService.deleteUser(user._id).subscribe(user => {
             console.log((user));
             this.getUsers();
+            let message = "User deleted successfully";
+            ///action va etre changé
+            let action = "Annuler"
+            this.snackBar.open(message, action, {
+              duration: 2000,
+            });
         });
     }
 
@@ -75,8 +81,9 @@ export class UsersComponent implements OnInit {
             data: user
         });
         dialogRef.afterClosed().subscribe(user => {
-            if (user) {
-                (user._id) ? this.updateUser(user) : this.addUser(user);
+            let use = user
+            if (use) {
+                (use._id) ? this.updateUser(use) : delete use._id; this.addUser(use);
             }
         });
         this.showSearch = false;

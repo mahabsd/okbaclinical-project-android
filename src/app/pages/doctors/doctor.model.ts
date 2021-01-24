@@ -1,14 +1,15 @@
 export class Doctor {
-  _id: number; 
+  _id: string; 
   profile: DoctorProfile;
   work: DoctorWork;
   contacts: DoctorContacts;
+  settings: DoctorSettings;
 }
 
 export class DoctorProfile {  
   name: string;
   surname: string;  
-  birthday: Object;
+  birthday: string;
   image: string;
 }
 
@@ -20,5 +21,9 @@ export class DoctorContacts{
   email: string;
   phone: string;
   address: string;  
+}
+export class DoctorSettings{
+  isActive: boolean;
+  isDeleted: boolean;
 }
 

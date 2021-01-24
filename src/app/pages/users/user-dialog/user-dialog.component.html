@@ -53,8 +53,8 @@
                                 </mat-card-header>
                                 <mat-card-content>
                                     <mat-form-field class="w-100">
-                                        <mat-select placeholder="Position" formControlName="work.roles">
-                                            <mat-option *ngFor="let role of roles" [value]="role.name">
+                                        <mat-select placeholder="Position" formControlName="roles">
+                                            <mat-option *ngFor="let role of roles" [value]="role._id">
                                                 {{role.name}}
                                             </mat-option>
                                         </mat-select>
@@ -98,7 +98,7 @@
             <mat-tab label="Settings" formGroupName="settings">
                 <div fxLayout="column" class="form-field-outer">
                     <!-- <mat-checkbox formControlName="isActive" class="pb-3">Active</mat-checkbox> -->
-                    <mat-checkbox formControlName="isDeleted" class="pb-3">Blocked</mat-checkbox>
+                    <!-- <mat-checkbox formControlName="isDeleted" class="pb-3">Blocked</mat-checkbox> -->
                     <!-- <p *ngIf="user._id" class="pb-3"><span>Registration date:</span> <i class="mx-1">{{user.settings.registrationDate | date:"dd MMMM, yyyy 'at' HH:mm" }}</i></p> 
                        <p *ngIf="user._id" class="pb-3"><span>Last joined date:</span> <i class="mx-1">{{user.settings.joinedDate | date:"dd MMMM, yyyy 'at' HH:mm" }}</i> </p>      -->
                     <mat-form-field>
@@ -117,6 +117,6 @@
     </form>
 </div>
 <div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
-    <button mat-raised-button color="primary" [mat-dialog-close]="form.value" [disabled]="!form.valid"><span *ngIf="!user._id">Save</span><span *ngIf="user._id">Update</span></button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="form.value" [disabled]="!form.valid"><span *ngIf="!user._id" (click)="openSnackBarAdd()">Save</span><span *ngIf="user._id"  (click)="openSnackBarUpdate()">Update</span></button>
     <button mat-raised-button color="warn" (click)="close()">Cancel</button>
 </div>

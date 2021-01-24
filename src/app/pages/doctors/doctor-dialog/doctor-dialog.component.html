@@ -1,4 +1,4 @@
-<h1 mat-dialog-title><span *ngIf="!user.id">Add</span><span *ngIf="user.id">Edit</span> user</h1>
+<h1 mat-dialog-title><span *ngIf="!doctor._id">Add</span><span *ngIf="doctor._id">Edit</span> doctor</h1>
 <div mat-dialog-content>
     <form [formGroup]="form" class="user-form">      
         <mat-tab-group class="vertical-tabs">
@@ -23,9 +23,6 @@
             <mat-tab label="Work" formGroupName="work">
                 <div fxLayout="column" class="form-field-outer">
                     <mat-form-field class="w-100">
-                        <input matInput placeholder="Company" formControlName="company">
-                    </mat-form-field>
-                    <mat-form-field class="w-100">
                         <input matInput placeholder="Position" formControlName="position">
                     </mat-form-field>
                 </div>
@@ -43,10 +40,28 @@
                     </mat-form-field>
                 </div>
             </mat-tab>
+            <mat-tab label="Settings" formGroupName="settings">
+                <div fxLayout="column" class="form-field-outer">
+                    <!-- <mat-checkbox formControlName="isActive" class="pb-3">Active</mat-checkbox>
+                    <mat-checkbox formControlName="isDeleted" class="pb-3">Blocked</mat-checkbox>
+                    <p *ngIf="user._id" class="pb-3"><span>Registration date:</span> <i class="mx-1">{{user.settings.registrationDate | date:"dd MMMM, yyyy 'at' HH:mm" }}</i></p> 
+                    <p *ngIf="user._id" class="pb-3"><span>Last joined date:</span> <i class="mx-1">{{user.settings.joinedDate | date:"dd MMMM, yyyy 'at' HH:mm" }}</i> </p>      -->
+                    <mat-form-field>
+                        <mat-select placeholder="Choose bg color" formControlName="bgColor" name="bgColor">
+                            <mat-option *ngFor="let color of colors" [value]="color.value">
+                                <div fxLayout="row" fxLayoutAlign="start center">
+                                    <div class="p-2" [ngClass]="color.value"></div>
+                                    <span class="mx-3">{{color.viewValue}}</span> 
+                                </div>                               
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </mat-tab>
         </mat-tab-group>
     </form>
 </div>
 <div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
-    <button mat-raised-button color="primary" [mat-dialog-close]="form.value" [disabled]="!form.valid"><span *ngIf="!user.id">Save</span><span *ngIf="user.id">Update</span></button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="form.value" [disabled]="!form.valid"><span *ngIf="!doctor._id" (click)="openSnackBarAdd()">Save</span><span *ngIf="doctor._id" (click)="openSnackBarUpdate()">Update</span></button>
     <button mat-raised-button color="warn" (click)="close()">Cancel</button>
 </div>
