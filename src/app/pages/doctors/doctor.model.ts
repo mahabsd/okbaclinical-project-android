@@ -1,26 +1,20 @@
 export class Doctor {
-  id: number;
-  username: string;
-  password: string;  
+  _id: string; 
   profile: DoctorProfile;
   work: DoctorWork;
   contacts: DoctorContacts;
-  social: DoctorSocial;
   settings: DoctorSettings;
 }
 
 export class DoctorProfile {  
   name: string;
   surname: string;  
-  birthday: Object;
-  gender: string;
+  birthday: string;
   image: string;
 }
 
 export class DoctorWork {
-  company: string;
   position: string;
-  salary: number;
 }
 
 export class DoctorContacts{
@@ -28,16 +22,8 @@ export class DoctorContacts{
   phone: string;
   address: string;  
 }
-
-export class DoctorSocial {
-  facebook: string;
-  twitter: string;
-  google: string;
-}
-
 export class DoctorSettings{
   isActive: boolean;
   isDeleted: boolean;
-  registrationDate: Date;
-  joinedDate: Date;
 }
+

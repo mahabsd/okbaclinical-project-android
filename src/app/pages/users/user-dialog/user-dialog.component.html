@@ -1,4 +1,4 @@
-<h1 mat-dialog-title><span *ngIf="!user.id">Add</span><span *ngIf="user.id">Edit</span> user</h1>
+<h1 mat-dialog-title><span *ngIf="!user._id">Add</span><span *ngIf="user._id">Edit</span> user</h1>
 <div mat-dialog-content>
     <form [formGroup]="form" class="user-form">      
         <mat-tab-group class="vertical-tabs">
@@ -46,13 +46,26 @@
                     <mat-form-field class="w-100">
                         <input matInput placeholder="Company" formControlName="company">
                     </mat-form-field>
+                        <!-- <input matInput placeholder="Position" formControlName="roles"> -->
+                        <div class="w-100">
+                                <mat-card-header>                
+                                    <!-- <mat-card-subtitle><h2>Basic select</h2></mat-card-subtitle> -->
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <mat-form-field class="w-100">
+                                        <mat-select placeholder="Position" formControlName="roles">
+                                            <mat-option *ngFor="let role of roles" [value]="role._id">
+                                                {{role.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <!-- <p class="pt-3 mx-2"> Selected value: <b>{{work.roles}}</b> </p> -->
+                                </mat-card-content>
+                        </div> 
                     <mat-form-field class="w-100">
-                        <input matInput placeholder="Position" formControlName="position">
-                    </mat-form-field>
-                    <mat-form-field class="w-100">
-                        <input matInput placeholder="Salary" formControlName="salary">
-                        <span matPrefix>$&nbsp;</span>
-                        <span matSuffix>.00</span>
+                        <input matInput placeholder="days off" formControlName="soldeConge">
+                        <span matPrefix>&nbsp;</span>
+                        <span matSuffix></span>
                     </mat-form-field>
                 </div>
             </mat-tab>
@@ -84,10 +97,10 @@
             </mat-tab>
             <mat-tab label="Settings" formGroupName="settings">
                 <div fxLayout="column" class="form-field-outer">
-                    <mat-checkbox formControlName="isActive" class="pb-3">Active</mat-checkbox>
-                    <mat-checkbox formControlName="isDeleted" class="pb-3">Blocked</mat-checkbox>
-                    <p *ngIf="user.id" class="pb-3"><span>Registration date:</span> <i class="mx-1">{{user.settings.registrationDate | date:"dd MMMM, yyyy 'at' HH:mm" }}</i></p> 
-                    <p *ngIf="user.id" class="pb-3"><span>Last joined date:</span> <i class="mx-1">{{user.settings.joinedDate | date:"dd MMMM, yyyy 'at' HH:mm" }}</i> </p>     
+                    <!-- <mat-checkbox formControlName="isActive" class="pb-3">Active</mat-checkbox> -->
+                    <!-- <mat-checkbox formControlName="isDeleted" class="pb-3">Blocked</mat-checkbox> -->
+                    <!-- <p *ngIf="user._id" class="pb-3"><span>Registration date:</span> <i class="mx-1">{{user.settings.registrationDate | date:"dd MMMM, yyyy 'at' HH:mm" }}</i></p> 
+                       <p *ngIf="user._id" class="pb-3"><span>Last joined date:</span> <i class="mx-1">{{user.settings.joinedDate | date:"dd MMMM, yyyy 'at' HH:mm" }}</i> </p>      -->
                     <mat-form-field>
                         <mat-select placeholder="Choose bg color" formControlName="bgColor" name="bgColor">
                             <mat-option *ngFor="let color of colors" [value]="color.value">
@@ -104,6 +117,6 @@
     </form>
 </div>
 <div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
-    <button mat-raised-button color="primary" [mat-dialog-close]="form.value" [disabled]="!form.valid"><span *ngIf="!user.id">Save</span><span *ngIf="user.id">Update</span></button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="form.value" [disabled]="!form.valid"><span *ngIf="!user._id" (click)="openSnackBarAdd()">Save</span><span *ngIf="user._id"  (click)="openSnackBarUpdate()">Update</span></button>
     <button mat-raised-button color="warn" (click)="close()">Cancel</button>
 </div>
