@@ -39,8 +39,6 @@ import { ApplicationsComponent } from './theme/components/applications/applicati
 import { MessagesComponent } from './theme/components/messages/messages.component';
 import { UserMenuComponent } from './theme/components/user-menu/user-menu.component';
 import { FavoritesComponent } from './theme/components/favorites/favorites.component';
-import { ActionnairesComponent } from './pages/actionnaires/actionnaires.component';
-import { ActionnaireDialogComponent } from './pages/Actionnaires/actionnaire-dialog/actionnaire-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from 'src/app/services/token.interceptor';
@@ -83,8 +81,6 @@ import { TokenInterceptor } from 'src/app/services/token.interceptor';
     MessagesComponent,
     UserMenuComponent,
     FavoritesComponent,
-    ActionnairesComponent,
-    ActionnaireDialogComponent,
  
 
   ],

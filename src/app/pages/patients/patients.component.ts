@@ -2,8 +2,9 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AppSettings } from '../../app.settings';
 import { Settings } from '../../app.settings.model';
-import { Patient, PatientProfile, PatientWork, PatientContacts, PatientSocial, PatientSettings } from './patient.model';
-import { PatientsService } from './patients.service';
+import { Patient
+} from './patient.model';
+import { PatientsService } from 'src/app/services/patients.service';
 import { PatientDialogComponent } from './patient-dialog/patient-dialog.component';
 
 @Component({
@@ -11,10 +12,10 @@ import { PatientDialogComponent } from './patient-dialog/patient-dialog.componen
   templateUrl: './patients.component.html',
   styleUrls: ['./patients.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  providers: [ PatientsService ] 
+//    providers: [ PatientsService ] 
 })
 export class PatientsComponent implements OnInit {
-  public patients: Patient[];
+  public patients;
   public searchText: string;
   public page:any;
   public settings: Settings;
@@ -27,21 +28,24 @@ export class PatientsComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.getPatients();         
+      this.getPatients();   
+      console.log(this.patients);
+            
   }
 
   public getPatients(): void {
       this.patients = null; //for show spinner each time
-      this.patientsService.getPatients().subscribe(patients => this.patients = patients);    
+      this.patientsService.getAllPatients().subscribe(patients =>{this.patients=patients
+        console.log(patients)}  );    
   }
   public addPatient(patient:Patient){
-      this.patientsService.addPatient(patient).subscribe(patient => this.getPatients());
+      this.patientsService.addPatient(patient).subscribe(patient => {console.log(patient), this.getPatients()});
   }
   public updatePatient(patient:Patient){
-      this.patientsService.updatePatient(patient).subscribe(patient => this.getPatients());
-  }
+      this.patientsService.updatePatient(patient, patient).subscribe(patient => this.getPatients());
+  } 
   public deletePatient(patient:Patient){
-     this.patientsService.deletePatient(patient.id).subscribe(patient => this.getPatients());
+     this.patientsService.deletePatient(patient).subscribe(patient => this.getPatients());
   }
   
   public changeView(viewType){

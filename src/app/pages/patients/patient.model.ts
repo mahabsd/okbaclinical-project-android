@@ -1,11 +1,9 @@
 export class Patient {
-    id: number;
-    username: string;
-    password: string;  
+    // _id: number;
+    cin: string;
     profile: PatientProfile;
     work: PatientWork;
     contacts: PatientContacts;
-    social: PatientSocial;
     settings: PatientSettings;
   }
   
@@ -14,13 +12,15 @@ export class Patient {
     surname: string;  
     birthday: Object;
     gender: string;
+    service: string;
+    descriptionAct: string ;
     image: string;
   }
   
   export class PatientWork {
     company: string;
     position: string;
-    salary: number;
+    
   }
   
   export class PatientContacts{
@@ -29,15 +29,11 @@ export class Patient {
     address: string;  
   }
   
-  export class PatientSocial {
-    facebook: string;
-    twitter: string;
-    google: string;
-  }
   
   export class PatientSettings{
-    isActive: boolean;
-    isDeleted: boolean;
-    registrationDate: Date;
-    joinedDate: Date;
+    isActive: true;
+    isDeleted: false;
+    status: String ;
+    dateEntree: Date;
+  
   }

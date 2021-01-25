@@ -4,18 +4,12 @@
         <mat-tab-group class="vertical-tabs">
             <mat-tab label="Basic">
                 <div fxLayout="column" class="form-field-outer">
+                    
                     <mat-form-field class="w-100">
-                        <mat-placeholder><mat-icon>person</mat-icon> Patientname</mat-placeholder>
-                        <input matInput formControlName="username" required>
-                        <mat-error *ngIf="form.controls.username.errors?.required">Patientname is required</mat-error>
-                        <mat-error *ngIf="form.controls.username.hasError('minlength')">Patientname isn't long enough, minimum of 5 characters</mat-error>
-                    </mat-form-field>
-                    <mat-form-field class="w-100">
-                        <mat-placeholder><mat-icon>vpn_key</mat-icon> Password</mat-placeholder>
-                        <input matInput formControlName="password" required [type]="passwordHide ? 'password' : 'text'">
-                        <mat-icon matSuffix (click)="passwordHide = !passwordHide">{{passwordHide ? 'visibility' : 'visibility_off'}}</mat-icon>
-                        <mat-error *ngIf="form.controls.password.errors?.required">Password is required</mat-error>
-                        <mat-error *ngIf="form.controls.password.hasError('minlength')">Password isn't long enough, minimum of 6 characters</mat-error>
+                        <mat-placeholder><mat-icon>vpn_key</mat-icon> Cin</mat-placeholder>
+                        <input matInput formControlName="cin" required [type]="passwordHide ? 'password' : 'text'">
+                        <mat-error *ngIf="form.controls.cin.errors?.required">Cin is required</mat-error>
+                        <mat-error *ngIf="form.controls.cin.hasError('minlength')">Cin isn't long enough, minimum of 6 characters</mat-error>
                     </mat-form-field>
                 </div>
             </mat-tab>
@@ -37,8 +31,15 @@
                         <mat-radio-button value="female" labelPosition="before">Female</mat-radio-button>
                     </mat-radio-group>
                     <mat-form-field class="w-100">
+                        <input matInput placeholder="Service" formControlName="service">
+                    </mat-form-field>
+                    <mat-form-field class="w-100">
+                        <input matInput  placeholder="Description Act" formControlName="descriptionAct">
+                    </mat-form-field>
+                    <mat-form-field class="w-100">
                         <input matInput placeholder="Image url" formControlName="image">
                     </mat-form-field>
+                   
                 </div>
             </mat-tab>
             <mat-tab label="Work" formGroupName="work">
@@ -49,11 +50,7 @@
                     <mat-form-field class="w-100">
                         <input matInput placeholder="Position" formControlName="position">
                     </mat-form-field>
-                    <mat-form-field class="w-100">
-                        <input matInput placeholder="Salary" formControlName="salary">
-                        <span matPrefix>$&nbsp;</span>
-                        <span matSuffix>.00</span>
-                    </mat-form-field>
+                
                 </div>
             </mat-tab>
             <mat-tab label="Contacts" formGroupName="contacts">
@@ -69,25 +66,12 @@
                     </mat-form-field>
                 </div>
             </mat-tab>
-            <mat-tab label="Social life" formGroupName="social">
-                <div fxLayout="column" class="form-field-outer">
-                    <mat-form-field class="w-100">
-                        <input matInput placeholder="Facebook" formControlName="facebook">
-                    </mat-form-field>
-                    <mat-form-field class="w-100">
-                        <input matInput placeholder="Twitter" formControlName="twitter">
-                    </mat-form-field>
-                    <mat-form-field class="w-100">
-                        <input matInput placeholder="Google" formControlName="google">
-                    </mat-form-field>
-                </div>
-            </mat-tab>
+            
             <mat-tab label="Settings" formGroupName="settings">
                 <div fxLayout="column" class="form-field-outer">
-                    <mat-checkbox formControlName="isActive" class="pb-3">Active</mat-checkbox>
-                    <mat-checkbox formControlName="isDeleted" class="pb-3">Blocked</mat-checkbox>
-                    <p *ngIf="patient.id" class="pb-3"><span>Registration date:</span> <i class="mx-1">{{patient.settings.registrationDate | date:"dd MMMM, yyyy 'at' HH:mm" }}</i></p> 
-                    <p *ngIf="patient.id" class="pb-3"><span>Last joined date:</span> <i class="mx-1">{{patient.settings.joinedDate | date:"dd MMMM, yyyy 'at' HH:mm" }}</i> </p>     
+                    <mat-form-field class="w-100">
+                        <input matInput placeholder="Status" formControlName="status">
+                    </mat-form-field>    
                     <mat-form-field>
                         <mat-select placeholder="Choose bg color" formControlName="bgColor" name="bgColor">
                             <mat-option *ngFor="let color of colors" [value]="color.value">
