@@ -10,11 +10,12 @@ export class UsersService {
   user;
   httpHeaders;
   options;
+  usersUrl: string = environment.basUrl;
+
   constructor(private http: HttpClient) {
    
   }
  
-  usersUrl: string = environment.basUrl;
  
   addUser(data) {
     //console.log(data);
@@ -30,6 +31,6 @@ export class UsersService {
     return this.http.delete(this.usersUrl + "users/user/delete/" + id, );
   }
   getAllUsers() {
-    return this.http.get(this.usersUrl + "users/getAllusers",  );
+    return this.http.get(this.usersUrl + "users/getAllusers");
   }
 }

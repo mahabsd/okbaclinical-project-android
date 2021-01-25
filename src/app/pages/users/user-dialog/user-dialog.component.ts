@@ -1,7 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject,EventEmitter, Input, Output } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators} from '@angular/forms';
+import { FormGroup, Validators, FormControl} from '@angular/forms';
 import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings } from '../user.model';
+import { LoginService } from 'src/app/services/login.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-user-dialog',
@@ -25,48 +27,49 @@ export class UserDialogComponent implements OnInit {
     {value: 'gradient-brown', viewValue: 'Brown'},
     {value: 'gradient-lime', viewValue: 'Lime'}
   ];
+  public roles;
   constructor(public dialogRef: MatDialogRef<UserDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public user: User,
-              public fb: FormBuilder) {
-    this.form = this.fb.group({
-      id: null,
-      username: [null, Validators.compose([Validators.required, Validators.minLength(5)])],
-      password: [null, Validators.compose([Validators.required, Validators.minLength(6)])],       
-      profile: this.fb.group({
-        name: null,
-        surname: null,  
-        birthday: null,
-        gender: null,
-        image: null
-      }),
-      work: this.fb.group({
-        company: null,
-        position: null,
-        salary: null
-      }),
-      contacts: this.fb.group({
-        email: null,
-        phone: null,
-        address: null          
-      }),
-      social: this.fb.group({
-        facebook: null,
-        twitter: null,
-        google: null
-      }),
-      settings: this.fb.group({
-        isActive: null,
-        isDeleted: null,
-        registrationDate: null,
-        joinedDate: null,
-        bgColor: null
-      })
-    });
+              @Inject(MAT_DIALOG_DATA) public user: User,  public UserService: LoginService , public snackBar: MatSnackBar) {
+                this.form = new FormGroup({
+                 _id:new FormControl(''),
+                  username: new FormControl('', [Validators.required, Validators.minLength(5)]),
+                  password: new FormControl('', [Validators.required]),
+                  profile: new FormGroup({
+                    name: new FormControl(''),
+                    surname: new FormControl(''), 
+                    birthday:new FormControl(''),
+                    gender: new FormControl(''),
+                    image: new FormControl(''),
+                  }),
+                  work: new FormGroup({
+                    company:new FormControl(''),
+                    roles:new FormControl([]),
+                   soldeConge: new FormControl('')
+                  }),
+                  contacts: new FormGroup({
+                    email: new FormControl('', [Validators.required]),
+                    phone: new FormControl(''),
+                    address: new FormControl(''),          
+                  }),
+                  social: new FormGroup({
+                    facebook: new FormControl(''),
+                    twitter: new FormControl(''),
+                    google: new FormControl('')
+                  }),
+                  settings: new FormGroup({
+                  // isActive: new FormControl(''),
+                   // isDeleted: new FormControl(''),
+                     registrationDate: new FormControl(''),
+                     joinedDate: new FormControl(''),
+                     bgColor: new FormControl(''),
+                  })
+                });
+
   }
 
   ngOnInit() {
     if(this.user){
-      this.form.setValue(this.user);
+      this.form.patchValue(this.user);
     } 
     else{
       this.user = new User();
@@ -76,8 +79,32 @@ export class UserDialogComponent implements OnInit {
       this.user.social = new UserSocial();
       this.user.settings = new UserSettings();
     } 
+    this.getRoles();
   }
 
+  public getRoles(): void {
+    this.roles = null; //for show spinner each time
+    this.UserService.getAllRoles().subscribe(res => {
+        this.roles = res;
+        console.log(this.roles);
+        console.log("hello users"+ this.roles);
+    }
+    )
+  }
+  openSnackBarAdd() {
+    let message = "User added successfully";
+    let action = "Annuler"
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
+  openSnackBarUpdate() {
+    let message = "User updated successfully"
+let action = "Annuler"
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
   close(): void {
     this.dialogRef.close();
   }

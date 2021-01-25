@@ -1,7 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { Doctor, DoctorProfile, DoctorWork, DoctorContacts, DoctorSocial, DoctorSettings } from '../doctor.model';
+import { FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
+import { Doctor, DoctorProfile, DoctorWork, DoctorContacts, DoctorSettings } from '../doctor.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-doctor-dialog',
@@ -27,58 +28,58 @@ export class DoctorDialogComponent implements OnInit {
     {value: 'gradient-lime', viewValue: 'Lime'}
   ];
   constructor(public dialogRef: MatDialogRef<DoctorDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public user: Doctor,
-              public fb: FormBuilder) {
-    this.form = this.fb.group({
-      id: null,
-      username: [null, Validators.compose([Validators.required, Validators.minLength(5)])],
-      password: [null, Validators.compose([Validators.required, Validators.minLength(6)])],       
-      profile: this.fb.group({
-        name: null,
-        surname: null,  
-        birthday: null,
-        gender: null,
-        image: null
-      }),
-      work: this.fb.group({
-        company: null,
-        position: null,
-        salary: null
-      }),
-      contacts: this.fb.group({
-        email: null,
-        phone: null,
-        address: null          
-      }),
-      social: this.fb.group({
-        facebook: null,
-        twitter: null,
-        google: null
-      }),
-      settings: this.fb.group({
-        isActive: null,
-        isDeleted: null,
-        registrationDate: null,
-        joinedDate: null,
-        bgColor: null
-      })
-    });
+              @Inject(MAT_DIALOG_DATA) public doctor: Doctor, public snackBar: MatSnackBar) {
+                this.form = new FormGroup({
+                  _id: new FormControl(''),
+                   profile: new FormGroup({
+                     name: new FormControl(''),
+                     surname: new FormControl(''), 
+                     birthday:new FormControl(''),
+                     image: new FormControl(''),
+                   }),
+                   work: new FormGroup({
+                    position:new FormControl(''),
+                   }),
+                   contacts: new FormGroup({
+                     email: new FormControl(''),
+                     phone: new FormControl(''),
+                     address: new FormControl(''),
+                   }),
+                   settings: new FormGroup({
+                     // isActive: new FormControl(''),
+                     // isDeleted: new FormControl(''),
+                       bgColor: new FormControl(''),
+                    })
+                 })
   }
 
   ngOnInit() {
-    if(this.user){
-      this.form.setValue(this.user);
+    if(this.doctor){
+      this.form.patchValue(this.doctor);
     } 
     else{
-      this.user = new Doctor();
-      this.user.profile = new DoctorProfile();
-      this.user.work = new DoctorWork();
-      this.user.contacts = new DoctorContacts();
-      this.user.social = new DoctorSocial();
-      this.user.settings = new DoctorSettings();
+      this.doctor = new Doctor();
+      this.doctor.profile = new DoctorProfile();
+      this.doctor.work = new DoctorWork();
+      this.doctor.contacts = new DoctorContacts();
+      this.doctor.settings = new DoctorSettings();
+
     } 
   }
-
+  openSnackBarAdd() {
+    let message = "Doctor added successfully";
+    let action = "Annuler"
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
+  openSnackBarUpdate() {
+    let message = "Doctor updated successfully"
+let action = "Annuler"
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
   close(): void {
     this.dialogRef.close();
   }
