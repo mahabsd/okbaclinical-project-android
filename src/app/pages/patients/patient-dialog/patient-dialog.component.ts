@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { Patient, PatientProfile, PatientWork, PatientContacts, PatientSocial, PatientSettings } from '../patient.model';
-
+import { FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
+import { Patient, PatientProfile, PatientWork, PatientContacts, PatientSettings } from '../patient.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-patient-dialog',
@@ -28,60 +28,65 @@ export class PatientDialogComponent implements OnInit {
     {value: 'gradient-lime', viewValue: 'Lime'}
   ];
   constructor(public dialogRef: MatDialogRef<PatientDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public patient: Patient,
-              public fb: FormBuilder) {
-    this.form = this.fb.group({
-      id: null,
-      username: [null, Validators.compose([Validators.required, Validators.minLength(5)])],
-      password: [null, Validators.compose([Validators.required, Validators.minLength(6)])],       
-      profile: this.fb.group({
-        name: null,
-        surname: null,  
-        birthday: null,
-        gender: null,
-        image: null
-      }),
-      work: this.fb.group({
-        company: null,
-        position: null,
-        salary: null
-      }),
-      contacts: this.fb.group({
-        email: null,
-        phone: null,
-        address: null          
-      }),
-      social: this.fb.group({
-        facebook: null,
-        twitter: null,
-        google: null
-      }),
-      settings: this.fb.group({
-        isActive: null,
-        isDeleted: null,
-        registrationDate: null,
-        joinedDate: null,
-        bgColor: null
-      })
-    });
+              @Inject(MAT_DIALOG_DATA) public patient: Patient, public snackBar: MatSnackBar) {
+                this.form = new FormGroup({
+                  _id: new FormControl(''),
+                  cin: new FormControl('', [Validators.required, Validators.minLength(8)]),
+                  dateDentre: new FormControl('', [Validators.required]),
+                  service: new FormControl('', [Validators.required]),
+                  description: new FormControl(''),
+                   profile: new FormGroup({
+                     name: new FormControl('', [Validators.required]),
+                     surname: new FormControl('', [Validators.required]),
+                     birthday:new FormControl(''),
+                     image: new FormControl(''),
+                   }),
+                   work: new FormGroup({
+                    position:new FormControl(''),
+                   }),
+                   contacts: new FormGroup({
+                     email: new FormControl(''),
+                     phone: new FormControl(''),
+                     address: new FormControl(''),
+                   }),
+                   settings: new FormGroup({
+                     // isActive: new FormControl(''),
+                     // isDeleted: new FormControl(''),
+                       bgColor: new FormControl(''),
+                    })
+                 })
   }
 
   ngOnInit() {
     if(this.patient){
-      this.form.setValue(this.patient);
+      this.form.patchValue(this.patient);
     } 
     else{
       this.patient = new Patient();
       this.patient.profile = new PatientProfile();
       this.patient.work = new PatientWork();
       this.patient.contacts = new PatientContacts();
-      this.patient.social = new PatientSocial();
       this.patient.settings = new PatientSettings();
+
     } 
   }
-
+  openSnackBarAdd() {
+    let message = "Patient added successfully";
+    let action = "Annuler"
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
+  openSnackBarUpdate() {
+    let message = "Patient updated successfully"
+let action = "Annuler"
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
   close(): void {
     this.dialogRef.close();
   }
 
 }
+

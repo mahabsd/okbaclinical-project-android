@@ -1,12 +1,12 @@
 <app-content-header 
     [icon]="'supervisor_account'" 
     [title]="'Patients'" 
-    [desc]="'View information about the patients, search, add, edit or delete any patient.'"
+    [desc]="'View information about the patients, search, add, edit or delete any patients.'"
     [hideBreadcrumb]="false"
     [hasBgImage]="true" 
     [class]="'pb-5'"></app-content-header>
 
-<mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center" class="px-2 patient-toolbar">
+<mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center" class="px-2 user-toolbar">
     <div fxLayout="row">
         <button mat-icon-button (click)="openPatientDialog(null)">
             <mat-icon>person_add</mat-icon>
@@ -37,9 +37,9 @@
                 <div fxFlex="35" fxLayout="column" fxLayoutAlign="center center" class="bg-primary" [ngClass]="(patient.settings.isDeleted) ? '' : patient.settings.bgColor">
                     <div class="patient-img">
                         <img *ngIf="patient.profile.image" [src]="patient.profile.image" class="transition mb-2" [class.blocked]="patient.settings.isDeleted">
-                        <img *ngIf="!patient.profile.image" src="assets/img/patients/default-patient.jpg" class="transition mb-2" [class.blocked]="patient.settings.isDeleted">  
+                        <img *ngIf="!patient.profile.image" src="assets/img/users/default-user.jpg" class="transition mb-2" [class.blocked]="patient.settings.isDeleted">  
                         <mat-icon *ngIf="patient.settings.isDeleted" class="warn-color block-icon">block</mat-icon>
-                        <div fxLayout="row" fxLayoutAlign="center center" class="social-icons">
+                        <!-- <div fxLayout="row" fxLayoutAlign="center center" class="social-icons">
                             <a [href]="'https://www.facebook.com/'+patient.social.facebook" target="_blank">
                                 <svg class="mat-icon mat-icon-sm mx-1" viewBox="0 0 24 24">
                                     <path d="M17,2V2H17V6H15C14.31,6 14,6.81 14,7.5V10H14L17,10V14H14V22H10V14H7V10H10V6A4,4 0 0,1 14,2H17Z" />
@@ -55,13 +55,13 @@
                                     <path d="M23,11H21V9H19V11H17V13H19V15H21V13H23M8,11V13.4H12C11.8,14.4 10.8,16.4 8,16.4C5.6,16.4 3.7,14.4 3.7,12C3.7,9.6 5.6,7.6 8,7.6C9.4,7.6 10.3,8.2 10.8,8.7L12.7,6.9C11.5,5.7 9.9,5 8,5C4.1,5 1,8.1 1,12C1,15.9 4.1,19 8,19C12,19 14.7,16.2 14.7,12.2C14.7,11.7 14.7,11.4 14.6,11H8Z" />
                                 </svg>
                             </a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>       
                 <div fxFlex="65" [class.blocked]="patient.settings.isDeleted" class="patient-details"> 
                     <div fxLayout="row" fxLayoutAlign="space-between center">
                         <h4 *ngIf="!patient.settings.isDeleted" class="patient-name px-2">{{patient.profile.name}} {{patient.profile.surname}}</h4> 
-                        <h4 *ngIf="patient.settings.isDeleted" class="patient-name px-2">Patient blocked</h4>
+                        <h4 *ngIf="patient.settings.isDeleted" class="patient-name px-2">User blocked</h4>
                         <button mat-icon-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
                             <mat-icon>more_vert</mat-icon>
                         </button>
@@ -88,6 +88,7 @@
                         <p fxLayout="row" fxLayoutAlign="start center">
                             <mat-icon class="secondary-text-color">card_membership</mat-icon>
                             <span>{{patient.work.position}}</span>
+
                         </p>
                         <p fxLayout="row" fxLayoutAlign="start center">
                             <mat-icon class="secondary-text-color">mail_outline</mat-icon>
@@ -112,9 +113,9 @@
                 <div fxFlex="20" fxFlex.xs="30" fxLayout="column" fxLayoutAlign="center center" class="bg-primary" [ngClass]="(patient.settings.isDeleted) ? '' : patient.settings.bgColor">
                     <div class="patient-img">
                         <img *ngIf="patient.profile.image" [src]="patient.profile.image" class="transition mb-2" [class.blocked]="patient.settings.isDeleted">
-                        <img *ngIf="!patient.profile.image" src="assets/img/patients/default-patient.jpg" class="transition mb-2" [class.blocked]="patient.settings.isDeleted">  
+                        <img *ngIf="!patient.profile.image" src="assets/img/users/default-user.jpg" class="transition mb-2" [class.blocked]="patient.settings.isDeleted">  
                         <mat-icon *ngIf="patient.settings.isDeleted" class="warn-color block-icon">block</mat-icon>
-                        <div fxLayout="row" fxLayoutAlign="center center" class="social-icons">
+                        <!-- <div fxLayout="row" fxLayoutAlign="center center" class="social-icons">
                             <a [href]="'https://www.facebook.com/'+patient.social.facebook" target="_blank">
                                 <svg class="mat-icon mat-icon-sm mx-1" viewBox="0 0 24 24">
                                     <path d="M17,2V2H17V6H15C14.31,6 14,6.81 14,7.5V10H14L17,10V14H14V22H10V14H7V10H10V6A4,4 0 0,1 14,2H17Z" />
@@ -130,14 +131,14 @@
                                     <path d="M23,11H21V9H19V11H17V13H19V15H21V13H23M8,11V13.4H12C11.8,14.4 10.8,16.4 8,16.4C5.6,16.4 3.7,14.4 3.7,12C3.7,9.6 5.6,7.6 8,7.6C9.4,7.6 10.3,8.2 10.8,8.7L12.7,6.9C11.5,5.7 9.9,5 8,5C4.1,5 1,8.1 1,12C1,15.9 4.1,19 8,19C12,19 14.7,16.2 14.7,12.2C14.7,11.7 14.7,11.4 14.6,11H8Z" />
                                 </svg>
                             </a>
-                        </div>
+                        </div> -->
                     </div>
                 </div> 
                 <div fxFlex="80" fxFlex.xs="70" fxLayout="row wrap" fxLayout.xs="column" class="patient-details">
                     <div class="w-100">
                         <div fxLayout="row" fxLayoutAlign="space-between center">
                             <h4 *ngIf="!patient.settings.isDeleted" class="patient-name px-2">{{patient.profile.name}} {{patient.profile.surname}}</h4> 
-                            <h4 *ngIf="patient.settings.isDeleted" class="patient-name px-2">Patient blocked</h4>
+                            <h4 *ngIf="patient.settings.isDeleted" class="patient-name px-2">User blocked</h4>
                             <button mat-icon-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
                                 <mat-icon>more_vert</mat-icon>
                             </button>
@@ -215,7 +216,7 @@
             </mat-card>
         </div>
     </div>    
-    <div *ngIf="!patients" fxLayout="column" fxLayoutAlign="center center" class="patient-spinner">   
+    <div *ngIf="!patients" fxLayout="column" fxLayoutAlign="center center" class="patients-spinner">   
         <mat-spinner color="accent"></mat-spinner>    
     </div>   
 </div>
