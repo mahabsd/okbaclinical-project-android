@@ -1,12 +1,12 @@
 <app-content-header 
     [icon]="'supervisor_account'" 
     [title]="'Actionnaires'" 
-    [desc]="'View information about the actionnaires, search, add, edit or delete any actionnaire.'"
+    [desc]="'View information about the actionnaires, search, add, edit or delete any actionnaires.'"
     [hideBreadcrumb]="false"
     [hasBgImage]="true" 
     [class]="'pb-5'"></app-content-header>
 
-<mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center" class="px-2 actionnaire-toolbar">
+<mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center" class="px-2 user-toolbar">
     <div fxLayout="row">
         <button mat-icon-button (click)="openActionnaireDialog(null)">
             <mat-icon>person_add</mat-icon>
@@ -32,14 +32,14 @@
 
 <div class="actionnaires-wrapper p-2">
     <div *ngIf="viewType == 'grid'" fxLayout="row wrap">    
-        <div *ngFor="let actionnaire of actionnaires | ActionnaireSearchPipe : searchText | paginate: { itemsPerPage: 6, currentPage: page }" fxFlex="100" fxFlex.gt-md="33.3" fxFlex.md="50" fxFlex.sm="50" class="p-2"> 
+        <div *ngFor="let actionnaire of actionnaires | UserSearchPipe : searchText | paginate: { itemsPerPage: 6, currentPage: page }" fxFlex="100" fxFlex.gt-md="33.3" fxFlex.md="50" fxFlex.sm="50" class="p-2"> 
             <mat-card fxLayout="row" class="p-0 actionnaire-content">  
                 <div fxFlex="35" fxLayout="column" fxLayoutAlign="center center" class="bg-primary" [ngClass]="(actionnaire.settings.isDeleted) ? '' : actionnaire.settings.bgColor">
                     <div class="actionnaire-img">
                         <img *ngIf="actionnaire.profile.image" [src]="actionnaire.profile.image" class="transition mb-2" [class.blocked]="actionnaire.settings.isDeleted">
-                        <img *ngIf="!actionnaire.profile.image" src="assets/img/actionnaires/default-actionnaire.jpg" class="transition mb-2" [class.blocked]="actionnaire.settings.isDeleted">  
+                        <img *ngIf="!actionnaire.profile.image" src="assets/img/users/default-user.jpg" class="transition mb-2" [class.blocked]="actionnaire.settings.isDeleted">  
                         <mat-icon *ngIf="actionnaire.settings.isDeleted" class="warn-color block-icon">block</mat-icon>
-                        <div fxLayout="row" fxLayoutAlign="center center" class="social-icons">
+                        <!-- <div fxLayout="row" fxLayoutAlign="center center" class="social-icons">
                             <a [href]="'https://www.facebook.com/'+actionnaire.social.facebook" target="_blank">
                                 <svg class="mat-icon mat-icon-sm mx-1" viewBox="0 0 24 24">
                                     <path d="M17,2V2H17V6H15C14.31,6 14,6.81 14,7.5V10H14L17,10V14H14V22H10V14H7V10H10V6A4,4 0 0,1 14,2H17Z" />
@@ -55,13 +55,13 @@
                                     <path d="M23,11H21V9H19V11H17V13H19V15H21V13H23M8,11V13.4H12C11.8,14.4 10.8,16.4 8,16.4C5.6,16.4 3.7,14.4 3.7,12C3.7,9.6 5.6,7.6 8,7.6C9.4,7.6 10.3,8.2 10.8,8.7L12.7,6.9C11.5,5.7 9.9,5 8,5C4.1,5 1,8.1 1,12C1,15.9 4.1,19 8,19C12,19 14.7,16.2 14.7,12.2C14.7,11.7 14.7,11.4 14.6,11H8Z" />
                                 </svg>
                             </a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>       
                 <div fxFlex="65" [class.blocked]="actionnaire.settings.isDeleted" class="actionnaire-details"> 
                     <div fxLayout="row" fxLayoutAlign="space-between center">
                         <h4 *ngIf="!actionnaire.settings.isDeleted" class="actionnaire-name px-2">{{actionnaire.profile.name}} {{actionnaire.profile.surname}}</h4> 
-                        <h4 *ngIf="actionnaire.settings.isDeleted" class="actionnaire-name px-2">Actionnaire blocked</h4>
+                        <h4 *ngIf="actionnaire.settings.isDeleted" class="actionnaire-name px-2">User blocked</h4>
                         <button mat-icon-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
                             <mat-icon>more_vert</mat-icon>
                         </button>
@@ -88,6 +88,7 @@
                         <p fxLayout="row" fxLayoutAlign="start center">
                             <mat-icon class="secondary-text-color">card_membership</mat-icon>
                             <span>{{actionnaire.work.position}}</span>
+
                         </p>
                         <p fxLayout="row" fxLayoutAlign="start center">
                             <mat-icon class="secondary-text-color">mail_outline</mat-icon>
@@ -107,14 +108,14 @@
         </div>
     </div>
     <div *ngIf="viewType == 'list'" fxLayout="row wrap">
-        <div *ngFor="let actionnaire of actionnaires | ActionnaireSearchPipe : searchText | paginate: { itemsPerPage: 6, currentPage: page }" fxFlex="100" class="p-2"> 
+        <div *ngFor="let actionnaire of actionnaires | UserSearchPipe : searchText | paginate: { itemsPerPage: 6, currentPage: page }" fxFlex="100" class="p-2"> 
             <mat-card class="p-0 actionnaire-content"> 
                 <div fxFlex="20" fxFlex.xs="30" fxLayout="column" fxLayoutAlign="center center" class="bg-primary" [ngClass]="(actionnaire.settings.isDeleted) ? '' : actionnaire.settings.bgColor">
                     <div class="actionnaire-img">
                         <img *ngIf="actionnaire.profile.image" [src]="actionnaire.profile.image" class="transition mb-2" [class.blocked]="actionnaire.settings.isDeleted">
-                        <img *ngIf="!actionnaire.profile.image" src="assets/img/actionnaires/default-actionnaire.jpg" class="transition mb-2" [class.blocked]="actionnaire.settings.isDeleted">  
+                        <img *ngIf="!actionnaire.profile.image" src="assets/img/users/default-user.jpg" class="transition mb-2" [class.blocked]="actionnaire.settings.isDeleted">  
                         <mat-icon *ngIf="actionnaire.settings.isDeleted" class="warn-color block-icon">block</mat-icon>
-                        <div fxLayout="row" fxLayoutAlign="center center" class="social-icons">
+                        <!-- <div fxLayout="row" fxLayoutAlign="center center" class="social-icons">
                             <a [href]="'https://www.facebook.com/'+actionnaire.social.facebook" target="_blank">
                                 <svg class="mat-icon mat-icon-sm mx-1" viewBox="0 0 24 24">
                                     <path d="M17,2V2H17V6H15C14.31,6 14,6.81 14,7.5V10H14L17,10V14H14V22H10V14H7V10H10V6A4,4 0 0,1 14,2H17Z" />
@@ -130,14 +131,14 @@
                                     <path d="M23,11H21V9H19V11H17V13H19V15H21V13H23M8,11V13.4H12C11.8,14.4 10.8,16.4 8,16.4C5.6,16.4 3.7,14.4 3.7,12C3.7,9.6 5.6,7.6 8,7.6C9.4,7.6 10.3,8.2 10.8,8.7L12.7,6.9C11.5,5.7 9.9,5 8,5C4.1,5 1,8.1 1,12C1,15.9 4.1,19 8,19C12,19 14.7,16.2 14.7,12.2C14.7,11.7 14.7,11.4 14.6,11H8Z" />
                                 </svg>
                             </a>
-                        </div>
+                        </div> -->
                     </div>
                 </div> 
                 <div fxFlex="80" fxFlex.xs="70" fxLayout="row wrap" fxLayout.xs="column" class="actionnaire-details">
                     <div class="w-100">
                         <div fxLayout="row" fxLayoutAlign="space-between center">
                             <h4 *ngIf="!actionnaire.settings.isDeleted" class="actionnaire-name px-2">{{actionnaire.profile.name}} {{actionnaire.profile.surname}}</h4> 
-                            <h4 *ngIf="actionnaire.settings.isDeleted" class="actionnaire-name px-2">Actionnaire blocked</h4>
+                            <h4 *ngIf="actionnaire.settings.isDeleted" class="actionnaire-name px-2">User blocked</h4>
                             <button mat-icon-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
                                 <mat-icon>more_vert</mat-icon>
                             </button>
@@ -215,7 +216,7 @@
             </mat-card>
         </div>
     </div>    
-    <div *ngIf="!actionnaires" fxLayout="column" fxLayoutAlign="center center" class="actionnaire-spinner">   
+    <div *ngIf="!actionnaires" fxLayout="column" fxLayoutAlign="center center" class="actionnaires-spinner">   
         <mat-spinner color="accent"></mat-spinner>    
     </div>   
 </div>

@@ -21,10 +21,10 @@ export class PatientsService {
     return this.http.get(this.patientsUrl + "patients/patient" + id,);
   }
   updatePatient(id, data) {
-    return this.http.put(this.patientsUrl + "patients/patient/update"+ id, data, );
+    return this.http.put(this.patientsUrl + "patients/patient/update/"+ id, data, );
   }
   deletePatient(id) {
-    return this.http.delete(this.patientsUrl + "patients/patient/delete" + id, );
+    return this.http.delete(this.patientsUrl + "patients/patient/delete/" + id, );
   }
   getAllPatients() {
     return this.http.get(this.patientsUrl + "patients/getAllpatients",  );
