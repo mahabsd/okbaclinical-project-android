@@ -22,7 +22,8 @@ export class UserProfile {
 export class UserWork {
   company: string;
   roles: string;
-  soldeConge: string;
+  soldeConge: number;
+
 }
 
 export class UserContacts{

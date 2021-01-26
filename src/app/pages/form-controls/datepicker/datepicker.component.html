@@ -1,6 +1,6 @@
 <app-content-header 
     [icon]="'today'" 
-    [title]="'Datepicker'" 
+    [title]="'Holidays request'" 
     [hideBreadcrumb]="false"
     [hasBgImage]="true" 
     [class]="'pb-4'"></app-content-header>
@@ -9,7 +9,7 @@
     <div fxFlex="50" class="p-2"> 
         <mat-card>
             <mat-card-header fxLayoutAlign="center">                
-                <mat-card-subtitle><h2>Basic datepicker</h2></mat-card-subtitle>
+                <mat-card-subtitle><h2> Start date </h2></mat-card-subtitle>
             </mat-card-header>
             <mat-card-content fxLayoutAlign="center">
                 <mat-form-field>
@@ -23,7 +23,26 @@
     <div fxFlex="50" class="p-2"> 
         <mat-card>
             <mat-card-header fxLayoutAlign="center">                
-                <mat-card-subtitle><h2>Datepicker start date</h2></mat-card-subtitle>
+                <mat-card-subtitle><h2>End date</h2></mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content fxLayoutAlign="center">
+                <mat-form-field>
+                    <input matInput [matDatepicker]="picker2" placeholder="Choose a date">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+            </mat-card-content>
+        </mat-card>
+    </div>  
+    <div class="row" style="color : #ffffff">
+        <p>pppppppppppppppppppppppppppppppppppppppppppppppppppppppppp</p>
+    </div>
+    <button mat-flat-button color="warn" class="m-1 ">send your request</button>
+
+    <!-- <div fxFlex="50" class="p-2"> 
+        <mat-card>
+            <mat-card-header fxLayoutAlign="center">                
+                <mat-card-subtitle><h2>Datepicker start date maha</h2></mat-card-subtitle>
             </mat-card-header>
             <mat-card-content fxLayoutAlign="center">
                 <mat-form-field>
@@ -131,5 +150,5 @@
                 <button mat-raised-button (click)="picker7.open()">Open</button>
             </mat-card-content>
         </mat-card>
-    </div>                                 
+    </div>                                  -->
 </div>

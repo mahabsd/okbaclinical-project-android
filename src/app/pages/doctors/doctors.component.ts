@@ -47,14 +47,9 @@ export class DoctorsComponent implements OnInit {
     this.doctorsService.updateDoctor(doctor._id, doctor).subscribe(doctor => this.getDoctors());
   }
   public deleteDoctor(doctor: Doctor) {
+
     this.doctorsService.deleteDoctor(doctor._id).subscribe(doctor => {
       this.getDoctors();
-      let message = "Doctor deleted successfully";
-      ///action va etre changé
-      let action = "Annuler"
-      this.snackBar.open(message, action, {
-        duration: 2000,
-      });
     });
   }
 
@@ -77,8 +72,13 @@ export class DoctorsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(doctor => {
       let doc = doctor
       if (doc) {
-        // console.log("close 1"+ JSON.stringify(doctor));
-        (doc._id) ? this.updateDoctor(doc) : delete doc._id; this.addDoctor(doc);
+        if (doc._id) {
+          this.updateDoctor(doc)
+        } else {
+          delete doc._id;
+          this.addDoctor(doc)
+        }
+     //   (doc._id) ? this.updateDoctor(doc) : delete doc._id; this.addDoctor(doc);
       }
     });
     this.showSearch = false;
