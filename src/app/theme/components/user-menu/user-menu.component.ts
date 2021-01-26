@@ -12,5 +12,7 @@ export class UserMenuComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  logout(): void {
+    localStorage.removeItem('token');
+  }
 }

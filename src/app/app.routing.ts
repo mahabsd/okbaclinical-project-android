@@ -32,6 +32,7 @@ export const routes: Routes = [
             { path: 'search', component: SearchComponent, data: { breadcrumb: 'Search' } },
             { path: 'search/:name', component: SearchComponent, data: { breadcrumb: 'Search' } },
             { path: 'doctors', loadChildren: () => import('./pages/doctors/doctors.module').then(m => m.DoctorsModule), data: { breadcrumb: 'Doctors' } },
+            { path: 'actionnaires', loadChildren: () => import('./pages/actionnaires/actionnaires.module').then(m => m.ActionnairesModule), data: { breadcrumb: 'Actionnaires' } },
 
         ]
     },
