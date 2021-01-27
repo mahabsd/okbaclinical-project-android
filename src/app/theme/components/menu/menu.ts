@@ -24,7 +24,7 @@ export const verticalMenuItems = [
     new Menu (20, 'Form Controls', null, null, 'dvr', null, true, 0), 
     new Menu (21, 'Autocomplete', '/form-controls/autocomplete', null, 'short_text', null, false, 20), 
     new Menu (22, 'Checkbox', '/form-controls/checkbox', null, 'check_box', null, false, 20), 
-    new Menu (23, 'Datepicker', '/form-controls/datepicker', null, 'today', null, false, 20), 
+    new Menu (23, 'holidays request', '/form-controls/datepicker', null, 'today', null, false, 20), 
     new Menu (24, 'Form field', '/form-controls/form-field', null, 'view_stream', null, false, 20), 
     new Menu (25, 'Input', '/form-controls/input', null, 'input', null, false, 20), 
     new Menu (26, 'Radio button', '/form-controls/radio-button', null, 'radio_button_checked', null, false, 20), 

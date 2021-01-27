@@ -25,7 +25,7 @@ export class DialogComponent {
       this.animal = result;
     });
   }
-
+ 
 }
 
 @Component({

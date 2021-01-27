@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit, ViewEncapsulation, Inject,Input } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AppSettings } from '../../app.settings';
 import { Settings } from '../../app.settings.model';
 import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings } from './user.model';
@@ -18,6 +18,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class UsersComponent implements OnInit {
     public users;
+    
     public searchText: string;
     public page: any;
     public settings: Settings;
@@ -30,10 +31,10 @@ export class UsersComponent implements OnInit {
         public snackBar: MatSnackBar) {
         this.settings = this.appSettings.settings;
     }
-    
+
     ngOnInit() {
         this.getUsers();
-        
+
     }
 
     public getUsers(): void {
@@ -41,29 +42,29 @@ export class UsersComponent implements OnInit {
         this.UserService.getAllUsers().subscribe(res => {
             this.users = res;
             console.log(this.users);
-            console.log("hello users"+ this.users);
+            console.log("hello users" + this.users);
         })
     }
-    public addUser(user:User) {
+    public addUser(user: User) {
         this.UserService.addUser(user).subscribe(res =>
             this.getUsers()
         )
     }
-    public updateUser(user:User) {
+    public updateUser(user: User) {
         this.UserService.updateUser(user._id, user).subscribe(user => this.getUsers());
     }
-    public deleteUser(user:User) {
-        this.UserService.deleteUser(user._id).subscribe(user => {
-            console.log((user));
-            this.getUsers();
-            let message = "User deleted successfully";
-            ///action va etre changé
-            let action = "Annuler"
-            this.snackBar.open(message, action, {
-              duration: 2000,
-            });
-        });
-    }
+    // public deleteUser(user:User) {
+    //     this.UserService.deleteUser(user._id).subscribe(user => {
+    //         console.log((user));
+    //         this.getUsers();
+    //         let message = "User deleted successfully";
+    //         ///action va etre changé
+    //         let action = "Annuler"
+    //         this.snackBar.open(message, action, {
+    //           duration: 2000,
+    //         });
+    //     });
+    // }
 
     public changeView(viewType) {
         this.viewType = viewType;
@@ -83,10 +84,71 @@ export class UsersComponent implements OnInit {
         dialogRef.afterClosed().subscribe(user => {
             let use = user
             if (use) {
-                (use._id) ? this.updateUser(use) : delete use._id; this.addUser(use);
+                (use._id) ? this.updateUser(use) : delete use._id; const x = use.profile.image.slice(12);
+                use.profile.image = x; this.addUser(use);
             }
         });
         this.showSearch = false;
+    }
+
+    openDialog(user): void {
+        let dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+            data: {
+                message: 'Are you sure want to delete?',
+                buttonText: {
+                    ok: 'Save',
+                    cancel: 'No'
+                }
+            }
+    });
+
+        dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+            let confirm = confirmed;
+
+            if (confirm) {
+
+                this.UserService.deleteUser(user._id).subscribe(user => {
+                    console.log((user));
+                    this.getUsers();
+                    let message = "User deleted successfully";
+                    ///action va etre changé
+                    let action = "close"
+                    this.snackBar.open(message, action, {
+                        duration: 2000,
+                    });
+                });
+            }
+        });
+    }
+}
+
+
+@Component({
+    selector: 'dialog-overview-example-dialog',
+    templateUrl: 'dialog-overview-example-dialog.html',
+})
+export class DialogOverviewExampleDialog {
+    users;
+    message: string = "Are you sure?"
+    confirmButtonText = "Yes"
+    cancelButtonText = "Cancel"
+    constructor(
+        public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+        @Inject(MAT_DIALOG_DATA) public data: any) { }
+    if(data) {
+        this.message = data.message || this.message;
+        if (data.buttonText) {
+            console.log("data.buttonText" + data.buttonText);
+
+            this.confirmButtonText = data.buttonText.ok || this.confirmButtonText;
+            this.cancelButtonText = data.buttonText.cancel || this.cancelButtonText;
+        }
+    }
+    onNoClick(): void {
+        this.dialogRef.close();
+    }
+    onConfirmClick(): void {
+    this.dialogRef.close(true);
     }
 
 }
