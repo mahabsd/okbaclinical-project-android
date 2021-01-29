@@ -41,8 +41,6 @@ export class UsersComponent implements OnInit {
         this.users = null; //for show spinner each time
         this.UserService.getAllUsers().subscribe(res => {
             this.users = res;
-            console.log(this.users);
-            console.log("hello users" + this.users);
         })
     }
     public addUser(user: User) {
@@ -53,18 +51,6 @@ export class UsersComponent implements OnInit {
     public updateUser(user: User) {
         this.UserService.updateUser(user._id, user).subscribe(user => this.getUsers());
     }
-    // public deleteUser(user:User) {
-    //     this.UserService.deleteUser(user._id).subscribe(user => {
-    //         console.log((user));
-    //         this.getUsers();
-    //         let message = "User deleted successfully";
-    //         ///action va etre changé
-    //         let action = "Annuler"
-    //         this.snackBar.open(message, action, {
-    //           duration: 2000,
-    //         });
-    //     });
-    // }
 
     public changeView(viewType) {
         this.viewType = viewType;
@@ -94,7 +80,7 @@ export class UsersComponent implements OnInit {
     openDialog(user): void {
         let dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
             data: {
-                message: 'Are you sure want to delete?',
+                message: 'Are you sure want to delete ?',
                 buttonText: {
                     ok: 'Save',
                     cancel: 'No'
@@ -111,7 +97,6 @@ export class UsersComponent implements OnInit {
                     console.log((user));
                     this.getUsers();
                     let message = "User deleted successfully";
-                    ///action va etre changé
                     let action = "close"
                     this.snackBar.open(message, action, {
                         duration: 2000,
@@ -135,15 +120,15 @@ export class DialogOverviewExampleDialog {
     constructor(
         public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
         @Inject(MAT_DIALOG_DATA) public data: any) { }
-    if(data) {
-        this.message = data.message || this.message;
-        if (data.buttonText) {
-            console.log("data.buttonText" + data.buttonText);
+    // if(data) {
+    //     this.message = data.message || this.message;
+    //     if (data.buttonText) {
+    //         console.log("data.buttonText" + data.buttonText);
 
-            this.confirmButtonText = data.buttonText.ok || this.confirmButtonText;
-            this.cancelButtonText = data.buttonText.cancel || this.cancelButtonText;
-        }
-    }
+    //         this.confirmButtonText = data.buttonText.ok || this.confirmButtonText;
+    //         this.cancelButtonText = data.buttonText.cancel || this.cancelButtonText;
+    //     }
+    // }
     onNoClick(): void {
         this.dialogRef.close();
     }

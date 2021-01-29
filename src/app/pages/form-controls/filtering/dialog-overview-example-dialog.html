@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Delete user</h1>
+<div mat-dialog-content  class="w-100">
+  <p>decline request ?</p>
+</div>
+<div mat-dialog-actions  class="w-100">
+  <button mat-button tabindex="1" [mat-dialog-close]="confirmButtonText" (click)="onConfirmClick()">{{confirmButtonText}}</button>
+  <button mat-button (click)="onNoClick()" tabindex="-1">{{cancelButtonText}}</button>
+</div>
