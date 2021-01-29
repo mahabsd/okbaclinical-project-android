@@ -13,6 +13,7 @@ import { RadioButtonComponent } from './radio-button/radio-button.component';
 import { SelectComponent } from './select/select.component';
 import { SliderComponent } from './slider/slider.component';
 import { SlideToggleComponent } from './slide-toggle/slide-toggle.component';
+import { FilteringComponent } from './filtering/filtering.component';
 
 export const routes = [
   { path: '', redirectTo: 'autocomplete', pathMatch: 'full'},
@@ -24,7 +25,9 @@ export const routes = [
   { path: 'radio-button', component: RadioButtonComponent, data: { breadcrumb: 'Radio Button' } },
   { path: 'select', component: SelectComponent, data: { breadcrumb: 'Select' } },
   { path: 'slider', component: SliderComponent, data: { breadcrumb: 'Slider' } },
-  { path: 'slide-toggle', component: SlideToggleComponent, data: { breadcrumb: 'Slide Toggle' } }
+  { path: 'slide-toggle', component: SlideToggleComponent, data: { breadcrumb: 'Slide Toggle' } },
+  { path: 'filtering', component: FilteringComponent, data: { breadcrumb: 'Filtering table' } },
+
 ];
 
 @NgModule({
@@ -45,7 +48,8 @@ export const routes = [
     RadioButtonComponent, 
     SelectComponent, 
     SliderComponent, 
-    SlideToggleComponent
+    SlideToggleComponent,
+    FilteringComponent
   ]
 })
 export class FormControlsModule { }

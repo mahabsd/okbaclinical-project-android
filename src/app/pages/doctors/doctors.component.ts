@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AppSettings } from '../../app.settings';
 import { Settings } from '../../app.settings.model';
 import { Doctor, DoctorProfile, DoctorWork, DoctorContacts } from './doctor.model';
@@ -46,12 +46,12 @@ export class DoctorsComponent implements OnInit {
   public updateDoctor(doctor: Doctor) {
     this.doctorsService.updateDoctor(doctor._id, doctor).subscribe(doctor => this.getDoctors());
   }
-  public deleteDoctor(doctor: Doctor) {
+  // public deleteDoctor(doctor: Doctor) {
 
-    this.doctorsService.deleteDoctor(doctor._id).subscribe(doctor => {
-      this.getDoctors();
-    });
-  }
+  //   this.doctorsService.deleteDoctor(doctor._id).subscribe(doctor => {
+  //     this.getDoctors();
+  //   });
+  // }
 
   public changeView(viewType) {
     this.viewType = viewType;
@@ -78,10 +78,67 @@ export class DoctorsComponent implements OnInit {
           delete doc._id;
           this.addDoctor(doc)
         }
-     //   (doc._id) ? this.updateDoctor(doc) : delete doc._id; this.addDoctor(doc);
+        //   (doc._id) ? this.updateDoctor(doc) : delete doc._id; this.addDoctor(doc);
       }
     });
     this.showSearch = false;
+  }
+
+  openDialog(user): void {
+    let dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+      data: {
+        message: 'Are you sure want to delete ?',
+        buttonText: {
+          ok: 'Save',
+          cancel: 'No'
+        }
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      let confirm = confirmed;
+
+      if (confirm) {
+
+        this.doctorsService.deleteDoctor(user._id).subscribe(user => {
+          this.getDoctors();
+          let message = "User deleted successfully";
+          let action = "close"
+          this.snackBar.open(message, action, {
+            duration: 2000,
+          });
+        });
+      }
+    });
+  }
+}
+
+@Component({
+  selector: 'dialog-overview-example-dialog',
+  templateUrl: 'dialog-overview-example-dialog.html',
+})
+export class DialogOverviewExampleDialog {
+  users;
+  message: string = "Are you sure?"
+  confirmButtonText = "Yes"
+  cancelButtonText = "Cancel"
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
+  // if(data) {
+  //     this.message = data.message || this.message;
+  //     if (data.buttonText) {
+  //         console.log("data.buttonText" + data.buttonText);
+
+  //         this.confirmButtonText = data.buttonText.ok || this.confirmButtonText;
+  //         this.cancelButtonText = data.buttonText.cancel || this.cancelButtonText;
+  //     }
+  // }
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+  onConfirmClick(): void {
+    this.dialogRef.close(true);
   }
 
 }

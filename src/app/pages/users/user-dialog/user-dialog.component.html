@@ -40,7 +40,7 @@
                         
                     </mat-form-field> -->
                     <p>add a photo please</p>
-                    <input  type="file"  placeholder="Image url" formControlName="image">
+                    <input  type="file"  formControlName="image" (click) = "selectImage($event)">
 
                 </div>
             </mat-tab>

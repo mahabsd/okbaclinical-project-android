@@ -35,11 +35,12 @@ export class PatientsComponent implements OnInit {
     this.patients = null; //for show spinner each time
     this.patientsService.getAllPatients().subscribe(patient =>
 
-      this.patients = patient);
+    {  this.patients = patient;
+    } );
   }
   public addPatient(patient: Patient) {
     this.patientsService.addPatient(patient).subscribe(patient => {
-      this.getPatients()
+      this.getPatients();
       console.log("hello" + patient);
 
     });
