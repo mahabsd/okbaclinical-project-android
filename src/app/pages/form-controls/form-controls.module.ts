@@ -16,7 +16,7 @@ import { SlideToggleComponent } from './slide-toggle/slide-toggle.component';
 import { FilteringComponent } from './filtering/filtering.component';
 
 export const routes = [
-  { path: '', redirectTo: 'autocomplete', pathMatch: 'full'},
+  { path: '', redirectTo: 'datepicker', pathMatch: 'full'},
   { path: 'autocomplete', component: AutocompleteComponent, data: { breadcrumb: 'Autocomplete' } },
   { path: 'checkbox', component: CheckboxComponent, data: { breadcrumb: 'Checkbox' } },
   { path: 'datepicker', component: DatepickerComponent, data: { breadcrumb: 'Datepicker' } },
@@ -26,7 +26,7 @@ export const routes = [
   { path: 'select', component: SelectComponent, data: { breadcrumb: 'Select' } },
   { path: 'slider', component: SliderComponent, data: { breadcrumb: 'Slider' } },
   { path: 'slide-toggle', component: SlideToggleComponent, data: { breadcrumb: 'Slide Toggle' } },
-  { path: 'filtering', component: FilteringComponent, data: { breadcrumb: 'Filtering table' } },
+  { path: 'Holidays-list', component: FilteringComponent, data: { breadcrumb: 'Filtering table' } },
 
 ];
 
