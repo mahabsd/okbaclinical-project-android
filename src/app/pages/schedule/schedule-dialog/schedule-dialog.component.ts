@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators} from '@angular/forms';
+import { FormGroup, FormControl, Validators} from '@angular/forms';
+import jwt_decode from "../../../../../node_modules/jwt-decode";
 
 @Component({
   selector: 'app-schedule-dialog',
@@ -8,26 +9,40 @@ import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 })
 export class ScheduleDialogComponent implements OnInit {
   public form:FormGroup;
+   token = localStorage.getItem('token');
+  decoded = jwt_decode(this.token);
   constructor(public dialogRef: MatDialogRef<ScheduleDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
-              public formBuilder: FormBuilder) {
-    this.form = this.formBuilder.group({ 
-      'title': ['', Validators.required],            
-      'start': ['', Validators.required], 
-      'end': '',
-      'isEdit' : false
+              ) {
+    this.form = new FormGroup({
+      title: new FormControl('', [Validators.required, Validators.minLength(5)]),
+      start: new FormControl('', [Validators.required]),
+      descrip: new FormControl('', [Validators.required]),
+      isEdit : new FormControl(''),
+      userOwner: new FormControl(''),
     });
+    this.form.patchValue({
+     
+      'isEdit' : false,
+      'userOwner': JSON.parse(JSON.stringify(this.decoded))._id,
+    })
   }
 
+
   ngOnInit() {
+    console.log(this.form);
+    
+
     if (this.data){
       this.form.patchValue({
         'title': this.data.title,
         'start': this.data.start,
-        'end': this.data.end,
-        'isEdit' : true
+        'descrip': this.data.descrip,
+        'isEdit' : true,
+        'userOwner': JSON.parse(JSON.stringify(this.decoded))._id,
       })
     }
+    console.log(this.form);
   }
 
   close(): void {

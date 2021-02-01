@@ -53,9 +53,14 @@
                 </mat-cell>
             </ng-container>
             <ng-container matColumnDef="respond">
-                <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef> Action</mat-header-cell>
                 <mat-cell *matCellDef="let element">
                     <button mat-mini-fab  color="primary" class="m-1 " (click) = "confirmRequest(element)">
+                        <span class="material-icons">
+                            offline_pin
+                            </span>
+                    </button>
+                    <button mat-mini-fab  color="primary" class="m-1 " (click) = "cancelRequest(element)">
                         <span class="material-icons">
                             offline_pin
                             </span>
