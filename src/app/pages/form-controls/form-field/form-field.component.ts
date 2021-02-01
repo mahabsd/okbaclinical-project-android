@@ -1,41 +1,64 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { AppSettings } from '../../../app.settings';
-import { Settings } from '../../../app.settings.model';
+import { Component,OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MaintenancesService } from 'src/app/services/maintenance.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import jwt_decode from "../../../../../node_modules/jwt-decode";
+
 
 @Component({
   selector: 'app-form-field',
   templateUrl: './form-field.component.html'
 })
-export class FormFieldComponent {
-  options: FormGroup;
-  email = new FormControl('', [Validators.required, Validators.email]);
-  hide:boolean = true;
-  themingForm: FormGroup;
-  public settings: Settings;
-  constructor(public appSettings:AppSettings, public formBuilder:FormBuilder) {
-    this.settings = this.appSettings.settings;     
+export class FormFieldComponent implements OnInit {
+
+  public formMaintenance:FormGroup;
+  
+  constructor( public maintenancesService:MaintenancesService,public snackBar: MatSnackBar) {
+                this.formMaintenance = new FormGroup({
+                  title: new FormControl('', [Validators.required]),
+                  descriptionMaintenance: new FormControl('', [Validators.required]),
+                  type: new FormControl('', [Validators.required]),
+               
+                 })
   }
 
-  ngOnInit(){
-    this.options = this.formBuilder.group({
-      hideRequired: false,
-      floatLabel: 'auto',
+  ngOnInit() {
+    this.formMaintenance = new FormGroup({
+      title: new FormControl('', [Validators.required]),
+      descriptionMaintenance: new FormControl('', [Validators.required]),
+      type: new FormControl('', [Validators.required]),
+      status: new FormControl('',),
+      userOwner: new FormControl(''),
+   
+     })
+  }
+  // add maintenance
+  onSubmit() {
+    let token = localStorage.getItem('token');
+    var decoded = jwt_decode(token);
+    this.formMaintenance.patchValue({
+    
+      userOwner: JSON.parse(JSON.stringify(decoded))._id,
+      
     });
-    this.themingForm = this.formBuilder.group({
-      'color': 'primary',
-      'fontSize': [16, Validators.min(10)],
-    });
+    console.log(this.formMaintenance);
+    this.maintenancesService.addMaintenance(this.formMaintenance.value).subscribe(
+      (val) => {
+          console.log("POST call successful value returned in body", 
+                      val);
+                      let message = "Maintenance added successfully";
+                      ///action va etre changé
+                      let action = "close"
+                      this.snackBar.open(message, action, {
+                        duration: 2000,
+                      });
+                      this.ngOnInit()
+      },
+      () => {
+          console.log("The POST observable is now completed.");
+          
+      });
+     
   }
   
-  getErrorMessage() {
-    return this.email.hasError('required') ? 'You must enter a value' :
-        this.email.hasError('email') ? 'Not a valid email' :
-            '';
-  }
-
-  getFontSize() {
-    return Math.max(10, this.themingForm.value.fontSize);
-  }
-
 }

@@ -26,7 +26,7 @@
             </ng-container>     
             <ng-container matColumnDef="description">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> description </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.descriptionMaintenance}} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
             </ng-container>        
             <ng-container matColumnDef="type">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> Type </mat-header-cell>
@@ -34,17 +34,17 @@
             </ng-container>
             <ng-container matColumnDef="status">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.statut}} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="action">
                 <mat-header-cell *matHeaderCellDef> Action</mat-header-cell>
                 <mat-cell *matCellDef="let element">
-                    <button mat-mini-fab  color="primary" class="m-1 " (click) = "validerDemande(element)">
+                    <button mat-mini-fab  color="primary" class="m-1 " (click) = "confirmRequest(element)">
                         <span class="material-icons">
                             offline_pin
                             </span>
                     </button>
-                    <button mat-mini-fab  color="warn" class="m-1 " (click) = "deleteDemande(element)" >
+                    <button mat-mini-fab  color="warn" class="m-1 " (click) = "openDialog(element)">
                         <span class="material-icons">
                             delete_sweep
                             </span>

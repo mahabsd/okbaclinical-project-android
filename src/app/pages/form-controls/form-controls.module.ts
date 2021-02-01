@@ -14,6 +14,7 @@ import { SelectComponent } from './select/select.component';
 import { SliderComponent } from './slider/slider.component';
 import { SlideToggleComponent } from './slide-toggle/slide-toggle.component';
 import { FilteringComponent } from './filtering/filtering.component';
+import { SortingComponent, } from './sorting/sorting.component';
 
 export const routes = [
   { path: '', redirectTo: 'datepicker', pathMatch: 'full'},
@@ -27,6 +28,7 @@ export const routes = [
   { path: 'slider', component: SliderComponent, data: { breadcrumb: 'Slider' } },
   { path: 'slide-toggle', component: SlideToggleComponent, data: { breadcrumb: 'Slide Toggle' } },
   { path: 'Holidays-list', component: FilteringComponent, data: { breadcrumb: 'Filtering table' } },
+  { path: 'liste-maintenance', component: SortingComponent, data: { breadcrumb: 'Sorting table' } },
 
 ];
 

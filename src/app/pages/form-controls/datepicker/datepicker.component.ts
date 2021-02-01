@@ -83,8 +83,10 @@ export class DatepickerComponent implements OnInit {
         dateDebut: dateDebut,
         dateFin: dateFin,
         userOwner: JSON.parse(JSON.stringify(decoded))._id,
-        status: "pending"
+        status: JSON.parse(JSON.stringify(decoded)).roles[0].name,  
       });
+      console.log(this.form.value);
+      
       this.congeService.addconge(this.form.value).subscribe(res =>
         console.log(res)
       )

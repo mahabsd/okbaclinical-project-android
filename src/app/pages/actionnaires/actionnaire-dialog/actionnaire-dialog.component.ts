@@ -37,7 +37,7 @@ export class ActionnaireDialogComponent implements OnInit {
                      name: new FormControl(''),
                      surname: new FormControl(''), 
                      birthday:new FormControl(''),
-                     image: new FormControl(''),
+                     image: new FormControl
                    }),
                    work: new FormGroup({
                     position:new FormControl(''),
@@ -85,6 +85,6 @@ let action = "Annuler"
   close(): void {
     this.dialogRef.close();
   }
-
+  
 }
 
