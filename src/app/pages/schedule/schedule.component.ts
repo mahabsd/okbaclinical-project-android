@@ -8,6 +8,7 @@ import { AppSettings } from '../../app.settings';
 import { Settings } from '../../app.settings.model';
 import { Subject } from 'rxjs';
 import { blockTransition } from '../../theme/utils/app-animation';
+import { SchedulesService } from 'src/app/services/schedule.service';
 
 const colors: any = {
   red: {
@@ -46,7 +47,7 @@ export class ScheduleComponent implements OnInit {
   }, {
       label: '<i class="material-icons icon-sm white">close</i>',
       onClick: ({event}: {event: CalendarEvent}): void => {
-          this.events = this.events.filter(iEvent => iEvent !== event);
+          this.schedules = this.schedules.filter(iEvent => iEvent !== event);
           this.snackBar.open('Event deleted successfully!', null, {
               duration: 1500
           });
@@ -84,24 +85,46 @@ export class ScheduleComponent implements OnInit {
 
 
   public settings: Settings;
+  schedules: any;
   constructor(public appSettings:AppSettings, 
               public dialog: MatDialog, 
-              public snackBar: MatSnackBar){
+              public snackBar: MatSnackBar,public scheduleService:SchedulesService){
       this.settings = this.appSettings.settings; 
   }
 
   ngOnInit() {
+    this.getAllSchedules();
+    
   }
 
-  dayClicked({date, events}: {date: Date, events: CalendarEvent[]}): void {    
+  dayClicked({date,events }: {date: Date, events: CalendarEvent[]}): void {    
     if (isSameMonth(date, this.viewDate)) {
-      if ((isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) || events.length === 0) {
+      if ((isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) || this.schedules.length === 0) {
         this.activeDayIsOpen = false;
       } else {
         this.activeDayIsOpen = true;
         this.viewDate = date;
       }
     }
+  }
+  public getAllSchedules(): void {
+    this.schedules = null; //for show spinner each time
+    this.scheduleService.getAllSchedules().subscribe(schedule =>
+
+      this.schedules = JSON.parse(JSON.stringify(schedule)));
+  }
+  public addSchedule(schedule) {
+    this.scheduleService.addSchedule(schedule).subscribe(schedule => {
+      this.getAllSchedules()
+      console.log("hello" + schedule);
+
+    });
+  }
+  public updateSchedule(schedule) {
+    this.scheduleService.updateSchedule(schedule._id, schedule).subscribe(schedule => {
+      this.getAllSchedules();
+      console.log("hello" + schedule);
+    });
   }
 
   openScheduleDialog(event){
@@ -110,15 +133,17 @@ export class ScheduleComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+     
       if(result){
         if(!result.isEdit){
-          result.color = colors.blue;
-          result.actions = this.actions;
-          this.events.push(result);
-          this.refresh.next();
-        }else{
-          //implement edit here
-        }
+           
+              // console.log("close 1"+ JSON.stringify(actionnaire));
+              this.addSchedule(result) 
+            }else{
+              
+                this.updateSchedule(result);
+            }
+         
       }
     });
   }
