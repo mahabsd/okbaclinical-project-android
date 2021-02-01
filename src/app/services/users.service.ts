@@ -33,4 +33,5 @@ export class UsersService {
   getAllUsers() {
     return this.http.get(this.usersUrl + "users/getAllusers");
   }
+
 }

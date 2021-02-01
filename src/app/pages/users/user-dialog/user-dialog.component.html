@@ -1,21 +1,28 @@
 <h1 mat-dialog-title><span *ngIf="!user._id">Add</span><span *ngIf="user._id">Edit</span> user</h1>
 <div mat-dialog-content>
-    <form [formGroup]="form" class="user-form">      
+    <form [formGroup]="form" class="user-form">
         <mat-tab-group class="vertical-tabs">
             <mat-tab label="Basic">
                 <div fxLayout="column" class="form-field-outer">
                     <mat-form-field class="w-100">
-                        <mat-placeholder><mat-icon>person</mat-icon> Username</mat-placeholder>
+                        <mat-placeholder>
+                            <mat-icon>person</mat-icon> Username
+                        </mat-placeholder>
                         <input matInput formControlName="username" required>
                         <mat-error *ngIf="form.controls.username.errors?.required">Username is required</mat-error>
-                        <mat-error *ngIf="form.controls.username.hasError('minlength')">Username isn't long enough, minimum of 5 characters</mat-error>
+                        <mat-error *ngIf="form.controls.username.hasError('minlength')">Username isn't long enough,
+                            minimum of 5 characters</mat-error>
                     </mat-form-field>
                     <mat-form-field class="w-100">
-                        <mat-placeholder><mat-icon>vpn_key</mat-icon> Password</mat-placeholder>
+                        <mat-placeholder>
+                            <mat-icon>vpn_key</mat-icon> Password
+                        </mat-placeholder>
                         <input matInput formControlName="password" required [type]="passwordHide ? 'password' : 'text'">
-                        <mat-icon matSuffix (click)="passwordHide = !passwordHide">{{passwordHide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                        <mat-icon matSuffix (click)="passwordHide = !passwordHide">{{passwordHide ? 'visibility' :
+                            'visibility_off'}}</mat-icon>
                         <mat-error *ngIf="form.controls.password.errors?.required">Password is required</mat-error>
-                        <mat-error *ngIf="form.controls.password.hasError('minlength')">Password isn't long enough, minimum of 6 characters</mat-error>
+                        <mat-error *ngIf="form.controls.password.hasError('minlength')">Password isn't long enough,
+                            minimum of 6 characters</mat-error>
                     </mat-form-field>
                 </div>
             </mat-tab>
@@ -40,8 +47,11 @@
                         
                     </mat-form-field> -->
                     <p>add a photo please</p>
-                    <input  type="file"  formControlName="image" (click) = "selectImage($event)">
-
+                    <input type="file" (input)="selectImage($event)" >
+                    <span *ngIf="choosen"></span>
+                    <button (click)="submitPhoto()">
+                        submit
+                    </button>
                 </div>
             </mat-tab>
             <mat-tab label="Work" formGroupName="work">
@@ -49,22 +59,22 @@
                     <mat-form-field class="w-100">
                         <input matInput placeholder="Company" formControlName="company">
                     </mat-form-field>
-                        <!-- <input matInput placeholder="Position" formControlName="roles"> -->
-                        <div class="w-100">
-                                <mat-card-header>                
-                                    <!-- <mat-card-subtitle><h2>Basic select</h2></mat-card-subtitle> -->
-                                </mat-card-header>
-                                <mat-card-content>
-                                    <mat-form-field class="w-100">
-                                        <mat-select placeholder="Position" formControlName="roles">
-                                            <mat-option *ngFor="let role of roles" [value]="role._id">
-                                                {{role.name}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                    <!-- <p class="pt-3 mx-2"> Selected value: <b>{{work.roles}}</b> </p> -->
-                                </mat-card-content>
-                        </div> 
+                    <!-- <input matInput placeholder="Position" formControlName="roles"> -->
+                    <div class="w-100">
+                        <mat-card-header>
+                            <!-- <mat-card-subtitle><h2>Basic select</h2></mat-card-subtitle> -->
+                        </mat-card-header>
+                        <mat-card-content>
+                            <mat-form-field class="w-100">
+                                <mat-select placeholder="Position" formControlName="roles">
+                                    <mat-option *ngFor="let role of roles" [value]="role._id">
+                                        {{role.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <!-- <p class="pt-3 mx-2"> Selected value: <b>{{work.roles}}</b> </p> -->
+                        </mat-card-content>
+                    </div>
                     <mat-form-field class="w-100">
                         <input matInput placeholder="days off" formControlName="soldeConge">
                         <span matPrefix>&nbsp;</span>
@@ -109,8 +119,8 @@
                             <mat-option *ngFor="let color of colors" [value]="color.value">
                                 <div fxLayout="row" fxLayoutAlign="start center">
                                     <div class="p-2" [ngClass]="color.value"></div>
-                                    <span class="mx-3">{{color.viewValue}}</span> 
-                                </div>                               
+                                    <span class="mx-3">{{color.viewValue}}</span>
+                                </div>
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -120,6 +130,8 @@
     </form>
 </div>
 <div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
-    <button mat-raised-button color="primary" [mat-dialog-close]="form.value" [disabled]="!form.valid"><span *ngIf="!user._id" (click)="openSnackBarAdd()">Save</span><span *ngIf="user._id"  (click)="openSnackBarUpdate()">Update</span></button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="form.value" [disabled]="!form.valid"><span
+            *ngIf="!user._id" (click)="openSnackBarAdd()">Save</span><span *ngIf="user._id"
+            (click)="openSnackBarUpdate()">Update</span></button>
     <button mat-raised-button color="warn" (click)="close()">Cancel</button>
 </div>

@@ -28,8 +28,11 @@ export class UserDialogComponent implements OnInit {
     { value: 'gradient-lime', viewValue: 'Lime' }
   ];
   public roles;
+  public image;
+  submitted: boolean;
+  choosen: boolean;
   constructor(public dialogRef: MatDialogRef<UserDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public user: User, public UserService: LoginService, public snackBar: MatSnackBar) {
+    @Inject(MAT_DIALOG_DATA) public user: User, public userService: LoginService, public snackBar: MatSnackBar) {
     this.form = new FormGroup({
       _id: new FormControl(''),
       username: new FormControl('', [Validators.required, Validators.minLength(5)]),
@@ -84,21 +87,23 @@ export class UserDialogComponent implements OnInit {
 
   public getRoles(): void {
     this.roles = null; //for show spinner each time
-    this.UserService.getAllRoles().subscribe(res => {
+    this.userService.getAllRoles().subscribe(res => {
       this.roles = res;
     }
     )
   }
-  openSnackBarAdd() {
-    let message = "User added successfully";
-    let action = "Annuler"
-    this.snackBar.open(message, action, {
-      duration: 2000,
-    });
-  }
+  // openSnackBarAdd() {
+
+  //   let message = "User added successfully";
+  //   let action = "close"
+  //   this.snackBar.open(message, action, {
+  //     duration: 2000,
+  //   });
+  // }
   openSnackBarUpdate() {
+
     let message = "User updated successfully"
-    let action = "Annuler"
+    let action = "close"
     this.snackBar.open(message, action, {
       duration: 2000,
     });
@@ -106,10 +111,44 @@ export class UserDialogComponent implements OnInit {
   close(): void {
     this.dialogRef.close();
   }
-  // selectImage(event){
-  //   if(event.target.files[0]){
-  //     const file = event.target.files[0];
-  //     this.form.profile.image = file
-  //   }
-  // }
+
+  selectImage(event) {
+    console.log(event + "event ");
+    
+    if (event.target.value) {
+      this.form.patchValue({
+        profile : {
+          image : event
+        }
+      })
+
+      // console.log("event.target.files[0] " + event.target.files[0]);
+      
+      // this.image = <File>event.target.files[0];
+    }
+  }
+  openSnackBarAdd() {
+    // let fd = new FormData();
+    // if (this.image) {
+    //   fd.append('image', this.image);
+    //   this.image = fd;
+    // }
+    // this.form.patchValue({
+    //   profile: {
+    //     image: this.image
+    //   }
+    // })
+
+    let message = "User added successfully";
+    let action = "close"
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+    // this.userService.postImage(fd).subscribe(res => {
+    //   if (res['success']) {
+    //     this.submitted = false;
+    //   }
+    // })
+  }
+
 }

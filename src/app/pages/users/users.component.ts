@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Inject,Input } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Inject, Input } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AppSettings } from '../../app.settings';
 import { Settings } from '../../app.settings.model';
@@ -18,12 +18,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class UsersComponent implements OnInit {
     public users;
-    
+
     public searchText: string;
     public page: any;
     public settings: Settings;
     public showSearch: boolean = false;
     public viewType: string = 'grid';
+    image: File;
 
     constructor(public appSettings: AppSettings,
         public dialog: MatDialog,
@@ -41,6 +42,8 @@ export class UsersComponent implements OnInit {
         this.users = null; //for show spinner each time
         this.UserService.getAllUsers().subscribe(res => {
             this.users = res;
+            console.log(this.users);
+
         })
     }
     public addUser(user: User) {
@@ -70,8 +73,23 @@ export class UsersComponent implements OnInit {
         dialogRef.afterClosed().subscribe(user => {
             let use = user
             if (use) {
-                (use._id) ? this.updateUser(use) : delete use._id; const x = use.profile.image.slice(12);
-                use.profile.image = x; this.addUser(use);
+                (use._id) ? this.updateUser(use) : delete use._id;
+                console.log(use.profile.image);
+                let fd = new FormData();
+
+                 this.image = <File>use.profile.image.target.files[0];
+                 console.log(this.image);
+
+                if (this.image) {
+                    fd.append('image', this.image, this.image.name);
+                    
+                    use.profile.image = fd;
+                    console.log("before "+ fd);
+                    this.addUser(use);
+
+                }
+                console.log(use.profile.image);
+
             }
         });
         this.showSearch = false;
@@ -86,7 +104,7 @@ export class UsersComponent implements OnInit {
                     cancel: 'No'
                 }
             }
-    });
+        });
 
         dialogRef.afterClosed().subscribe((confirmed: boolean) => {
             let confirm = confirmed;
@@ -133,7 +151,7 @@ export class DialogOverviewExampleDialog {
         this.dialogRef.close();
     }
     onConfirmClick(): void {
-    this.dialogRef.close(true);
+        this.dialogRef.close(true);
     }
 
 }
