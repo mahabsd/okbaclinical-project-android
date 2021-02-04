@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
 import { Doctor, DoctorProfile, DoctorWork, DoctorContacts, DoctorSettings } from '../doctor.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DoctorsService } from 'src/app/services/doctors.service';
 
 @Component({
   selector: 'app-doctor-dialog',
@@ -27,8 +28,9 @@ export class DoctorDialogComponent implements OnInit {
     {value: 'gradient-brown', viewValue: 'Brown'},
     {value: 'gradient-lime', viewValue: 'Lime'}
   ];
+  image: File;
   constructor(public dialogRef: MatDialogRef<DoctorDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public doctor: Doctor, public snackBar: MatSnackBar) {
+              @Inject(MAT_DIALOG_DATA) public doctor: Doctor, public snackBar: MatSnackBar, public doctorsService : DoctorsService) {
                 this.form = new FormGroup({
                   _id: new FormControl(''),
                    profile: new FormGroup({
@@ -83,6 +85,43 @@ let action = "Annuler"
   close(): void {
     this.dialogRef.close();
   }
+  selectImage(event) {
+    console.log(event + "event ");
+    
+    if (event.target.value) {
+      this.form.patchValue({
+        profile : {
+          image : event
+        }
+      })
 
+      console.log("event.target.files[0] " + event.target.files[0]);
+      
+       this.image = <File>event.target.files[0];
+      console.log( this.image)
+       
+    }
+    
+  }
+
+  submit(){
+        let fd = new FormData();
+    if (this.image) {
+      fd.append('image', this.image, this.image.name );
+   
+    }
+
+    this.form.patchValue({
+      profile: {
+        image: fd
+      }
+    })
+
+        this.doctorsService.postImage(fd).subscribe(res => {
+    console.log(res);
+    
+    });
+
+  }
 }
 

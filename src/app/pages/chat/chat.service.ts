@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core'
+import { environment } from 'src/environments/environment';
 import { Chat } from './chat.model';
+import {io} from 'socket.io-client';
 
 let date = new Date(),
     day = date.getDate(),
@@ -11,10 +13,10 @@ let date = new Date(),
 let chats = [
     new Chat(
         'assets/img/profile/ashley.jpg',
-        'Ashley Ahlberg', 
+        'Ashley Ahlberg',
         'Online',
         'Great, then I\'ll definitely buy this theme. Thanks!',
-        new Date(year, month, day-2, hour, minute),
+        new Date(year, month, day - 2, hour, minute),
         false
     ),
     new Chat(
@@ -22,7 +24,7 @@ let chats = [
         'Bruno Vespa',
         'Do not disturb',
         'Great, then I\'ll definitely buy this theme. Thanks!',
-        new Date(year, month, day-2, hour, minute),
+        new Date(year, month, day - 2, hour, minute),
         false
     ),
     new Chat(
@@ -30,7 +32,7 @@ let chats = [
         'Julia Aniston',
         'Away',
         'Great, then I\'ll definitely buy this theme. Thanks!',
-        new Date(year, month, day-2, hour, minute),
+        new Date(year, month, day - 2, hour, minute),
         false
     ),
     new Chat(
@@ -38,7 +40,7 @@ let chats = [
         'Adam Sandler',
         'Online',
         'Great, then I\'ll definitely buy this theme. Thanks!',
-        new Date(year, month, day-2, hour, minute),
+        new Date(year, month, day - 2, hour, minute),
         false
     ),
     new Chat(
@@ -46,15 +48,15 @@ let chats = [
         'Tereza Stiles',
         'Offline',
         'Great, then I\'ll definitely buy this theme. Thanks!',
-        new Date(year, month, day-2, hour, minute),
+        new Date(year, month, day - 2, hour, minute),
         false
-    ),  
+    ),
     new Chat(
         'assets/img/profile/michael.jpg',
         'Michael Blair',
         'Online',
         'Great, then I\'ll definitely buy this theme. Thanks!',
-        new Date(year, month, day-2, hour, minute),
+        new Date(year, month, day - 2, hour, minute),
         false
     )
 ]
@@ -62,32 +64,37 @@ let chats = [
 let talks = [
     new Chat(
         'assets/img/profile/ashley.jpg',
-        'Ashley Ahlberg', 
+        'Ashley Ahlberg',
         'Online',
         'Hi, I\'m looking for admin template with angular material 2 design.  What do you think about Annular Admin Template?',
-        new Date(year, month, day-2, hour, minute+3),
+        new Date(year, month, day - 2, hour, minute + 3),
         false
     ),
     new Chat(
         'assets/img/users/user.jpg',
-        'Emilio Verdines', 
+        'Emilio Verdines',
         'Online',
         'Hi, Annular is a fully compatible with angular material 2, responsive, organized folder structure, clean & customizable code, easy to use and much more...',
-        new Date(year, month, day-2, hour, minute+2),
+        new Date(year, month, day - 2, hour, minute + 2),
         true
     )
 ]
 
 @Injectable()
 export class ChatService {
-
-    public getChats():Array<Chat> {
+    usersUrl: string = environment.basUrl;
+    socket
+    public getChats(): Array<Chat> {
         return chats;
     }
 
-    public getTalk():Array<Chat> {
+    public getTalk(): Array<Chat> {
         return talks;
     }
+
+    // setupSocketConnection () { 
+    //     this.socket = io (environment.SOCKET_ENDPOINT); 
+    //   } 
 
 }
 

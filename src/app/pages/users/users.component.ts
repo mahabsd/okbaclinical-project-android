@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Inject,Input } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Inject, Input } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AppSettings } from '../../app.settings';
 import { Settings } from '../../app.settings.model';
@@ -18,12 +18,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class UsersComponent implements OnInit {
     public users;
-    
+
     public searchText: string;
     public page: any;
     public settings: Settings;
     public showSearch: boolean = false;
     public viewType: string = 'grid';
+    image: File;
 
     constructor(public appSettings: AppSettings,
         public dialog: MatDialog,
@@ -41,13 +42,16 @@ export class UsersComponent implements OnInit {
         this.users = null; //for show spinner each time
         this.UserService.getAllUsers().subscribe(res => {
             this.users = res;
+            console.log(res);
+            
+
         })
     }
     public addUser(user: User) {
         this.UserService.addUser(user).subscribe(res =>
             this.getUsers()
         )
-    }
+   }
     public updateUser(user: User) {
         this.UserService.updateUser(user._id, user).subscribe(user => this.getUsers());
     }
@@ -67,11 +71,16 @@ export class UsersComponent implements OnInit {
         let dialogRef = this.dialog.open(UserDialogComponent, {
             data: user
         });
-        dialogRef.afterClosed().subscribe(user => {
-            let use = user
+        dialogRef.afterClosed().subscribe(formData => {
+            let use = formData
+
             if (use) {
-                (use._id) ? this.updateUser(use) : delete use._id; const x = use.profile.image.slice(12);
-                use.profile.image = x; this.addUser(use);
+               if (use._id) {
+                this.updateUser(use) 
+               }else{
+               // formData.delete("_id");
+                this.addUser(use);
+               }
             }
         });
         this.showSearch = false;
@@ -86,7 +95,7 @@ export class UsersComponent implements OnInit {
                     cancel: 'No'
                 }
             }
-    });
+        });
 
         dialogRef.afterClosed().subscribe((confirmed: boolean) => {
             let confirm = confirmed;
@@ -94,7 +103,6 @@ export class UsersComponent implements OnInit {
             if (confirm) {
 
                 this.UserService.deleteUser(user._id).subscribe(user => {
-                    console.log((user));
                     this.getUsers();
                     let message = "User deleted successfully";
                     let action = "close"
@@ -133,7 +141,7 @@ export class DialogOverviewExampleDialog {
         this.dialogRef.close();
     }
     onConfirmClick(): void {
-    this.dialogRef.close(true);
+        this.dialogRef.close(true);
     }
 
 }

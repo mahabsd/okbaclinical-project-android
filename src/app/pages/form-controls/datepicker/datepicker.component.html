@@ -12,15 +12,23 @@
                     </mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content fxLayoutAlign="center">
-                    <mat-form-field>
-                        <input matInput [matDatepicker]="picker1" placeholder="Choose a date"
-                            formControlName="dateDebut">
-                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                        <mat-datepicker #picker1></mat-datepicker>
-                        <mat-error *ngIf="form.controls.dateDebut.errors?.required"> Start date is required</mat-error>
-                        <mat-error *ngIf="form.controls.dateDebut.errors?.required"> and should be before the end date</mat-error>
+                    <div>
+                        <mat-form-field>
+                            <input matInput [matDatepicker]="picker1" placeholder="Choose a date"
+                                formControlName="dateDebut">
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                            <mat-error *ngIf="form.controls.dateDebut.errors?.required"> Start date is required
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-error *ngIf="validated"> Start date should be before the end date</mat-error>
 
-                    </mat-form-field>
+                    </div>
+
+
+                    <!-- <div style="display: none;"  id ="validated" >
+                        <mat-error  *ngIf="validated"> should be before the end date</mat-error>
+                    </div> -->
                 </mat-card-content>
             </mat-card>
         </div>
@@ -32,12 +40,15 @@
                     </mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content fxLayoutAlign="center">
+                  <div>
                     <mat-form-field>
                         <input matInput [matDatepicker]="picker2" placeholder="Choose a date" formControlName="dateFin">
                         <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                         <mat-datepicker #picker2></mat-datepicker>
                         <mat-error *ngIf="form.controls.dateFin.errors?.required"> End date is required</mat-error>
                     </mat-form-field>
+                    <mat-error *ngIf="validated"> Start date should be before the end date</mat-error>
+                  </div>
                 </mat-card-content>
             </mat-card>
         </div>
@@ -69,8 +80,16 @@
                         <h2></h2>
                     </mat-card-subtitle>
                 </mat-card-header>
-                <mat-card-content fxLayoutAlign="center">
-                    <p>to send vacation request : start date should be after 3 days from now </p>
+                <mat-card-content fxLayoutAlign=" center center">
+                    <div>
+                        <mat-card-subtitle>
+                            <h2>for your information :</h2>
+                        </mat-card-subtitle>
+                        <p>your leave balance is : {{soldeConge}} </p>
+                        <p>to send vacation request : start date should be after 3 days from now </p>
+                    </div>
+
+
                     <!-- <mat-form-field>
                         <input matInput [matDatepicker]="picker2" placeholder="Choose a date">
                         <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
@@ -82,10 +101,12 @@
     </div>
 
 </form>
-<!-- <div class="row" style="color : #ffffff">
-    <p>pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp</p>
-</div> -->
-<button mat-flat-button color="warn" class="m-1 " (click)="onFormSubmit()" [disabled]="!form.valid">send your request</button>
+<div fxLayoutAlign="center" >
+    <button mat-flat-button color="warn" class="m-1 " (click)="onFormSubmit()"
+    [disabled]="!form.valid">send your request</button>
+</div>
+
+
 <!-- <div fxFlex="50" class="p-2"> 
         <mat-card>
             <mat-card-header fxLayoutAlign="center">                

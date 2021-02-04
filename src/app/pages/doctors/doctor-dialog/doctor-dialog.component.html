@@ -1,6 +1,6 @@
 <h1 mat-dialog-title><span *ngIf="!doctor._id">Add</span><span *ngIf="doctor._id">Edit</span> doctor</h1>
 <div mat-dialog-content>
-    <form [formGroup]="form" class="user-form">      
+    <form [formGroup]="form" class="user-form">
         <mat-tab-group class="vertical-tabs">
             <mat-tab label="Personal" formGroupName="profile">
                 <div fxLayout="column" class="form-field-outer">
@@ -15,9 +15,9 @@
                         <mat-datepicker-toggle matSuffix [for]="birthday"></mat-datepicker-toggle>
                         <mat-datepicker #birthday></mat-datepicker>
                     </mat-form-field>
-                    <mat-form-field class="w-100">
-                        <input matInput placeholder="Image url" formControlName="image">
-                    </mat-form-field>
+                    <input type="file" (input)="selectImage($event)" accept="image/*">
+
+                    <button (click)="submit()"> submit</button>
                 </div>
             </mat-tab>
             <mat-tab label="Work" formGroupName="work">
@@ -51,8 +51,8 @@
                             <mat-option *ngFor="let color of colors" [value]="color.value">
                                 <div fxLayout="row" fxLayoutAlign="start center">
                                     <div class="p-2" [ngClass]="color.value"></div>
-                                    <span class="mx-3">{{color.viewValue}}</span> 
-                                </div>                               
+                                    <span class="mx-3">{{color.viewValue}}</span>
+                                </div>
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -62,6 +62,8 @@
     </form>
 </div>
 <div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
-    <button mat-raised-button color="primary" [mat-dialog-close]="form.value" [disabled]="!form.valid"><span *ngIf="!doctor._id" (click)="openSnackBarAdd()">Save</span><span *ngIf="doctor._id" (click)="openSnackBarUpdate()">Update</span></button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="form.value" [disabled]="!form.valid"><span
+            *ngIf="!doctor._id" (click)="openSnackBarAdd()">Save</span><span *ngIf="doctor._id"
+            (click)="openSnackBarUpdate()">Update</span></button>
     <button mat-raised-button color="warn" (click)="close()">Cancel</button>
 </div>

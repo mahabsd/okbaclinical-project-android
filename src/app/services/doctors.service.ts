@@ -27,4 +27,8 @@ export class DoctorsService {
   getAllDoctors() {
     return this.http.get(this.doctorsUrl + "doctors/getAllDoctors");
   }
+  postImage(data) {
+    //console.log(data);
+    return this.http.post(this.doctorsUrl + "users/upload/", data );
+  }
 }

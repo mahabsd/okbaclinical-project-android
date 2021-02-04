@@ -23,10 +23,17 @@ export class DatepickerComponent implements OnInit {
     userOwner: new FormControl(''),
   });
   valid = true;
-  constructor(public appSettings: AppSettings, public congeService: CongeService ,public snackBar: MatSnackBar) {
+  validated = false;
+  decoded: any;
+  soldeConge: any;
+  token: string;
+  constructor(public appSettings: AppSettings, public congeService: CongeService, public snackBar: MatSnackBar) {
     this.settings = this.appSettings.settings;
   }
   ngOnInit() {
+    this.token = localStorage.getItem('token');
+    this.decoded = jwt_decode(this.token);
+    this.soldeConge = JSON.parse(JSON.stringify(this.decoded)).soldeConge;
 
   }
   //Datepicker start date
@@ -60,12 +67,9 @@ export class DatepickerComponent implements OnInit {
 
   //submit holidays request
   onFormSubmit() {
-    let token = localStorage.getItem('token');
-    var decoded = jwt_decode(token);
     let currentDate = new Date();
     let dateDebut = new Date(this.form.value.dateDebut);
     let dateFin = new Date(this.form.value.dateFin);
-    let soldeConge = JSON.parse(JSON.stringify(decoded)).soldeConge
     let thirdDate = new Date();
     // différence des heures
     var time_diff = dateFin.getTime() - dateDebut.getTime();
@@ -76,24 +80,46 @@ export class DatepickerComponent implements OnInit {
     if ((currentDate < dateDebut)
       && (dateDebut <= dateFin)
       && (thirdDay < dateDebut)
-      && (soldeConge != 0)
-      && (days_Diff <= soldeConge)) {
+      && (this.soldeConge != 0)
+      && (days_Diff <= this.soldeConge)) {
+        this.validated = false;
+
       this.form.patchValue({
         nbreJours: days_Diff + 1,
         dateDebut: dateDebut,
         dateFin: dateFin,
-        userOwner: JSON.parse(JSON.stringify(decoded))._id,
-        status: JSON.parse(JSON.stringify(decoded)).roles[0].name,  
+        userOwner: JSON.parse(JSON.stringify(this.decoded))._id,
+        status: JSON.parse(JSON.stringify(this.decoded)).roles[0].name,
       });
       console.log(this.form.value);
-      
-      this.congeService.addconge(this.form.value).subscribe(res =>
-        console.log(res)
-      )
 
-      // return console.log(true);
+      this.congeService.addconge(this.form.value).subscribe(
+        (val) => {
+          console.log(val);
+          
+          let message = "your request has been sent successfully";
+          let action = "close"
+          this.snackBar.open(message, action, {
+            duration: 2000,
+          });
+         this.ngOnInit();
+
+        },
+        () => {
+          console.log("The POST observable is now completed.");
+
+        });
+
+
+    } else {
+      this.validated = true;
+      //document.getElementById('validated').style.display = 'block';
+      let message = "please be sure that the end and start date are correct ";
+      let action = "close"
+      this.snackBar.open(message, action, {
+        duration: 2000,
+      });
     }
-
 
   }
 }
