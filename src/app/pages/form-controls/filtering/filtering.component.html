@@ -38,31 +38,37 @@
                 <mat-cell *matCellDef="let element"> {{element.motif}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="status">
-                <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef> checked by / status </mat-header-cell>
                 <mat-cell *matCellDef="let element">
-                    <button mat-mini-fab  color="" class="m-1 ">  
+                    {{element.status}} 
+                    <!-- <button mat-mini-fab  color="" class="m-1 ">  
                         <span class="material-icons">
                             schedule
                             </span>
                     </button>
-                    <button mat-mini-fab  color="" class="m-1 ">
+                    <button mat-mini-fab  color="" class="m-1 " >
                         <span class="material-icons">
                             done_all
                             </span>
                     </button>
+                    <button mat-mini-fab  color="" class="m-1 ">
+                        <span class="material-icons">
+                            cancel_presentation
+                            </span>
+                    </button> -->
                 </mat-cell>
             </ng-container>
             <ng-container matColumnDef="respond">
                 <mat-header-cell *matHeaderCellDef> Action</mat-header-cell>
                 <mat-cell *matCellDef="let element">
-                    <button mat-mini-fab  color="primary" class="m-1 " (click) = "confirmRequest(element)">
+                    <button mat-mini-fab  color="primary" class="m-1 " (click) = "confirmRequest(element)"  *ngIf = "(element.status !='validated') &&( element.status != 'annulée')">
                         <span class="material-icons">
                             offline_pin
                             </span>
                     </button>
-                    <button mat-mini-fab  color="primary" class="m-1 " (click) = "cancelRequest(element)">
+                    <button mat-mini-fab  color="warn" class="m-1 " (click) = "cancelRequest(element)" *ngIf = "element.status != 'validated' && element.status != 'annulée'">
                         <span class="material-icons">
-                            offline_pin
+                            cancel_presentation
                             </span>
                     </button>
                     <button mat-mini-fab  color="warn" class="m-1 " (click) = "openDialog(element)">

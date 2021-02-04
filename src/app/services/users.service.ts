@@ -33,4 +33,8 @@ export class UsersService {
   getAllUsers() {
     return this.http.get(this.usersUrl + "users/getAllusers");
   }
+  postImage(data) {
+    //console.log(data);
+    return this.http.post(this.usersUrl + "users/user/add/'", data );
+  }
 }

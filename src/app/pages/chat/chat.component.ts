@@ -28,7 +28,9 @@ export class ChatComponent implements OnInit {
     this.chats = this.chatService.getChats(); 
     if(window.innerWidth <= 768){
       this.sidenavOpen = false;
-    }    
+    } 
+    
+  //  this.chatService.setupSocketConnection ();
   } 
 
   @HostListener('window:resize')

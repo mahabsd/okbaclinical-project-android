@@ -42,6 +42,7 @@ import { FavoritesComponent } from './theme/components/favorites/favorites.compo
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from 'src/app/services/token.interceptor';
+import { ChatService } from 'src/app/pages/chat/chat.service';
 
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 
@@ -97,7 +98,8 @@ import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
-    }
+    },
+  
   ],
   bootstrap: [
     AppComponent

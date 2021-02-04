@@ -41,7 +41,7 @@ export class LoginComponent {
       password: this.form.value.password,
       contacts: { email: this.form.value.email }
     })
-    this.formService.loginUser(this.loginUser.value).subscribe((res) => {
+    this.formService.loginUser(this.form.value).subscribe((res) => {
       console.log(res);
       this.response = res
       console.log(this.response);

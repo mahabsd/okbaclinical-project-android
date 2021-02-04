@@ -42,7 +42,7 @@ export class SortingComponent {
     });
   }
   validerDemande(element){
-    var statut = "valider";
+    var statut = "validated";
     var formMaintenance=({
     
       statut: JSON.parse(JSON.stringify(statut)),
@@ -54,7 +54,7 @@ export class SortingComponent {
         this.dataSource = res;  
             
       })
-      let message = "demande maintenance valider ";
+      let message = "demande maintenance validée ";
       let action = "close"
       this.snackBar.open(message, action, {
         duration: 2000,
