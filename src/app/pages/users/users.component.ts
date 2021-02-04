@@ -42,7 +42,8 @@ export class UsersComponent implements OnInit {
         this.users = null; //for show spinner each time
         this.UserService.getAllUsers().subscribe(res => {
             this.users = res;
-            console.log(this.users);
+            console.log(res);
+            
 
         })
     }
@@ -50,7 +51,7 @@ export class UsersComponent implements OnInit {
         this.UserService.addUser(user).subscribe(res =>
             this.getUsers()
         )
-    }
+   }
     public updateUser(user: User) {
         this.UserService.updateUser(user._id, user).subscribe(user => this.getUsers());
     }
@@ -70,26 +71,16 @@ export class UsersComponent implements OnInit {
         let dialogRef = this.dialog.open(UserDialogComponent, {
             data: user
         });
-        dialogRef.afterClosed().subscribe(user => {
-            let use = user
+        dialogRef.afterClosed().subscribe(formData => {
+            let use = formData
+
             if (use) {
-                (use._id) ? this.updateUser(use) : delete use._id;
-                console.log(use.profile.image);
-                let fd = new FormData();
-
-                 this.image = <File>use.profile.image.target.files[0];
-                 console.log(this.image);
-
-                if (this.image) {
-                    fd.append('image', this.image, this.image.name);
-                    
-                    use.profile.image = fd;
-                    console.log("before "+ fd);
-                    this.addUser(use);
-
-                }
-                console.log(use.profile.image);
-
+               if (use._id) {
+                this.updateUser(use) 
+               }else{
+               // formData.delete("_id");
+                this.addUser(use);
+               }
             }
         });
         this.showSearch = false;
@@ -112,7 +103,6 @@ export class UsersComponent implements OnInit {
             if (confirm) {
 
                 this.UserService.deleteUser(user._id).subscribe(user => {
-                    console.log((user));
                     this.getUsers();
                     let message = "User deleted successfully";
                     let action = "close"

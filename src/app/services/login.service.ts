@@ -35,6 +35,6 @@ export class LoginService {
     return this.http.get(this.usersUrl + "users/getAllRoles");
   }
   postImage(data){
-    return this.http.post(this.usersUrl + "users/upload/", data );
+    return this.http.post(this.usersUrl + "users/user/add/", data );
   }
 }

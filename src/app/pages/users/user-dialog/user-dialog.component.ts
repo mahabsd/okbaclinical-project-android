@@ -28,21 +28,23 @@ export class UserDialogComponent implements OnInit {
     { value: 'gradient-lime', viewValue: 'Lime' }
   ];
   public roles;
-  public image;
+  public image = null;
   submitted: boolean;
   choosen: boolean;
+  formData = new FormData();
+
   constructor(public dialogRef: MatDialogRef<UserDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public user: User, public userService: LoginService, public snackBar: MatSnackBar) {
     this.form = new FormGroup({
       _id: new FormControl(''),
-      username: new FormControl('', [Validators.required, Validators.minLength(5)]),
-      password: new FormControl('', [Validators.required]),
+      username: new FormControl('',),
+      password: new FormControl('',),
       profile: new FormGroup({
         name: new FormControl(''),
         surname: new FormControl(''),
         birthday: new FormControl(''),
         gender: new FormControl(''),
-        image: new FormControl(''),
+        //image: new FormControl(''),
       }),
       work: new FormGroup({
         company: new FormControl(''),
@@ -50,7 +52,7 @@ export class UserDialogComponent implements OnInit {
         soldeConge: new FormControl('')
       }),
       contacts: new FormGroup({
-        email: new FormControl('', [Validators.required]),
+        email: new FormControl('',),
         phone: new FormControl(''),
         address: new FormControl(''),
       }),
@@ -113,42 +115,30 @@ export class UserDialogComponent implements OnInit {
   }
 
   selectImage(event) {
-    console.log(event + "event ");
-    
     if (event.target.value) {
-      this.form.patchValue({
-        profile : {
-          image : event
-        }
-      })
-
-      // console.log("event.target.files[0] " + event.target.files[0]);
-      
-      // this.image = <File>event.target.files[0];
+      this.image = <File>event.target.files[0];
+      console.log("event "+this.image);
     }
   }
   openSnackBarAdd() {
-    // let fd = new FormData();
-    // if (this.image) {
-    //   fd.append('image', this.image);
-    //   this.image = fd;
-    // }
-    // this.form.patchValue({
-    //   profile: {
-    //     image: this.image
-    //   }
-    // })
+    if (this.image != null) {
+      this.formData.append('image', this.image, this.image.name);
+    }
+    
+    Object.keys(this.form.value).forEach(fieldName => {
+      console.log(fieldName, JSON.stringify(this.form.value[fieldName]));
+      this.formData.append(fieldName, JSON.stringify(this.form.value[fieldName]));
+    })
+
+
+    console.log( this.formData + " this.formData");
+    
 
     let message = "User added successfully";
     let action = "close"
     this.snackBar.open(message, action, {
       duration: 2000,
     });
-    // this.userService.postImage(fd).subscribe(res => {
-    //   if (res['success']) {
-    //     this.submitted = false;
-    //   }
-    // })
   }
 
 }

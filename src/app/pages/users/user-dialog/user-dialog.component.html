@@ -47,11 +47,9 @@
                         
                     </mat-form-field> -->
                     <p>add a photo please</p>
-                    <input type="file" (input)="selectImage($event)" >
-                    <span *ngIf="choosen"></span>
-                    <button (click)="submitPhoto()">
-                        submit
-                    </button>
+                    <input type="file" (change)="selectImage($event)" accept="image/*">
+                    <!-- <button (click)="submit()"> submit</button> -->
+
                 </div>
             </mat-tab>
             <mat-tab label="Work" formGroupName="work">
@@ -129,8 +127,9 @@
         </mat-tab-group>
     </form>
 </div>
+
 <div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
-    <button mat-raised-button color="primary" [mat-dialog-close]="form.value" [disabled]="!form.valid"><span
+    <button mat-raised-button color="primary" [mat-dialog-close]="formData" [disabled]="!form.valid"><span
             *ngIf="!user._id" (click)="openSnackBarAdd()">Save</span><span *ngIf="user._id"
             (click)="openSnackBarUpdate()">Update</span></button>
     <button mat-raised-button color="warn" (click)="close()">Cancel</button>

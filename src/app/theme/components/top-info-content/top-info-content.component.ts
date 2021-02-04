@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Input, Output, EventEmitter  } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 import { emailValidator } from '../../utils/app-validators';
 
 @Component({
@@ -20,13 +22,16 @@ export class TopInfoContentComponent implements OnInit {
     { name: 'Updates', checked: false },
     { name: 'Settings', checked: true }
   ]
-  constructor(public formBuilder: FormBuilder) { }
+  usersUrl: string = environment.basUrl;
+
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.contactForm = this.formBuilder.group({
-      email: ['', Validators.compose([Validators.required, emailValidator])],
-      subject: ['', Validators.required],
-      message: ['', Validators.required]
+
+    this.contactForm = new FormGroup({
+      from:  new FormControl('',[  Validators.required]),
+      to:  new FormControl('',[  Validators.required]),
+      message:  new FormControl('',[  Validators.required]),
     });
   }
 
@@ -39,5 +44,15 @@ export class TopInfoContentComponent implements OnInit {
   public closeInfoContent(event){
     this.onCloseInfoContent.emit(event);
   }
+
+
+  sendSms(data) {
+    //console.log(data);
+    return this.http.post(this.usersUrl + "sms", data ).subscribe(schedule => {
+      // this.getAllSchedules()
+    });
+  }
+  
+
 
 }
