@@ -94,16 +94,16 @@ export class UserDialogComponent implements OnInit {
     }
     )
   }
-  // openSnackBarAdd() {
 
-  //   let message = "User added successfully";
-  //   let action = "close"
-  //   this.snackBar.open(message, action, {
-  //     duration: 2000,
-  //   });
-  // }
   openSnackBarUpdate() {
+    if (this.image != null) {
+      this.formData.append('image', this.image, this.image.name);
+    }
 
+    Object.keys(this.form.value).forEach(fieldName => {
+    //  console.log(fieldName, JSON.stringify(this.form.value[fieldName]));
+      this.formData.append(fieldName, JSON.stringify(this.form.value[fieldName]));
+    })
     let message = "User updated successfully"
     let action = "close"
     this.snackBar.open(message, action, {
@@ -117,22 +117,20 @@ export class UserDialogComponent implements OnInit {
   selectImage(event) {
     if (event.target.value) {
       this.image = <File>event.target.files[0];
-      console.log("event "+this.image);
+      console.log("event " + this.image);
     }
   }
   openSnackBarAdd() {
     if (this.image != null) {
       this.formData.append('image', this.image, this.image.name);
     }
-    
+
     Object.keys(this.form.value).forEach(fieldName => {
-      console.log(fieldName, JSON.stringify(this.form.value[fieldName]));
+     console.log(fieldName, JSON.stringify(this.form.value[fieldName]));
       this.formData.append(fieldName, JSON.stringify(this.form.value[fieldName]));
     })
 
-
-    console.log( this.formData + " this.formData");
-    
+    console.log(this.formData + " this.formData");
 
     let message = "User added successfully";
     let action = "close"

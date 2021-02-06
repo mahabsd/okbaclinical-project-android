@@ -47,13 +47,13 @@ export class UsersComponent implements OnInit {
 
         })
     }
-    public addUser(user: User) {
+    public addUser(user) {
         this.UserService.addUser(user).subscribe(res =>
             this.getUsers()
         )
    }
-    public updateUser(user: User) {
-        this.UserService.updateUser(user._id, user).subscribe(user => this.getUsers());
+    public updateUser(user) {
+        this.UserService.updateUser(JSON.parse(user.get("_id")), user).subscribe(user => this.getUsers());
     }
 
     public changeView(viewType) {
@@ -72,14 +72,16 @@ export class UsersComponent implements OnInit {
             data: user
         });
         dialogRef.afterClosed().subscribe(formData => {
-            let use = formData
+            let user = formData
 
-            if (use) {
-               if (use._id) {
-                this.updateUser(use) 
+            if (formData) {
+               if (JSON.parse(user.get("_id"))!= 0) {
+                   console.log(formData);
+                   
+                this.updateUser(formData);
                }else{
-               // formData.delete("_id");
-                this.addUser(use);
+               formData.delete("_id");
+                this.addUser(formData);
                }
             }
         });
