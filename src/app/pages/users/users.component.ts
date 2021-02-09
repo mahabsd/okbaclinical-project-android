@@ -42,7 +42,11 @@ export class UsersComponent implements OnInit {
         this.users = null; //for show spinner each time
         this.UserService.getAllUsers().subscribe(res => {
             this.users = res;
-            console.log(res);
+           
+           this.users.forEach(user => {
+            user.profile.image = "http://localhost:3000/api/"+ user.profile.image ;
+           });
+            console.log(this.users);
             
 
         })

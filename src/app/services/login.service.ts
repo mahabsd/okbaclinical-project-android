@@ -34,6 +34,9 @@ export class LoginService {
   getAllRoles() {
     return this.http.get(this.usersUrl + "users/getAllRoles");
   }
+  updateUserConge(id, data) {
+    return this.http.put(this.usersUrl + "users/user/updateConge/"+ id, data );
+  }
   // postImage(data){
   //   return this.http.post(this.usersUrl + "users/user/add/", data );
   // }

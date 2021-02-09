@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core'
-import { environment } from 'src/environments/environment';
 import { Chat } from './chat.model';
-import {io} from 'socket.io-client';
+import { Socket } from 'ngx-socket-io';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs/internal/Observable';
+//import * as io from 'socket.io-client';
 
 let date = new Date(),
     day = date.getDate(),
@@ -35,30 +37,7 @@ let chats = [
         new Date(year, month, day - 2, hour, minute),
         false
     ),
-    new Chat(
-        'assets/img/profile/adam.jpg',
-        'Adam Sandler',
-        'Online',
-        'Great, then I\'ll definitely buy this theme. Thanks!',
-        new Date(year, month, day - 2, hour, minute),
-        false
-    ),
-    new Chat(
-        'assets/img/profile/tereza.jpg',
-        'Tereza Stiles',
-        'Offline',
-        'Great, then I\'ll definitely buy this theme. Thanks!',
-        new Date(year, month, day - 2, hour, minute),
-        false
-    ),
-    new Chat(
-        'assets/img/profile/michael.jpg',
-        'Michael Blair',
-        'Online',
-        'Great, then I\'ll definitely buy this theme. Thanks!',
-        new Date(year, month, day - 2, hour, minute),
-        false
-    )
+
 ]
 
 let talks = [
@@ -82,9 +61,13 @@ let talks = [
 
 @Injectable()
 export class ChatService {
-    usersUrl: string = environment.basUrl;
-    socket
-    public getChats(): Array<Chat> {
+    // private url = 'http://localhost:8080';
+    // private socket;
+    constructor(private socket : Socket) { 
+
+     //   this.socket = io(this.url);
+    }
+   public getChats(): Array<Chat> {
         return chats;
     }
 
@@ -92,9 +75,20 @@ export class ChatService {
         return talks;
     }
 
-    // setupSocketConnection () { 
-    //     this.socket = io (environment.SOCKET_ENDPOINT); 
-    //   } 
 
+
+    sendMessage(message) {
+        this.socket.emit('new-message', message);
+    }
+
+    getMessages = () => {
+        return Observable.create((observer) => {
+            this.socket.on('new-message', (message) => {
+                observer.next(message);
+            });
+
+            });
+
+    }    
 }
 
