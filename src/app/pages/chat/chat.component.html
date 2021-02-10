@@ -1,7 +1,45 @@
 <app-content-header [title]="'Chat'" [hideBreadcrumb]="false" [hasBgImage]="true" [class]="'pb-5'"></app-content-header>
 
-<ul>
+<!-- <ul>
     <li *ngFor="let message of messageList">{{message}}</li>
 </ul>
 <input [(ngModel)]="newMessage" (keyup)="$event.keyCode == 13 && sendMessage()" />
-<button (click)="sendMessage()">Send Message</button>
+<button (click)="sendMessage()">Send Message</button> -->
+
+
+
+<div>
+    <div class="chat-content" [class.actions-visible]="messageList" perfectScrollbar>
+        <mat-list *ngIf="messageList" class="p-0">
+            <mat-list-item *ngFor=" let message of messageList" class="talk-item">
+                <img matListAvatar [src]="">
+                <p matLine class="message">
+                    <span [ngClass]="(message.me) ? 'bg-primary' : 'bg-accent'">{{message.message}}</span>
+                </p>
+                <p matLine class="message-date">
+                    <small>{{message.currentTime }}</small>
+                </p>
+            </mat-list-item>
+        </mat-list>
+        <div *ngIf="!messageList" fxLayout="column" fxLayoutAlign="center center" class="h-100 empty">
+            <mat-icon>chat</mat-icon>
+            <p>Select a interlocutor for talk</p>
+        </div>
+    </div>
+    <mat-card *ngIf="messageList" class="chat-actions">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+            <mat-form-field class="w-100">
+                <input matInput placeholder="Enter your text..." [(ngModel)]="newMessage"
+                    (keyup)="$event.keyCode == 13 && sendMessage()">
+            </mat-form-field>
+            <div fxLayout="row" fxLayoutAlign="scenter center">
+                <button mat-icon-button type="button">
+                    <mat-icon>attach_file</mat-icon>
+                </button>
+                <button mat-mini-fab color="primary" type="button" (click)="sendMessage()">
+                    <mat-icon>send</mat-icon>
+                </button>
+            </div>
+        </div>
+    </mat-card>
+</div>

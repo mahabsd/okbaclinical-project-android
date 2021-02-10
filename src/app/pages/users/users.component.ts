@@ -44,11 +44,14 @@ export class UsersComponent implements OnInit {
             this.users = res;
            
            this.users.forEach(user => {
-            user.profile.image = "http://localhost:3000/api/"+ user.profile.image ;
+            if (user.profile.image.indexOf('http://localhost:3000/api/') > -1)
+            {
+              console.log("") 
+            }else{
+                user.profile.image = "http://localhost:3000/api/"+ user.profile.image ;
+            }
            });
-            console.log(this.users);
-            
-
+        
         })
     }
     public addUser(user) {

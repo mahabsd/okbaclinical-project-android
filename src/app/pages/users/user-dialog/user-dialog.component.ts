@@ -44,7 +44,7 @@ export class UserDialogComponent implements OnInit {
         surname: new FormControl(''),
         birthday: new FormControl(''),
         gender: new FormControl(''),
-        //image: new FormControl(''),
+        image: new FormControl(''),
       }),
       work: new FormGroup({
         company: new FormControl(''),

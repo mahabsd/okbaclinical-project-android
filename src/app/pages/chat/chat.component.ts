@@ -5,6 +5,8 @@ import { Settings } from '../../app.settings.model';
 import { Chat } from './chat.model';
 import { ChatService } from './chat.service';
 import { throttleTime , distinctUntilChanged } from 'rxjs/operators';
+import jwt_decode from "../../../../node_modules/jwt-decode";
+
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -21,7 +23,12 @@ export class ChatComponent implements OnInit {
   public currentChat: Chat;
   public newMessage: string;
 
-  messageList: string[] = [];
+  messageList = [];
+  token: string;
+  decoded: any;
+  chatOwner: any;
+  me = true;
+
   constructor(public appSettings: AppSettings, private socketService: ChatService) {
     this.settings = this.appSettings.settings;
   }
@@ -31,13 +38,24 @@ export class ChatComponent implements OnInit {
     // if(window.innerWidth <= 768){
     //   this.sidenavOpen = false;
     // } 
-    
+    this.token = localStorage.getItem('token');
+    this.decoded = JSON.parse(JSON.stringify(jwt_decode(this.token)));
+    this.chatOwner = this.decoded._id;
+
     this.socketService.getMessages().pipe(throttleTime(5000)).subscribe((message: string) => {
       if(message){
         let currentTime = moment().format('hh:mm:ss a');
-        let messageWithTimestamp =  `${currentTime}: ${message}`;
+        //let messageWithTimestamp =  `${currentTime}: ${message}`;
+        let msg=  {
+        
+          chatOwner : this.chatOwner,
+          currentTime : currentTime,
+          message : message,
+          me : this.me
+        };
+
   
-        this.messageList.push(messageWithTimestamp);
+        this.messageList.push(msg);
       }else{
         return;
       }
