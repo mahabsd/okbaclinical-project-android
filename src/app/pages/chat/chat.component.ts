@@ -4,8 +4,11 @@ import { AppSettings } from '../../app.settings';
 import { Settings } from '../../app.settings.model';
 import { Chat } from './chat.model';
 import { ChatService } from './chat.service';
-import { throttleTime , distinctUntilChanged } from 'rxjs/operators';
+import { throttleTime, distinctUntilChanged } from 'rxjs/operators';
 import jwt_decode from "../../../../node_modules/jwt-decode";
+import { FormControl, FormGroup } from '@angular/forms';
+import { Socket } from 'ngx-socket-io';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-chat',
@@ -23,52 +26,87 @@ export class ChatComponent implements OnInit {
   public currentChat: Chat;
   public newMessage: string;
 
-  messageList = [];
-  token: string;
-  decoded: any;
-  chatOwner: any;
-  me = true;
-
-  constructor(public appSettings: AppSettings, private socketService: ChatService) {
+  listeCandidats: any;
+  chosenUser: any;
+  listeMessages: any;
+  messageForm: FormGroup;
+  conversation: any;
+  logo = localStorage.getItem('avatar') ||{};
+  token = localStorage.getItem('token');
+  decoded = JSON.parse(JSON.stringify(jwt_decode(this.token)))
+  userId = this.decoded._id
+  constructor(public appSettings:AppSettings, private socket: Socket, public chatService: ChatService, public auth: LoginService) {
+    this.listeMessages = [];
+    this.listeCandidats = [];
+    this.messageForm = new FormGroup({
+      content: new FormControl(''),
+      user: new FormControl(''),
+      name: new FormControl(''),
+      my:  new FormControl('')
+    });
     this.settings = this.appSettings.settings;
   }
 
   ngOnInit() {
-    // this.chats = this.chatService.getChats(); 
-    // if(window.innerWidth <= 768){
-    //   this.sidenavOpen = false;
-    // } 
-    this.token = localStorage.getItem('token');
-    this.decoded = JSON.parse(JSON.stringify(jwt_decode(this.token)));
-    this.chatOwner = this.decoded._id;
+    if(window.innerWidth <= 768){
+      this.sidenavOpen = false;
+    }
 
-    this.socketService.getMessages().pipe(throttleTime(5000)).subscribe((message: string) => {
-      if(message){
-        let currentTime = moment().format('hh:mm:ss a');
-        //let messageWithTimestamp =  `${currentTime}: ${message}`;
-        let msg=  {
-        
-          chatOwner : this.chatOwner,
-          currentTime : currentTime,
-          message : message,
-          me : this.me
-        };
+    console.log(typeof (localStorage.getItem('avatar')));
+    if (localStorage.getItem('avatar') === '' ||
+      localStorage.getItem('avatar') === 'undefined' ||
+      localStorage.getItem('avatar') === undefined ||
+      localStorage.getItem('avatar') === null) {
+      this.logo = 'https://ptetutorials.com/images/user-profile.png';
+    }
+    this.messageForm = new FormGroup({
+      content: new FormControl(''),
+      user: new FormControl(this.decoded._id),
+      name: new FormControl(this.decoded._id),
+      logo: new FormControl(this.logo)
+    });
 
-  
-        this.messageList.push(msg);
-      }else{
-        return;
-      }
-
-
+    this.socket.on('newUserAdded', () => {
+      this.auth.getAllUsers().subscribe((res: any[]) => {
+       this.listeCandidats = res.filter(obj => obj._id !== this.userId._id);
+        console.log("listeCandidats "+this.listeCandidats)
       });
-      
+    });
+    this.auth.getAllUsers().subscribe((res: any) => {
+    //  console.log(res);
+      this.listeCandidats = res.filter(obj => obj._id !== this.userId._id);
+      this.clickUser(this.listeCandidats[0]._id);
+    });
+    this.socket.on('newMessageSended', () => {
+      this.clickUser(this.chosenUser);
+      console.log('hahahaha');
+    });
   }
 
+  clickUser(idCandidat) {
+    this.chosenUser = idCandidat;
+    this.chatService.getPrivateMessage(idCandidat, this.userId).subscribe((res: any) => {
+      console.log(res);
+      this.conversation = res._id;
+      this.listeMessages = res.messages;
+      console.log(this.listeMessages);
+
+    });
+  }
   sendMessage() {
-    this.socketService.sendMessage(this.newMessage)
-    this.newMessage = '';
-    
+    console.log('clicked');
+    this.chatService.sendMessage(this.messageForm.value, this.conversation).subscribe((res) => {
+      this.messageForm.controls['content'].patchValue('');
+    });
+  }
+  loadcondidatavatar(logo: string): string {
+  //  console.log(typeof (logo));
+    if (logo === undefined || logo === null) {
+      return 'https://ptetutorials.com/images/user-profile.png';
+    }
+    else {
+      return logo;
+    }
   }
 
 
@@ -80,47 +118,6 @@ export class ChatComponent implements OnInit {
     (window.innerWidth <= 768) ? this.sidenavOpen = false : this.sidenavOpen = true;
   }
 
-  // public getChat(obj){
-  //   if(this.talks){
-  //      this.talks.length = 2;
-  //   }   
-  //   this.talks = this.chatService.getTalk();
-  //   this.talks.push(obj);
-  //   this.currentChat = obj;      
-  //   this.talks.forEach(talk => {
-  //     if(!talk.my){
-  //       talk.image = obj.image;
-  //     }
-  //   });
-  //   if(window.innerWidth <= 768){
-  //     this.sidenav.close();
-  //   }     
-  // }
-
-  // public sendMessage($event) {       
-  //   if (($event.which === 1 || $event.which === 13) && this.newMessage.trim() != '') {
-  //     if(this.talks){ 
-  //       this.talks.push(
-  //           new Chat(
-  //             'assets/img/users/user.jpg', 
-  //             'Emilio Verdines', 
-  //             'online', 
-  //             this.newMessage,
-  //             new Date(), 
-  //             true)
-  //       )
-  //       this.newMessage = '';
-  //       let chatContainer = document.querySelector('.chat-content');
-  //       if(chatContainer){
-  //         setTimeout(() => {
-  //           var nodes = chatContainer.querySelectorAll('.mat-list-item');
-  //           let newChatTextHeight = nodes[nodes.length- 1];
-  //           chatContainer.scrollTop = chatContainer.scrollHeight + newChatTextHeight.clientHeight;
-  //         }); 
-  //       }
-  //     }
-  //   }
-  // }
 
   public ngOnDestroy() {
     if (this.talks)

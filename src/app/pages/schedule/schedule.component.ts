@@ -115,9 +115,7 @@ export class ScheduleComponent implements OnInit {
         element.actions = this.actions
       });
       this.events = schedule
-    }
-
-    )
+    })
   }
   public addSchedule(schedule) {
     this.scheduleService.addSchedule(schedule).subscribe(schedule => {

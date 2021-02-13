@@ -55,6 +55,7 @@ export class FilteringComponent implements OnInit {
     this.token = localStorage.getItem('token');
     this.decoded = JSON.parse(JSON.stringify(jwt_decode(this.token)));
     this.userId = this.decoded._id;
+console.log(  this.userId);
 
     this.tablesService.getAllconges().subscribe(conges => {
       this.dataSource = conges;

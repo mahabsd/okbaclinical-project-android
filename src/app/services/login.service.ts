@@ -12,7 +12,7 @@ export class LoginService {
   }
 
   loginUser(data) {
-    return this.http.post(this.usersUrl + "users/user/login/", data);
+    return this.http.post(this.usersUrl + "users/login/", data);
   }
 
   addUser(data) {
