@@ -6,6 +6,8 @@ import { Patient, PatientProfile, PatientWork, PatientContacts } from './patient
 import { PatientsService } from 'src/app/services/patients.service';
 import { PatientDialogComponent } from './patient-dialog/patient-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PatientsmsComponent } from "./patient-sms/patient-sms.component";
+import { SmsService } from 'src/app/services/sms.service';
 
 @Component({
   selector: 'app-patients',
@@ -23,7 +25,7 @@ export class PatientsComponent implements OnInit {
   public viewType:string = 'grid';
   constructor(public appSettings:AppSettings, 
               public dialog: MatDialog,
-              public patientsService:PatientsService ,public snackBar: MatSnackBar){
+              public patientsService:PatientsService,public smsService:SmsService ,public snackBar: MatSnackBar){
       this.settings = this.appSettings.settings; 
   }
 
@@ -59,6 +61,16 @@ export class PatientsComponent implements OnInit {
       });
     });
   }
+  public AddetSendSms(Sms) {
+    this.smsService.addSms(Sms).subscribe(sms => {
+      console.log("hello" + sms);
+
+    });
+    this.smsService.SendSms(Sms).subscribe(sms => {
+      console.log("hello" + sms);
+
+    });
+  }
   public changeView(viewType) {
     this.viewType = viewType;
     this.showSearch = false;
@@ -83,6 +95,21 @@ export class PatientsComponent implements OnInit {
       }else{
         delete pati._id; 
         this.addPatient(pati);
+      }
+    });
+    this.showSearch = false;
+  }
+  public openSmsDialog(patient) {
+
+    let dialogRef = this.dialog.open(PatientsmsComponent, {
+      data: patient
+    });
+    dialogRef.afterClosed().subscribe(sms => {
+      
+      if (sms) {
+        delete sms._id; 
+        // console.log("close 1"+ JSON.stringify(patient));
+        this.AddetSendSms(sms) 
       }
     });
     this.showSearch = false;

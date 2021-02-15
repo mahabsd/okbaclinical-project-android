@@ -10,7 +10,7 @@ import { PipesModule } from '../../theme/pipes/pipes.module';
 import { ActionnairesComponent } from './actionnaires.component';
 import { ActionnairesData } from './actionnaires.data';
 import { ActionnaireDialogComponent } from './actionnaire-dialog/actionnaire-dialog.component';
-
+import { ActionnairesmsComponent } from "./actionnaire-sms/actionnaire-sms.component";
 export const routes = [
   { path: '', component: ActionnairesComponent, pathMatch: 'full' }
 ];
@@ -29,7 +29,8 @@ export const routes = [
   ],
   declarations: [
     ActionnairesComponent,
-    ActionnaireDialogComponent
+    ActionnaireDialogComponent,
+    ActionnairesmsComponent
   ],
   entryComponents:[
     ActionnaireDialogComponent

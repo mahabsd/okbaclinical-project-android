@@ -81,6 +81,10 @@
                                 <span *ngIf="!doctor.settings.isDeleted">Block</span>
                                 <span *ngIf="doctor.settings.isDeleted">Unblock</span>
                             </button>
+                            <button mat-menu-item (click)="openSmsDialog(Doctor)">
+                                <mat-icon>mode_edit</mat-icon>
+                                <span>Envoyer SmS</span>
+                            </button>
                         </span>
                     </mat-menu>
                     <mat-divider></mat-divider>
@@ -157,6 +161,10 @@
                                     <mat-icon>block</mat-icon>
                                     <span *ngIf="!doctor.settings.isDeleted">Block</span>
                                     <span *ngIf="doctor.settings.isDeleted">Unblock</span>
+                                </button>
+                                <button mat-menu-item (click)="openSmsDialog(Doctor)">
+                                    <mat-icon>mode_edit</mat-icon>
+                                    <span>Envoyer SmS</span>
                                 </button>
                             </span>
                         </mat-menu>

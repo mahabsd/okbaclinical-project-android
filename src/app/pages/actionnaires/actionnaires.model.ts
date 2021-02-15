@@ -1,5 +1,7 @@
 export class Actionnaire {
   _id: string; 
+  status: string; 
+  userOwner:string;
   username: string;
   lastName: string;
   password: string;  
@@ -24,6 +26,7 @@ export class ActionnaireContacts{
   email: string;
   phone: string;
   address: string;  
+  
 }
 export class ActionnaireSettings{
   isActive: boolean;

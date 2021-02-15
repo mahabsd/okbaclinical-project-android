@@ -1,5 +1,7 @@
 export class Doctor {
   _id: string; 
+  status: string; 
+  userOwner:string;
   profile: DoctorProfile;
   work: DoctorWork;
   contacts: DoctorContacts;
