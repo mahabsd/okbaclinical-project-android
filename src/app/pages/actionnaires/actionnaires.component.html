@@ -81,7 +81,13 @@
                                 <span *ngIf="!actionnaire.settings.isDeleted">Block</span>
                                 <span *ngIf="actionnaire.settings.isDeleted">Unblock</span>
                             </button>
-                        </span>
+                        
+
+                        <button mat-menu-item (click)="openSmsDialog(actionnaire)">
+                            <mat-icon>mode_edit</mat-icon>
+                            <span>Envoyer Sms</span>
+                        </button>
+                    </span>
                     </mat-menu>
                     <mat-divider></mat-divider>
                     <div class="info-list mx-2" [class.blocked]="actionnaire.settings.isDeleted">
@@ -157,6 +163,10 @@
                                     <mat-icon>block</mat-icon>
                                     <span *ngIf="!actionnaire.settings.isDeleted">Block</span>
                                     <span *ngIf="actionnaire.settings.isDeleted">Unblock</span>
+                                </button>
+                                <button mat-menu-item (click)="openSmsDialog(actionnaire)">
+                                    <mat-icon>mode_edit</mat-icon>
+                                    <span>Envoyer Sms</span>
                                 </button>
                             </span>
                         </mat-menu>

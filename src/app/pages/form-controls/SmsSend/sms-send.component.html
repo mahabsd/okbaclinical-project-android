@@ -1,0 +1,45 @@
+<app-content-header [icon]="'view_stream'" [title]="'Envoie SmS'" [hideBreadcrumb]="false" [hasBgImage]="true"
+    [class]="'pb-4'"></app-content-header>
+
+<div fxLayout="column" class="p-2">
+    <div class="p-2">
+        <form [formGroup]="formSms">
+            <mat-card>
+                <mat-card-header fxLayoutAlign="center">
+                    <mat-card-subtitle>
+                        <h2>Envoie Des SmS</h2>
+                    </mat-card-subtitle>
+                </mat-card-header>
+                <form formGroupName="contacts">
+                <mat-card-content fxLayout="column" fxLayoutAlign="center">
+                    
+                        <mat-form-field>
+                            <input matInput placeholder="Phone" formControlName="phone">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <textarea matInput placeholder="message" formControlName="message"></textarea>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-select placeholder="langue" formControlName="type">
+                                <mat-option value="0">Francais</mat-option>
+                                <mat-option value="1">Arabe</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <br>
+                        <br>
+                    
+                </mat-card-content>
+            </form>
+                <div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+                    <button mat-raised-button color="primary" type="submit" (click)="onSubmit()"
+                        [mat-dialog-close]="formSms.value" [disabled]="!formSms.valid">Envoyé SmS</button>
+
+                </div>
+
+            </mat-card>
+
+        </form>
+    </div>
+
+</div>

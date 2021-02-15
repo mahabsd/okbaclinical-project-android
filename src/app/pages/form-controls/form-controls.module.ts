@@ -15,6 +15,7 @@ import { SliderComponent } from './slider/slider.component';
 import { SlideToggleComponent } from './slide-toggle/slide-toggle.component';
 import { FilteringComponent } from './filtering/filtering.component';
 import { SortingComponent, } from './sorting/sorting.component';
+import { SmsSendComponent } from "./SmsSend/sms-send.component";
 
 export const routes = [
   { path: '', redirectTo: 'datepicker', pathMatch: 'full'},
@@ -29,6 +30,7 @@ export const routes = [
   { path: 'slide-toggle', component: SlideToggleComponent, data: { breadcrumb: 'Slide Toggle' } },
   { path: 'Holidays-list', component: FilteringComponent, data: { breadcrumb: 'Filtering table' } },
   { path: 'liste-maintenance', component: SortingComponent, data: { breadcrumb: 'Sorting table' } },
+  { path: 'Envoie-sms', component: SmsSendComponent, data: { breadcrumb: 'Envoie Des SmS' } },
 
 ];
 
@@ -51,7 +53,8 @@ export const routes = [
     SelectComponent, 
     SliderComponent, 
     SlideToggleComponent,
-    FilteringComponent
+    FilteringComponent,
+    SmsSendComponent
   ]
 })
 export class FormControlsModule { }
