@@ -1,0 +1,28 @@
+<h1 mat-dialog-title><span >Send </span> Sms</h1>
+<div mat-dialog-content>
+    <form [formGroup]="form" class="user-form">      
+        <mat-tab-group class="vertical-tabs">
+            <mat-tab label="Contacts" formGroupName="contacts">
+                <div fxLayout="column" class="form-field-outer">
+                    <mat-form-field class="w-100">
+                        <input matInput placeholder="Phone" formControlName="phone">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-select placeholder="Type de message" formControlName="type">
+                            <mat-option value="0">Francais</mat-option>
+                            <mat-option value="1">Arabe</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <textarea matInput placeholder="message" formControlName="message"></textarea>
+                    </mat-form-field>
+                </div>
+            </mat-tab>
+            
+        </mat-tab-group>
+    </form>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-raised-button color="primary" [mat-dialog-close]="form.value" [disabled]="!form.valid"><span (click)="openSnackBarUpdate()">Send</span></button>
+    <button mat-raised-button color="warn" (click)="close()">Cancel</button>
+</div>

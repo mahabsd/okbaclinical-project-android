@@ -6,6 +6,8 @@ import { Doctor, DoctorProfile, DoctorWork, DoctorContacts } from './doctor.mode
 import { DoctorsService } from '../../services/doctors.service';
 import { DoctorDialogComponent } from './doctor-dialog/doctor-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DoctorsmsComponent } from "./doctor-sms/doctor-sms.component";
+import { SmsService } from 'src/app/services/sms.service';
 
 @Component({
   selector: 'app-doctors',
@@ -22,14 +24,23 @@ export class DoctorsComponent implements OnInit {
   public viewType: string = 'grid';
   constructor(public appSettings: AppSettings,
     public dialog: MatDialog,
-    public doctorsService: DoctorsService, public snackBar: MatSnackBar) {
+    public doctorsService: DoctorsService,public smsService:SmsService , public snackBar: MatSnackBar) {
     this.settings = this.appSettings.settings;
   }
 
   ngOnInit() {
     this.getDoctors();
   }
+  public AddetSendSms(Sms) {
+    this.smsService.addSms(Sms).subscribe(sms => {
+      console.log("hello" + sms);
 
+    });
+    this.smsService.SendSms(Sms).subscribe(sms => {
+      console.log("hello" + sms);
+
+    });
+  }
   public getDoctors(): void {
     this.doctors = null; //for show spinner each time
     this.doctorsService.getAllDoctors().subscribe(doctor =>
@@ -111,6 +122,22 @@ export class DoctorsComponent implements OnInit {
       }
     });
   }
+  public openSmsDialog(Doctor) {
+
+    let dialogRef = this.dialog.open(DoctorsmsComponent, {
+      data: Doctor
+    });
+    dialogRef.afterClosed().subscribe(sms => {
+      
+      if (sms) {
+        delete sms._id; 
+        // console.log("close 1"+ JSON.stringify(Doctor));
+        this.AddetSendSms(sms) 
+      }
+    });
+    this.showSearch = false;
+  }
+
 }
 
 @Component({

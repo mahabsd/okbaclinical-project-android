@@ -6,6 +6,9 @@ import { Actionnaire, ActionnaireProfile, ActionnaireWork, ActionnaireContacts }
 import { ActionnairesService } from 'src/app/services/actionnaires.service';
 import { ActionnaireDialogComponent } from './actionnaire-dialog/actionnaire-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActionnairesmsComponent } from "./actionnaire-sms/actionnaire-sms.component";
+import { SmsService } from 'src/app/services/sms.service';
+
 
 @Component({
   selector: 'app-actionnaires',
@@ -16,6 +19,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ActionnairesComponent implements OnInit {
   public actionnaires;
+  
   public searchText: string;
   public page:any;
   public settings: Settings;
@@ -23,14 +27,23 @@ export class ActionnairesComponent implements OnInit {
   public viewType:string = 'grid';
   constructor(public appSettings:AppSettings, 
               public dialog: MatDialog,
-              public actionnairesService:ActionnairesService ,public snackBar: MatSnackBar){
+              public actionnairesService:ActionnairesService,public smsService:SmsService  ,public snackBar: MatSnackBar){
       this.settings = this.appSettings.settings; 
   }
 
   ngOnInit() {
     this.getActionnaires();
   }
+  public AddetSendSms(Sms) {
+    this.smsService.addSms(Sms).subscribe(sms => {
+      console.log("hello" + sms);
 
+    });
+    this.smsService.SendSms(Sms).subscribe(sms => {
+      console.log("hello" + sms);
+
+    });
+  }
   public getActionnaires(): void {
     this.actionnaires = null; //for show spinner each time
     this.actionnairesService.getAllActionnaires().subscribe(actionnaire =>
@@ -84,6 +97,23 @@ export class ActionnairesComponent implements OnInit {
       }else{
          delete pati._id;
           this.addActionnaire(pati);
+      }
+    });
+    this.showSearch = false;
+  }
+  public openSmsDialog(actionnaire) {
+
+
+    let dialogRef = this.dialog.open(ActionnairesmsComponent, {
+      data: actionnaire
+    });
+    dialogRef.afterClosed().subscribe(sms => {
+      
+      if (sms) {
+        delete sms._id; 
+        
+        // console.log("close 1"+ JSON.stringify(actionnaire));
+        this.AddetSendSms(sms) 
       }
     });
     this.showSearch = false;

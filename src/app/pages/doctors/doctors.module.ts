@@ -10,6 +10,8 @@ import { PipesModule } from '../../theme/pipes/pipes.module';
 import { DoctorsComponent } from './doctors.component';
 import { DoctorsData } from './doctors.data';
 import { DoctorDialogComponent } from './doctor-dialog/doctor-dialog.component';
+import { DoctorsmsComponent } from "./doctor-sms/doctor-sms.component";
+
 
 export const routes = [
   { path: '', component: DoctorsComponent, pathMatch: 'full' }
@@ -29,7 +31,8 @@ export const routes = [
   ],
   declarations: [
     DoctorsComponent,
-    DoctorDialogComponent
+    DoctorDialogComponent,
+    DoctorsmsComponent
   ],
   entryComponents:[
     DoctorDialogComponent

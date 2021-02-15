@@ -10,6 +10,7 @@ import { SortingComponent } from './sorting/sorting.component';
 import { SelectingComponent } from './selecting/selecting.component';
 import { NgxTableComponent } from './ngx-table/ngx-table.component';
 import { TablesService } from './tables.service';
+import { SmstableComponent } from "./smstable/sms-table.component";
  
 export const routes = [
   { path: '', redirectTo: 'basic', pathMatch: 'full'},
@@ -20,6 +21,8 @@ export const routes = [
   { path: 'selecting', component: SelectingComponent, data: { breadcrumb: 'Selecting table' } },
   { path: 'ngx-table', component: NgxTableComponent, data: { breadcrumb: 'Ngx datatable' } },
   { path: 'liste-maintenance', component: SortingComponent, data: { breadcrumb: 'Sorting table' } },
+  { path: 'liste-sms', component: SmstableComponent, data: { breadcrumb: 'Sorting table' } },
+
 
 ];
 
@@ -36,7 +39,8 @@ export const routes = [
     SortingComponent, 
    // FilteringComponent, 
     NgxTableComponent, 
-    SelectingComponent
+    SelectingComponent,
+    SmstableComponent
   ],
   providers: [
     TablesService
