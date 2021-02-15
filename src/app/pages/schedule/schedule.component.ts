@@ -9,6 +9,7 @@ import { Settings } from '../../app.settings.model';
 import { Subject } from 'rxjs';
 import { blockTransition } from '../../theme/utils/app-animation';
 import { SchedulesService } from 'src/app/services/schedule.service';
+import jwt_decode from "../../../../node_modules/jwt-decode";
 
 const colors: any = {
   red: {
@@ -53,37 +54,12 @@ export class ScheduleComponent implements OnInit {
       });
     }
   }];
-  events: CalendarEvent[] = [{
-    start: subDays(startOfDay(new Date()), 1),
-    end: addDays(new Date(), 1),
-    title: 'A 3 day event',
-    color: colors.red,
-    actions: this.actions
-  }, {
-    start: startOfDay(new Date()),
-    title: 'An event with no end date',
-    color: colors.yellow,
-    actions: this.actions
-  }, {
-    start: subDays(endOfMonth(new Date()), 3),
-    end: addDays(endOfMonth(new Date()), 3),
-    title: 'A long event that spans 2 months',
-    color: colors.blue
-  }, {
-    start: addHours(startOfDay(new Date()), 2),
-    end: new Date(),
-    title: 'A draggable and resizable event',
-    color: colors.yellow,
-    actions: this.actions,
-    resizable: {
-      beforeStart: true,
-      afterEnd: true
-    },
-    draggable: true
-  }];
+  events: CalendarEvent[] = [];
   refresh: Subject<any> = new Subject();
 
-
+  token = localStorage.getItem('token');
+  decoded = jwt_decode(this.token);
+  userId = JSON.parse(JSON.stringify(this.decoded))._id;
   public settings: Settings;
   schedules: any;
   constructor(public appSettings: AppSettings,
@@ -109,12 +85,15 @@ export class ScheduleComponent implements OnInit {
   }
   public getAllSchedules(): void {
     this.schedules = null; //for show spinner each time
-    this.scheduleService.getAllSchedules().subscribe((schedule :  CalendarEvent[] ) => {
+    this.scheduleService.getAllSchedules().subscribe((schedule: CalendarEvent[]) => {
       schedule.forEach(element => {
         element.start = new Date(element.start)
-        element.actions = this.actions
+        element.actions = this.actions;
+    
       });
-      this.events = schedule
+
+      this.events = schedule;
+      console.log(this.events);
     })
   }
   public addSchedule(schedule) {
