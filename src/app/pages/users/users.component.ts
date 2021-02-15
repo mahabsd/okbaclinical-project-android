@@ -82,7 +82,7 @@ export class UsersComponent implements OnInit {
             let user = formData
 
             if (formData) {
-               if (JSON.parse(user.get("_id"))!= 0) {
+               if (JSON.parse(user.get("_id"))!= '') {
                    console.log(formData);
                    
                 this.updateUser(formData);

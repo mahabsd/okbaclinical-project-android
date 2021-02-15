@@ -30,7 +30,10 @@ export class ChatService {
     sendMessage(message, idChat) {
       return this.httpClient.post(this.url+'/chat/sendMessage/' + idChat, message, );
     }
+    deleteChat(chatId) {
+      return this.httpClient.get(this.url+'/chat/deleteChat/' + chatId );
+    }
 
-
+  
 }
 

@@ -69,7 +69,6 @@ export class UserDialogComponent implements OnInit {
         bgColor: new FormControl(''),
       })
     });
-
   }
 
   ngOnInit() {
