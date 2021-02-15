@@ -81,7 +81,7 @@
                                 <span *ngIf="!doctor.settings.isDeleted">Block</span>
                                 <span *ngIf="doctor.settings.isDeleted">Unblock</span>
                             </button>
-                            <button mat-menu-item (click)="openSmsDialog(Doctor)">
+                            <button mat-menu-item (click)="openSmsDialog(doctor)">
                                 <mat-icon>mode_edit</mat-icon>
                                 <span>Envoyer SmS</span>
                             </button>

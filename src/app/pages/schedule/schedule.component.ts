@@ -88,9 +88,11 @@ export class ScheduleComponent implements OnInit {
   public getAllSchedules(): void {
     this.schedules = null; //for show spinner each time
     this.scheduleService.getAllSchedules().subscribe((schedule: CalendarEvent[]) => {
-      schedule.filter((event : any )=>{
-        event.userOwner == this.userId
+     schedule = schedule.filter((event : any )=>{
+        event.userOwner === this.userId
       })
+      console.log(schedule);
+      
       schedule.forEach(element => {
         element.start = new Date(element.start)
         element.actions = this.actions;
