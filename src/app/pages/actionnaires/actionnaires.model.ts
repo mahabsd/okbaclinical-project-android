@@ -2,6 +2,7 @@ export class Actionnaire {
   _id: string; 
   status: string; 
   userOwner:string;
+  smsOwner:string;
   username: string;
   lastName: string;
   password: string;  
