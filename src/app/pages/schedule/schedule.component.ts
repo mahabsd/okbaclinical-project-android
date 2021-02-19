@@ -62,6 +62,7 @@ export class ScheduleComponent implements OnInit {
   userId = JSON.parse(JSON.stringify(this.decoded))._id;
   public settings: Settings;
   schedules: any;
+  tab = [];
   constructor(public appSettings: AppSettings,
     public dialog: MatDialog,
     public snackBar: MatSnackBar, public scheduleService: SchedulesService) {
@@ -88,18 +89,16 @@ export class ScheduleComponent implements OnInit {
   public getAllSchedules(): void {
     this.schedules = null; //for show spinner each time
     this.scheduleService.getAllSchedules().subscribe((schedule: CalendarEvent[]) => {
-     schedule = schedule.filter((event : any )=>{
-        event.userOwner === this.userId
-      })
-      console.log(schedule);
-      
-      schedule.forEach(element => {
-        element.start = new Date(element.start)
-        element.actions = this.actions;
-      });
+      this.tab = []
+      schedule.forEach((event: any) => {
+        if (event.userOwner == this.userId) {
+          event.start = new Date(event.start)
+          event.actions = this.actions;
+          this.tab.push(event);
 
-      this.events = schedule;
-      console.log(this.events);
+        }
+      })
+      this.events = this.tab;
     })
   }
   public addSchedule(schedule) {

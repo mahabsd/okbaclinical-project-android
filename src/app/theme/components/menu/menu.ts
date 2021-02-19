@@ -40,7 +40,7 @@ export const verticalMenuItems = [
     new Menu (34, 'Filtering', '/tables/filtering', null, 'format_line_spacing', null, false, 30),
     new Menu (35, 'Selecting', '/tables/selecting', null, 'playlist_add_check', null, false, 30),
     new Menu (36, 'NGX DataTable', '/tables/ngx-table', null, 'view_array', null, false, 30), 
-    new Menu (37, 'Liste des SmS', '/tables/liste-sms', null, 'view_array', null, false, 30), 
+    new Menu (37, 'liste-sms', '/tables/liste-sms', null, 'view_array', null, false, 30), 
     new Menu (40, 'Pages', null, null, 'library_books', null, true, 0),
     new Menu (43, 'Login', '/login', null, 'exit_to_app', null, false, 40),    
     new Menu (44, 'Register', '/register', null, 'person_add', null, false, 40),

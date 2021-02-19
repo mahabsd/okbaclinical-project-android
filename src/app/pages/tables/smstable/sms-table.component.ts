@@ -13,36 +13,38 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class SmstableComponent {
   @ViewChild(MatSort) sort: MatSort;
-  public displayedColumns = ['requestDate','name','phone', 'message', 'status', 'action'];
+  public displayedColumns = ['requestDate', 'phone', 'message', 'status', 'action'];
   public dataSource: any;
   public data: any;
   public settings: Settings;
-  constructor(public appSettings:AppSettings, private tablesService:SmsService, public snackBar: MatSnackBar) {
-  //   this.tablesService.getAllSmss().subscribe(res => {
-  //     this.dataSource = res;
-  //     console.log(this.dataSource);
-  //   this.settings = this.appSettings.settings; 
-  // })
+  constructor(public appSettings: AppSettings, private tablesService: SmsService, public snackBar: MatSnackBar) {
+    //   this.tablesService.getAllSmss().subscribe(res => {
+    //     this.dataSource = res;
+    //     console.log(this.dataSource);
+    //   this.settings = this.appSettings.settings; 
+    // })
   }
-  
+
   ngAfterViewInit() {
     this.tablesService.getAllSmss().subscribe(res => {
       this.dataSource = (res);
-      this.data=new MatTableDataSource<Element>(this.dataSource) 
-    this.settings = this.appSettings.settings; 
-    this.data.sort = this.sort;
-    console.log(this.data.sort);
-  })
+console.log(this.dataSource);
+
+      this.data = new MatTableDataSource<Element>(this.dataSource)
+      this.settings = this.appSettings.settings;
+      this.data.sort = this.sort;
+      console.log(this.data.sort);
+    })
   }
 
-  
-  deleteDemande(element){
+
+  deleteDemande(element) {
     this.tablesService.deleteSms(element._id).subscribe(maitenance => {
       console.log((maitenance));
       this.tablesService.getAllSmss().subscribe(res => {
-        this.dataSource = res;  
-        this.data=new MatTableDataSource<Element>(this.dataSource) 
-            
+        this.dataSource = res;
+        this.data = new MatTableDataSource<Element>(this.dataSource)
+
       })
       let message = "SmS supprimer ";
       let action = "close"
@@ -51,23 +53,23 @@ export class SmstableComponent {
       });
     });
   }
-  validerDemande(element){
+  validerDemande(element) {
     var statut = "envoyé";
-    var formMaintenance=({
-    
+    var formMaintenance = ({
+
       status: JSON.parse(JSON.stringify(statut)),
-      
+
     });
     this.tablesService.SendSms(element).subscribe(sms => {
       console.log((sms));
     })
-      this.tablesService.updateSms(element._id,formMaintenance).subscribe(sms => {
-        console.log((sms));
-        
+    this.tablesService.updateSms(element._id, formMaintenance).subscribe(sms => {
+      console.log((sms));
+
       this.tablesService.getAllSmss().subscribe(res => {
-        this.dataSource = res;  
-        this.data=new MatTableDataSource<Element>(this.dataSource) 
-            
+        this.dataSource = res;
+        this.data = new MatTableDataSource<Element>(this.dataSource)
+
       })
       let message = "Sms Envoyé ";
       let action = "close"
@@ -77,6 +79,6 @@ export class SmstableComponent {
     });
   }
 
-  }
-    
+}
+
 

@@ -1,8 +1,4 @@
-<app-content-header     
-    [title]="'Chat'" 
-    [hideBreadcrumb]="false"
-    [hasBgImage]="true" 
-    [class]="'pb-5'"></app-content-header>
+<app-content-header [title]="'Chat'" [hideBreadcrumb]="false" [hasBgImage]="true" [class]="'pb-5'"></app-content-header>
 
 <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center" class="px-2 chat-toolbar">
     <div fxLayout="row">
@@ -10,10 +6,11 @@
             <mat-icon>list</mat-icon>
         </button>
     </div>
-    <div fxLayout="row" fxLayoutAlign="center center" >
+    <div fxLayout="row" fxLayoutAlign="center center">
         <mat-list class="p-0">
             <mat-list-item>
-                <img matListAvatar [src]="'http://localhost:3000/api/'+currentChat.candidat1.profile.image" class="author-img">
+                <img matListAvatar [src]="'http://localhost:3000/api/'+currentChat.candidat1.profile.image"
+                    class="author-img">
             </mat-list-item>
         </mat-list>
         <span class="author-name">{{currentChat.candidat1.profile.name}}</span>
@@ -30,7 +27,7 @@
                     <mat-icon>volume_mute</mat-icon>
                     <span>Mute</span>
                 </button> -->
-                <button mat-menu-item (click)="deleteChat(currentChat._id)"> 
+                <button mat-menu-item (click)="deleteChat(currentChat._id)">
                     <mat-icon>delete_forever</mat-icon>
                     <span>Clear chat</span>
                 </button>
@@ -40,10 +37,11 @@
 </mat-toolbar>
 
 <div fxLayout="row wrap">
-    <div fxFlex="100"> 
+    <div fxFlex="100">
         <mat-card class="p-0 chat">
             <mat-drawer-container class="chat-container">
-                <mat-drawer #sidenav [opened]="sidenavOpen" [mode]="sidenavOpen ? 'side' : 'over'" class="chat-sidenav mat-elevation-z1" autoFocus="false">
+                <mat-drawer #sidenav [opened]="sidenavOpen" [mode]="sidenavOpen ? 'side' : 'over'"
+                    class="chat-sidenav mat-elevation-z1" autoFocus="false">
                     <mat-nav-list class="p-0 chat-sidenav-list" perfectScrollbar>
                         <mat-list-item *ngFor="let chat of listeCandidats" (click)="clickUser(chat._id)">
                             <img matListAvatar [src]="'http://localhost:3000/api/'+chat.profile.image">
@@ -51,65 +49,75 @@
                             <p matLine fxLayout="row" fxLayoutAlign="none center" class="secondary-text-color">
                                 <span [ngSwitch]="chat.authorStatus">
                                     <mat-icon *ngSwitchCase="'Online'" class="chat-status-icon">check_circle</mat-icon>
-                                    <mat-icon *ngSwitchCase="'Offline'" class="chat-status-icon">highlight_off</mat-icon>
+                                    <mat-icon *ngSwitchCase="'Offline'" class="chat-status-icon">highlight_off
+                                    </mat-icon>
                                     <mat-icon *ngSwitchCase="'Away'" class="chat-status-icon">schedule</mat-icon>
-                                    <mat-icon *ngSwitchCase="'Do not disturb'" class="chat-status-icon">not_interested</mat-icon>
+                                    <mat-icon *ngSwitchCase="'Do not disturb'" class="chat-status-icon">not_interested
+                                    </mat-icon>
                                 </span>
                                 <!-- <span class="author-status">{{chat.authorStatus}}</span> -->
                             </p>
                         </mat-list-item>
                     </mat-nav-list>
                 </mat-drawer>
-                
+
                 <div>
-                    <div class="chat-content"  [class.actions-visible]="talks" perfectScrollbar>
-                        <mat-list *ngIf="talks" class="p-0" >
+                    <div class="chat-content" [class.actions-visible]="talks" perfectScrollbar>
+                        <mat-list *ngIf="talks" class="p-0">
                             <mat-list-item *ngFor="let talk of talks" class="talk-item">
                                 <img matListAvatar [src]="'http://localhost:3000/api/'+talk.logo">
-                                <p matLine class="message">
-                                    <span [ngClass]="(talk.candidat !== userId) ? 'bg-primary' : 'bg-accent'">{{talk.content}}</span>
-                                </p>                             
+                                <p matLine class="message" >
+                                    <span [ngClass]="(talk.candidat !== userId) ? 'bg-primary' : 'bg-accent'"
+                                        >{{talk.content}}</span>
+                                </p>
+                                <p matLine class="message" *ngIf="talk.files">
+                                    <a [href]="talk.files"
+                                        [ngClass]="(talk.candidat !== userId) ? 'bg-primary' : 'bg-accent'">{{talk.files}}</a>
+                                </p>
                                 <p matLine class="message-date">
                                     <small>{{talk.createdDate | date:"dd MMMM, yyyy 'at' HH:mm"}}</small>
-                                </p> 
+                                </p>
                             </mat-list-item>
                         </mat-list>
                         <div *ngIf="!talks" fxLayout="column" fxLayoutAlign="center center" class="h-100 empty">
-                            <mat-icon>chat</mat-icon>            
+                            <mat-icon>chat</mat-icon>
                             <p>Select a interlocutor for talk</p>
-                        </div> 
-                    </div>
-                    <mat-card *ngIf="talks" class="chat-actions"> 
-                        <div fxLayout="row" fxLayoutAlign="space-between center">
-                          <form [formGroup]="messageForm">
-                            <mat-form-field class="w-100">
-                                <input matInput placeholder="Enter your text..." formControlName="content">
-                            </mat-form-field>
-                
-                          </form>
-                          <div fxLayout="row" fxLayoutAlign="scenter center">
-                            <!-- <button mat-icon-button type="button">
-                                <mat-icon>attach_file</mat-icon>
-                            </button> -->
-                            <button mat-mini-fab color="primary" type="button" (click)="sendMessage()">
-                                <mat-icon>send</mat-icon>
-                            </button>
                         </div>
+                    </div>
+                    <mat-card *ngIf="talks" class="chat-actions">
+                        <div fxLayout="row" fxLayoutAlign="space-between center">
+                            <form [formGroup]="messageForm">
+                                <mat-form-field class="w-100">
+                                    <input matInput placeholder="Enter your text..." formControlName="content">
+                                </mat-form-field>
+
+                            </form>
+                            <div fxLayout="row" fxLayoutAlign="scenter center">
+                                <input type="file" name="myFiles" [(ngModel)]="myFiles" (change)="selectFile($event)" accept="file/*">
+                                <!-- <mat-icon>attach_file</mat-icon> -->
+                                <button mat-mini-fab color="primary" type="button" (click)="sendMessage()">
+                                    <mat-icon>send</mat-icon>
+                                </button>
                             </div>
+                        </div>
                     </mat-card>
                 </div>
 
-                <mat-drawer #personInfo mode="over" position="end" class="person-info-sidenav mat-elevation-z1" autoFocus="false">
+                <mat-drawer #personInfo mode="over" position="end" class="person-info-sidenav mat-elevation-z1"
+                    autoFocus="false">
                     <div class="p-0 h-100" perfectScrollbar>
 
-                        <div class="bg-primary w-100 text-center"> 
+                        <div class="bg-primary w-100 text-center">
                             <div fxLayout="row" fxLayoutAlign="space-between center" class="p-2">
                                 <h2>Contact Info</h2>
-                                <button mat-icon-button (click)="personInfo.toggle()"><mat-icon>close</mat-icon></button>
-                            </div>  
-                            <img *ngIf="currentChat" [src]="'http://localhost:3000/api/'+currentChat.candidat1.profile.image" class="py-2">
+                                <button mat-icon-button (click)="personInfo.toggle()">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            </div>
+                            <img *ngIf="currentChat"
+                                [src]="'http://localhost:3000/api/'+currentChat.candidat1.profile.image" class="py-2">
                             <h2 *ngIf="currentChat" class="pb-3">{{currentChat.candidat1.username}}</h2>
-                        </div> 
+                        </div>
                         <mat-list>
                             <mat-list-item>
                                 <mat-icon matListIcon class="secondary-text-color">mail_outline</mat-icon>
@@ -123,11 +131,11 @@
                                 <mat-icon matListIcon class="secondary-text-color">location_on</mat-icon>
                                 <h3 matLine>Y</h3>
                             </mat-list-item>
-                        </mat-list>                       
+                        </mat-list>
                     </div>
                 </mat-drawer>
-            
+
             </mat-drawer-container>
         </mat-card>
-      </div>
+    </div>
 </div>

@@ -19,12 +19,12 @@ export class ScheduleDialogComponent implements OnInit {
       start: new FormControl('', [Validators.required]),
       descrip: new FormControl('', [Validators.required]),
       isEdit : new FormControl(''),
-      color: new FormControl(''),
+      userOwner: new FormControl(''),
     });
     this.form.patchValue({
      
       'isEdit' : false,
-      'color': JSON.parse(JSON.stringify(this.decoded))._id,
+      'userOwner': JSON.parse(JSON.stringify(this.decoded))._id,
     })
   }
 
@@ -39,7 +39,7 @@ export class ScheduleDialogComponent implements OnInit {
         'start': this.data.start,
         'descrip': this.data.descrip,
         'isEdit' : true,
-        'color': JSON.parse(JSON.stringify(this.decoded))._id,
+        'userOwner': JSON.parse(JSON.stringify(this.decoded))._id,
       })
     }
     console.log(this.form);

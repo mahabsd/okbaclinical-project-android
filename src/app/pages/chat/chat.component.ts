@@ -31,51 +31,40 @@ export class ChatComponent implements OnInit {
   listeMessages: any;
   messageForm: FormGroup;
   conversation: any;
-  logo = localStorage.getItem('avatar') ||{};
+  logo;
   token = localStorage.getItem('token');
   decoded = JSON.parse(JSON.stringify(jwt_decode(this.token)))
   userId = this.decoded._id
-  constructor(public appSettings:AppSettings, private socket: Socket, public chatService: ChatService, public auth: LoginService) {
+  file;
+  formData = new FormData();
+  myFiles: any;
+
+  constructor(public appSettings: AppSettings, private socket: Socket, public chatService: ChatService, public auth: LoginService) {
     this.listeMessages = [];
     this.listeCandidats = [];
-    this.messageForm = new FormGroup({
-      content: new FormControl(''),
-      candidat: new FormControl(''),
-      name: new FormControl(''),
-      my:  new FormControl('')
-    });
     this.settings = this.appSettings.settings;
   }
 
   ngOnInit() {
-    if(window.innerWidth <= 768){
+    if (window.innerWidth <= 768) {
       this.sidenavOpen = false;
-    }
-
-   // console.log(typeof (localStorage.getItem('avatar')));
-    if (localStorage.getItem('avatar') === '' ||
-      localStorage.getItem('avatar') === 'undefined' ||
-      localStorage.getItem('avatar') === undefined ||
-      localStorage.getItem('avatar') === null) {
-      this.logo = 'https://ptetutorials.com/images/user-profile.png';
     }
     this.messageForm = new FormGroup({
       content: new FormControl(''),
       candidat: new FormControl(this.decoded._id),
       name: new FormControl(this.decoded.username),
-      logo: new FormControl('http://localhost:3000/api/'+this.decoded.user.profile.image),
-      my :  new FormControl(true)
+      logo: new FormControl(this.decoded.user.profile.image)
     });
 
     this.socket.on('newUserAdded', () => {
       this.auth.getAllUsers().subscribe((res: any[]) => {
-      this.chats = this.listeCandidats = res.filter(obj => obj._id !== this.userId._id);
+        this.chats = this.listeCandidats = res.filter(obj => obj._id !== this.userId);
         // console.log("listeCandidats "+this.listeCandidats)
       });
     });
     this.auth.getAllUsers().subscribe((res: any) => {
-    //  console.log(res);
-    this.chats = this.listeCandidats = res.filter(obj => obj._id !== this.userId._id);
+      //  console.log(res);
+      this.chats = this.listeCandidats = res.filter(obj => obj._id !== this.userId);
       this.clickUser(this.listeCandidats[0]._id);
     });
     this.socket.on('newMessageSended', () => {
@@ -87,57 +76,69 @@ export class ChatComponent implements OnInit {
     this.chosenUser = idCandidat;
     this.chatService.getPrivateMessage(idCandidat, this.userId).subscribe((res: any) => {
       console.log(res);
-      
+
       this.conversation = res._id;
       this.currentChat = res
-     // console.log(this.currentChat._id)
-      
-      this.talks  = this.listeMessages = res.messages;
+      // console.log(this.currentChat._id)
+
+      this.talks = this.listeMessages = res.messages;
       //console.log(this.listeMessages);
 
-      if(window.innerWidth <= 768){
+      if (window.innerWidth <= 768) {
         this.sidenav.close();
-      }  
+      }
     });
   }
   sendMessage() {
-   // console.log('clicked');
-   this.messageForm.patchValue({
-    candidat : this.userId
-  });
-    this.chatService.sendMessage(this.messageForm.value, this.conversation).subscribe((res) => {
+
+    if (this.file != null) {
+      this.formData.append('myFiles', this.file, this.file.name);
+    }
+
+    // Object.keys(this.messageForm.value).forEach(fieldName => {
+    //   console.log(fieldName + " fieldName");
+    //   console.log(typeof this.messageForm.value[fieldName]);
+
+    //   this.formData.append(fieldName,this.messageForm.value[fieldName]);
+    // })
+    this.formData.append('content', this.messageForm.value.content);
+    this.formData.append('logo', this.messageForm.value.logo);
+    this.formData.append('candidat', this.messageForm.value.candidat);
+    this.formData.append('name', this.messageForm.value.name);
+
+    this.chatService.sendMessage(this.formData, this.conversation).subscribe((res) => {
+      console.log(res);
+      
     });
-    this.newMessage= this.messageForm.value.content
-    this.newMessage = '';
+
     let chatContainer = document.querySelector('.chat-content');
-    this.messageForm.patchValue({
-      content : ''
-    });
-    if(chatContainer){
+
+    if (chatContainer) {
       setTimeout(() => {
         var nodes = chatContainer.querySelectorAll('.mat-list-item');
-        let newChatTextHeight = nodes[nodes.length- 1];
+        let newChatTextHeight = nodes[nodes.length - 1];
         chatContainer.scrollTop = chatContainer.scrollHeight + newChatTextHeight.clientHeight;
-      }); 
+      });
     }
-  }
-  loadcondidatavatar(logo: string): string {
-  //  console.log(typeof (logo));
-    if (logo === undefined || logo === null) {
-      return 'https://ptetutorials.com/images/user-profile.png';
-    }
-    else {
-      return logo;
-    }
-
+    this.myFiles = '';
+    this.messageForm.patchValue({
+      candidat: '',
+      content: '',
+      logo: '',
+      files: '',
+      name: ''
+    });
   }
 
+  selectFile(event) {
+    if (event.target.value) {
+      this.file = <File>event.target.files[0];
+    }
+  }
 
 
-  deleteChat(chatId){
-    console.log("delete " + chatId );
-    
-    this.chatService.deleteChat(chatId).subscribe(res =>{
+  deleteChat(chatId) {
+    this.chatService.deleteChat(chatId).subscribe(res => {
       console.log(res);
     })
   }
@@ -153,4 +154,15 @@ export class ChatComponent implements OnInit {
       this.talks.length = 2;
   }
 
+
+  //upload files :
+  // uploadFiles() {
+  //   if (this.file != null) {
+  //     this.formData.append('myFiles', this.file, this.file.name);
+  //   }
+  //   this.chatService.uploadFiles(this.formData).subscribe(files => {
+  //     console.log(files);
+
+  //   })
+  // }
 }

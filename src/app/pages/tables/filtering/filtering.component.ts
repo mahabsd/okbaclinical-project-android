@@ -55,16 +55,16 @@ export class FilteringComponent implements OnInit {
     this.token = localStorage.getItem('token');
     this.decoded = JSON.parse(JSON.stringify(jwt_decode(this.token)));
     this.userId = this.decoded._id;
-console.log(  this.userId);
 
     this.tablesService.getAllconges().subscribe(conges => {
       this.dataSource = conges;
+      console.log(conges);
 
       this.userConges = this.dataSource.filter(conge => conge.userOwner._id === this.userId)
       console.log(this.dataSource);
 
       this.data = new MatTableDataSource<Element>(this.userConges);
-    //  console.log(this.data);
+      //  console.log(this.data);
 
     })
 
