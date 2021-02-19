@@ -12,7 +12,7 @@ export class LoginService {
   }
 
   loginUser(data) {
-    return this.http.post(this.usersUrl + "users/user/login/", data);
+    return this.http.post(this.usersUrl + "users/login/", data);
   }
 
   addUser(data) {
@@ -23,7 +23,7 @@ export class LoginService {
     return this.http.get(this.usersUrl + "users/user/" + id,);
   }
   updateUser(id, data) {
-    return this.http.put(this.usersUrl + "users/user/update/"+ id, data, );
+    return this.http.put(this.usersUrl + "users/user/update/"+ id, data );
   }
   deleteUser(id) {
     return this.http.delete(this.usersUrl + "users/user/delete/" + id, );
@@ -34,7 +34,10 @@ export class LoginService {
   getAllRoles() {
     return this.http.get(this.usersUrl + "users/getAllRoles");
   }
-  postImage(data){
-    return this.http.post(this.usersUrl + "users/user/add/", data );
+  updateUserConge(id, data) {
+    return this.http.put(this.usersUrl + "users/user/updateConge/"+ id, data );
   }
+  // postImage(data){
+  //   return this.http.post(this.usersUrl + "users/user/add/", data );
+  // }
 }

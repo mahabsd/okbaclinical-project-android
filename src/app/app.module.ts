@@ -42,10 +42,9 @@ import { FavoritesComponent } from './theme/components/favorites/favorites.compo
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from 'src/app/services/token.interceptor';
-import { ChatService } from 'src/app/pages/chat/chat.service';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
-import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
-
+const config: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
 
 @NgModule({
   imports: [
@@ -65,7 +64,7 @@ import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
     PipesModule,
     AppRoutingModule,
     HttpClientModule,
-    
+    SocketIoModule.forRoot(config)
   ],
   declarations: [
     AppComponent,
