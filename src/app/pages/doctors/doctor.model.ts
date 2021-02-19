@@ -2,6 +2,7 @@ export class Doctor {
   _id: string; 
   status: string; 
   userOwner:string;
+  smsOwner:string;
   profile: DoctorProfile;
   work: DoctorWork;
   contacts: DoctorContacts;

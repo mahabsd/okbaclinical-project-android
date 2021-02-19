@@ -8,10 +8,11 @@
 <div fxLayout="column" class="p-2">
     <div class="p-2"> 
         <mat-table #table [dataSource]="data" matSort class="mat-elevation-z8">    
-            <!-- <ng-container matColumnDef="name">
+            <ng-container matColumnDef="name">
                 <mat-header-cell *matHeaderCellDef> User Name </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.userOwner !== '' ? element.userOwner.profile.name : ''}} </mat-cell>
-            </ng-container> -->
+                <mat-cell *matCellDef="let element" > {{element.smsOwner.profile.name}}{{element.smsOwner.profile.prename}} </mat-cell>
+                
+            </ng-container>            
             <ng-container matColumnDef="requestDate">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Request Date </mat-header-cell>
                 <mat-cell *matCellDef="let element">{{element.createdAt | date: 'dd/MM/yyyy'}} </mat-cell>
@@ -42,7 +43,7 @@
                             delete_sweep
                             </span>
                     </button>
-                </mat-cell>
+                 </mat-cell>
             </ng-container>
  
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

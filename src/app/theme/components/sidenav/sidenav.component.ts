@@ -3,6 +3,9 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { AppSettings } from '../../../app.settings';
 import { Settings } from '../../../app.settings.model';
 import { MenuService } from '../menu/menu.service';
+import { UsersService } from 'src/app/services/users.service';
+import jwt_decode from "jwt-decode";
+
 
 @Component({
   selector: 'app-sidenav',
@@ -15,13 +18,29 @@ export class SidenavComponent implements OnInit {
   public psConfig: PerfectScrollbarConfigInterface = {
     wheelPropagation:true
   };
+  public dataSource: any;
+  public data: any;
   public menuItems:Array<any>;
   public settings: Settings;
-  constructor(public appSettings:AppSettings, public menuService:MenuService){
+  constructor(public appSettings:AppSettings, public menuService:MenuService,public UserService: UsersService){
       this.settings = this.appSettings.settings; 
   }
 
   ngOnInit() {
+    let token = localStorage.getItem('token');
+    var decoded = jwt_decode(token);
+    console.log(decoded);
+     this.UserService.getUser(JSON.parse(JSON.stringify(decoded))._id,).subscribe(res => {
+      
+      this.dataSource=(res);
+      
+         this.data=this.dataSource;
+         console.log(this.data.profile.gender);
+         
+         
+         
+   
+     })
     this.menuItems = this.menuService.getVerticalMenuItems();    
   }
 

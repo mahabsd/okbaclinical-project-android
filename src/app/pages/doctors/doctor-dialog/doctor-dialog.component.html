@@ -15,9 +15,7 @@
                         <mat-datepicker-toggle matSuffix [for]="birthday"></mat-datepicker-toggle>
                         <mat-datepicker #birthday></mat-datepicker>
                     </mat-form-field>
-                    <input type="file" (input)="selectImage($event)" accept="image/*">
-
-                    <button (click)="submit()"> submit</button>
+                   
                 </div>
             </mat-tab>
             <mat-tab label="Work" formGroupName="work">
