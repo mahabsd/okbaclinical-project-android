@@ -35,7 +35,7 @@ export class SmsSendComponent implements OnInit {
   ngOnInit() {
     this.formSms = new FormGroup({
       status: new FormControl(''),
-     
+      smsOwner: new FormControl(''),
       userOwner: new FormControl(''),
       contacts: new FormGroup({
         phone: new FormControl(''),
@@ -54,7 +54,6 @@ export class SmsSendComponent implements OnInit {
     var decoded = jwt_decode(token);
     console.log(this.formSms);
     this.formSms.patchValue({
-    
       userOwner: JSON.parse(JSON.stringify(decoded))._id,
       status: "envoyé"
 

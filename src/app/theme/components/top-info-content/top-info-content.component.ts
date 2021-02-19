@@ -1,15 +1,16 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Input, Output, EventEmitter  } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { environment } from 'src/environments/environment';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { emailValidator } from '../../utils/app-validators';
-
+import { UsersService } from 'src/app/services/users.service';
+import jwt_decode from "jwt-decode";
 @Component({
   selector: 'app-top-info-content',
   templateUrl: './top-info-content.component.html',
   styleUrls: ['./top-info-content.component.scss']
 })
 export class TopInfoContentComponent implements OnInit {
+  
+  public data: any;
   @Input('showInfoContent') showInfoContent:boolean = false;
   @Output() onCloseInfoContent: EventEmitter<any> = new EventEmitter();
   contactForm: FormGroup;
@@ -22,16 +23,27 @@ export class TopInfoContentComponent implements OnInit {
     { name: 'Updates', checked: false },
     { name: 'Settings', checked: true }
   ]
-  usersUrl: string = environment.basUrl;
-
-  constructor(private http: HttpClient) { }
+  constructor(public UserService: UsersService,public formBuilder: FormBuilder) { }
 
   ngOnInit() {
-
-    this.contactForm = new FormGroup({
-      from:  new FormControl('',[  Validators.required]),
-      to:  new FormControl('',[  Validators.required]),
-      message:  new FormControl('',[  Validators.required]),
+    let token = localStorage.getItem('token');
+    var decoded = jwt_decode(token);
+    console.log(decoded);
+     this.UserService.getUser(JSON.parse(JSON.stringify(decoded))._id,).subscribe(res => {
+      
+      this.data=(res);
+      
+      console.log(res);
+         console.log(this.data);
+         
+         
+         
+   
+     })
+    this.contactForm = this.formBuilder.group({
+      email: ['', Validators.compose([Validators.required, emailValidator])],
+      subject: ['', Validators.required],
+      message: ['', Validators.required]
     });
   }
 
@@ -44,15 +56,5 @@ export class TopInfoContentComponent implements OnInit {
   public closeInfoContent(event){
     this.onCloseInfoContent.emit(event);
   }
-
-
-  sendSms(data) {
-    //console.log(data);
-    return this.http.post(this.usersUrl + "sms", data ).subscribe(schedule => {
-      // this.getAllSchedules()
-    });
-  }
-  
-
 
 }

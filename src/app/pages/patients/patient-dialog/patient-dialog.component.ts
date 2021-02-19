@@ -72,7 +72,7 @@ export class PatientDialogComponent implements OnInit {
   }
  
   openSnackBarUpdate() {
-    let message = "Sms sent & added successfully"
+    let message = "patient added successfully"
 let action = "Annuler"
     this.snackBar.open(message, action, {
       duration: 2000,

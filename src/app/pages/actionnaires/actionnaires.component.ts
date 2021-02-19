@@ -108,6 +108,7 @@ export class ActionnairesComponent implements OnInit {
       data: actionnaire
     });
     dialogRef.afterClosed().subscribe(sms => {
+      console.log(sms);
       
       if (sms) {
         delete sms._id; 

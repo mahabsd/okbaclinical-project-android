@@ -5,36 +5,18 @@
     [hasBgImage]="true" 
     [class]="'pb-4'"></app-content-header>
 
-<div fxLayout="row wrap" class="p-2"> 
+<div fxLayout="row wrap" class="p-2" [dataSource]="data"> 
   <div fxFlex="100" fxFlex.sm="35" fxFlex.md="30" fxFlex.lg="25" class="p-2">
     <mat-card>
-      <img mat-card-image src="assets/img/users/user-orig.png" alt="Photo 1">
+      <img mat-card-image src="{{data.profile.image}}" alt="Photo 1">
       <mat-card-content>
-          <h2 class="text-center">Emilio Verdines</h2>
-          <h3 class="text-center primary-color">Web Developer</h3>
-          <h4 class="secondary-text-color py-1">About:</h4>
-          <p class="text-justify">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <div fxLayoutAlign="end center">
-              <a href="javascript:void(0);" mat-stroked-button color="primary">
-                  More <mat-icon>arrow_right_alt</mat-icon>
-              </a> 
-          </div>          
+          <h2 class="text-center">{{data.profile.name}} {{data.profile.surname}}</h2>
+          <h3 class="text-center primary-color">{{data.work.company}}</h3>
+          <h4 class="secondary-text-color py-1">{{data.work.role}}</h4>
+                 
       </mat-card-content>
       <mat-divider></mat-divider>
-      <div class="py-1">
-        <div fxLayoutAlign="space-between center">
-          <div>Followers:</div>
-          <strong class="d-inline-block">675</strong>
-        </div>
-        <div fxLayoutAlign="space-between center" class="mt-2">
-          <div>Following:</div>
-          <strong class="d-inline-block">428</strong>
-        </div>
-        <div fxLayoutAlign="space-between center" class="mt-2">
-          <div>Projects:</div>
-          <strong class="d-inline-block">27</strong>
-        </div>
-      </div>      
+         
       <mat-divider></mat-divider>
 
       <mat-card-actions  class="text-center py-1"> 

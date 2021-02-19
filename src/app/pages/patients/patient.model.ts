@@ -1,6 +1,9 @@
 export class Patient {
   _id: string; 
   cin: string;
+  status: string; 
+  userOwner:string;
+  smsOwner:string;
   dateDentre: string;
   service: string;
   description: string;  
