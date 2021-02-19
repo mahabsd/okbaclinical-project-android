@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent } from 'angular-calendar';
-import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours } from 'date-fns';
+import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, parseISO } from 'date-fns';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ScheduleDialogComponent } from './schedule-dialog/schedule-dialog.component';
@@ -9,6 +9,7 @@ import { Settings } from '../../app.settings.model';
 import { Subject } from 'rxjs';
 import { blockTransition } from '../../theme/utils/app-animation';
 import { SchedulesService } from 'src/app/services/schedule.service';
+import jwt_decode from "../../../../node_modules/jwt-decode";
 
 const colors: any = {
   red: {
@@ -56,9 +57,12 @@ export class ScheduleComponent implements OnInit {
   events: CalendarEvent[] = [];
   refresh: Subject<any> = new Subject();
 
-
+  token = localStorage.getItem('token');
+  decoded = jwt_decode(this.token);
+  userId = JSON.parse(JSON.stringify(this.decoded))._id;
   public settings: Settings;
   schedules: any;
+  tab = [];
   constructor(public appSettings: AppSettings,
     public dialog: MatDialog,
     public snackBar: MatSnackBar, public scheduleService: SchedulesService) {
@@ -83,32 +87,29 @@ export class ScheduleComponent implements OnInit {
 
   }
   public getAllSchedules(): void {
-    var response: CalendarEvent[];
-    //for show spinner each time
+    this.schedules = null; //for show spinner each time
     this.scheduleService.getAllSchedules().subscribe((schedule: CalendarEvent[]) => {
-      schedule.forEach(element => {
-        element.color= colors.blue,
-        element.actions= this.actions
-      })
-      this.events=schedule;
-        console.log(this.events);
-       
-      // console.log("nidhal"+this.events);
-    });
-    // console.log("hello get" +this.schedules);
+      this.tab = []
+      schedule.forEach((event: any) => {
+        if (event.userOwner == this.userId) {
+          event.start = new Date(event.start)
+          event.actions = this.actions;
+          this.tab.push(event);
 
+        }
+      })
+      this.events = this.tab;
+    })
   }
   public addSchedule(schedule) {
     this.scheduleService.addSchedule(schedule).subscribe(schedule => {
       this.getAllSchedules()
-      console.log("hello" + schedule);
 
     });
   }
   public updateSchedule(schedule) {
     this.scheduleService.updateSchedule(schedule._id, schedule).subscribe(schedule => {
       this.getAllSchedules();
-      console.log("hello" + schedule);
     });
   }
 
@@ -122,12 +123,7 @@ export class ScheduleComponent implements OnInit {
       if (result) {
         if (!result.isEdit) {
 
-          // console.log("close 1"+ JSON.stringify(actionnaire));
           this.addSchedule(result)
-          // result.color = colors.blue;
-          // result.actions = this.actions;
-          // this.events.push(result);
-
         } else {
 
           this.updateSchedule(result);

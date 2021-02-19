@@ -5,6 +5,9 @@ import { Settings } from '../../../app.settings.model';
 import { CongeService } from 'src/app/services/conge.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import jwt_decode from "../../../../../node_modules/jwt-decode";
+import { LoginService } from 'src/app/services/login.service';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-filtering',
@@ -13,20 +16,60 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 export class FilteringComponent {
   public displayedColumns = ['user', 'requestDate', 'dateDebut', 'dateFin', 'daysNumber', 'motif', 'status', 'respond'];
   public dataSource: any;
+  public data: MatTableDataSource<Element>;
   public settings: Settings;
-
-  constructor(public appSettings: AppSettings, private tablesService: CongeService, public snackBar: MatSnackBar, public dialog: MatDialog) {
+  token: string;
+  decoded: any;
+  userId: any;
+  form = new FormGroup({
+    _id: new FormControl(''),
+    username: new FormControl('',),
+    password: new FormControl('',),
+    profile: new FormGroup({
+      name: new FormControl(''),
+      surname: new FormControl(''),
+      birthday: new FormControl(''),
+      gender: new FormControl(''),
+    }),
+    work: new FormGroup({
+      company: new FormControl(''),
+      roles: new FormControl([]),
+      soldeConge: new FormControl('')
+    }),
+    contacts: new FormGroup({
+      email: new FormControl('',),
+      phone: new FormControl(''),
+      address: new FormControl(''),
+    }),
+    social: new FormGroup({
+      facebook: new FormControl(''),
+      twitter: new FormControl(''),
+      google: new FormControl('')
+    }),
+    settings: new FormGroup({
+      registrationDate: new FormControl(''),
+      joinedDate: new FormControl(''),
+      bgColor: new FormControl(''),
+    })
+  });
+  soldeConge: any;
+  userOwner: Object;
+  user: any;
+  
+  constructor(public appSettings: AppSettings,
+    private tablesService: CongeService,
+    public snackBar: MatSnackBar,
+    public dialog: MatDialog,
+    public loginService: LoginService) {
     this.settings = this.appSettings.settings;
     this.tablesService.getAllconges().subscribe(res => {
       this.dataSource = res;
-      console.log(this.dataSource);
-
-
+      this.data   = new MatTableDataSource<Element>( this.dataSource)
     })
   }
 
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.data.filter = filterValue.trim().toLowerCase();
   }
 
   //approve request
@@ -105,16 +148,33 @@ export class FilteringComponent {
         var formconge = ({
           status: JSON.parse(JSON.stringify(statut)),
         });
+        this.token = localStorage.getItem('token');
+        this.decoded = JSON.parse(JSON.stringify(jwt_decode(this.token)));
+        this.userId = this.decoded._id;
+        this.soldeConge = this.decoded.soldeConge;
+        this.loginService.getUser(this.userId).subscribe(user =>{
+          this.user = user;
+          this.form.patchValue(this.user);
+          console.log(this.form.value);
+          this.form.patchValue({
+            work :{
+              soldeConge: (this.soldeConge - (conge.nbreJours) )
+            }
+          }) 
+          console.log(this.form);
+          this.loginService.updateUserConge(this.userId, this.form.value).subscribe(res => {
+            console.log(res);
+          })
+        })
         break;
       default:
         break;
     }
-    console.log((conge.status));
-    console.log((formconge));
+
     this.tablesService.updateconge(conge._id, formconge).subscribe(conge => {
-      console.log((conge));
       this.tablesService.getAllconges().subscribe(res => {
         this.dataSource = res;
+        this.data   = new MatTableDataSource<Element>( this.dataSource)
 
       })
       let message = "demande congé validée ";
@@ -137,6 +197,7 @@ export class FilteringComponent {
       console.log((conge));
       this.tablesService.getAllconges().subscribe(res => {
         this.dataSource = res;
+        this.data   = new MatTableDataSource<Element>( this.dataSource)
 
       })
       let message = "demande congé annulé ";
@@ -174,6 +235,8 @@ export class FilteringComponent {
           console.log((conge));
           this.tablesService.getAllconges().subscribe(res => {
             this.dataSource = res;
+                  this.data   = new MatTableDataSource<Element>( this.dataSource)
+
           })
           let message = "request deleted";
           let action = "close"

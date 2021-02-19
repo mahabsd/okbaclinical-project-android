@@ -42,18 +42,25 @@ export class UsersComponent implements OnInit {
         this.users = null; //for show spinner each time
         this.UserService.getAllUsers().subscribe(res => {
             this.users = res;
-            console.log(res);
-            
-
+           
+           this.users.forEach(user => {
+            if (user.profile.image.indexOf('http://localhost:3000/api/') > -1)
+            {
+              console.log("") 
+            }else{
+                user.profile.image = "http://localhost:3000/api/"+ user.profile.image ;
+            }
+           });
+        
         })
     }
-    public addUser(user: User) {
+    public addUser(user) {
         this.UserService.addUser(user).subscribe(res =>
             this.getUsers()
         )
    }
-    public updateUser(user: User) {
-        this.UserService.updateUser(user._id, user).subscribe(user => this.getUsers());
+    public updateUser(user) {
+        this.UserService.updateUser(JSON.parse(user.get("_id")), user).subscribe(user => this.getUsers());
     }
 
     public changeView(viewType) {
@@ -72,14 +79,16 @@ export class UsersComponent implements OnInit {
             data: user
         });
         dialogRef.afterClosed().subscribe(formData => {
-            let use = formData
+            let user = formData
 
-            if (use) {
-               if (use._id) {
-                this.updateUser(use) 
+            if (formData) {
+               if (JSON.parse(user.get("_id"))!= '') {
+                   console.log(formData);
+                   
+                this.updateUser(formData);
                }else{
-               // formData.delete("_id");
-                this.addUser(use);
+               formData.delete("_id");
+                this.addUser(formData);
                }
             }
         });
