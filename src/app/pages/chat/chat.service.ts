@@ -32,9 +32,5 @@ export class ChatService {
     return this.httpClient.get(this.url + '/chat/deleteChat/' + chatId);
   }
 
-  uploadFiles(files) {
-    return this.httpClient.post(this.url + '/chat/uploadmultiple/', files);
-
-  }
 }
 

@@ -77,6 +77,7 @@ export class ChatComponent implements OnInit {
       this.currentChat = res
 
       this.talks = this.listeMessages = res.messages;
+      console.log(this.talks);
 
       if (window.innerWidth <= 768) {
         this.sidenav.close();
@@ -85,13 +86,15 @@ export class ChatComponent implements OnInit {
   }
   sendMessage() {
     this.formData = new FormData();
+    console.log("first " + this.file);
 
     if (this.file != null) {
       this.formData.append('myFiles', this.file, this.file.name);
+
     }
 
     Object.keys(this.messageForm.value).forEach(fieldName => {
-      this.formData.append(fieldName,this.messageForm.value[fieldName]);
+      this.formData.append(fieldName, this.messageForm.value[fieldName]);
     })
     // this.formData.append('content', this.messageForm.value.content);
     // this.formData.append('logo', this.messageForm.value.logo);
@@ -109,11 +112,14 @@ export class ChatComponent implements OnInit {
         chatContainer.scrollTop = chatContainer.scrollHeight + newChatTextHeight.clientHeight;
       });
     }
+    console.log("second " + this.file);
+
     this.myFiles = '';
     this.messageForm.patchValue({
       content: '',
       files: '',
     });
+    this.file = null
   }
 
   selectFile(event) {
@@ -140,5 +146,5 @@ export class ChatComponent implements OnInit {
   }
 
 
- 
+
 }
