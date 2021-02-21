@@ -36,8 +36,8 @@
             <mat-card fxLayout="row" class="p-0 doctor-content">  
                 <div fxFlex="35" fxLayout="column" fxLayoutAlign="center center" class="bg-primary" [ngClass]="(doctor.settings.isDeleted) ? '' : doctor.settings.bgColor">
                     <div class="doctor-img">
-                        <img *ngIf="doctor.profile.image" [src]="doctor.profile.image" class="transition mb-2" [class.blocked]="doctor.settings.isDeleted">
-                        <img *ngIf="!doctor.profile.image" src="assets/img/doctors/default-doctor.jpg" class="transition mb-2" [class.blocked]="doctor.settings.isDeleted">  
+                        <!-- <img *ngIf="doctor.profile.image" [src]="doctor.profile.image" class="transition mb-2" [class.blocked]="doctor.settings.isDeleted"> -->
+                        <img  src="assets/img/doctors/default-doctor.jpg" class="transition mb-2" [class.blocked]="doctor.settings.isDeleted">  
                         <mat-icon *ngIf="doctor.settings.isDeleted" class="warn-color block-icon">block</mat-icon>
                         <!-- <div fxLayout="row" fxLayoutAlign="center center" class="social-icons">
                             <a [href]="'https://www.facebook.com/'+doctor.social.facebook" target="_blank">

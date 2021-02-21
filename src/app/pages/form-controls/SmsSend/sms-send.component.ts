@@ -16,20 +16,12 @@ export class SmsSendComponent implements OnInit {
     this.formSms = new FormGroup({
       status: new FormControl(''),
       userOwner: new FormControl(''),
-     
       contacts: new FormGroup({
         phone: new FormControl(''),
         message: new FormControl(''),
-        type:new FormControl(''),
-
+        type: new FormControl(''),
       }),
-     
-     
-
     })
-
-
-   
   }
 
   ngOnInit() {
@@ -40,43 +32,29 @@ export class SmsSendComponent implements OnInit {
       contacts: new FormGroup({
         phone: new FormControl(''),
         message: new FormControl(''),
-        type:new FormControl(''),
-
+        type: new FormControl(''),
       }),
-     
-     
 
     })
   }
-  // add maintenance
+  // add sms
   onSubmit() {
     let token = localStorage.getItem('token');
     var decoded = jwt_decode(token);
-    console.log(this.formSms);
     this.formSms.patchValue({
       userOwner: JSON.parse(JSON.stringify(decoded))._id,
       status: "envoyé"
 
     });
-    console.log(this.formSms);
     this.smsService.addSms(this.formSms.value).subscribe(sms => {
-      console.log("hello" + sms);
-
     });
-    this.smsService.SendSms(this.formSms.value).subscribe(sms => {
-      console.log("hello" + sms);
-      console.log("POST call successful value returned in body", );
+    this.smsService.SendSms(this.formSms.value.contacts.type, this.formSms.value.contacts.phone, this.formSms.value.contacts.message).subscribe(sms => {
       let message = "Sms added successfully";
-      ///action va etre changé
       let action = "close"
       this.snackBar.open(message, action, {
         duration: 2000,
       });
-   
     });
-       
- 
-
   }
 
 }

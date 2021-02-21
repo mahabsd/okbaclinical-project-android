@@ -1,20 +1,40 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core'; 
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class TodoService {
+  usersUrl: string = environment.basUrl;
 
-  private _todoList = [
-    { text: 'Check me out' },
-    { text: 'Curabitur dignissim nunc a tellus euismod, quis pretium ipsum convallis'},
-    { text: 'Vivamus dapibus pulvinar ipsum, sit amet elementum sapien tincidunt non'},
-    { text: 'Praesent viverra nisl a pharetra viverra'},
-    { text: 'Lorem ipsum dolor sit amet, possit denique oportere at his, etiam corpora deseruisse te pro' },
-    { text: 'Ex has semper alterum, expetenda dignissim' },
-    { text: 'Nulla nisl urna, lobortis in leo vel, porta faucibus nulla'},
-    { text: 'Simul erroribus ad usu' }
-  ];
-
-  getTodoList() {
-    return this._todoList;
+  constructor(private http: HttpClient) {
+   
   }
-}
+ 
+  addTodo(data) {
+    //console.log(data);
+    return this.http.post(this.usersUrl + "todos/todo/add/", data );
+  }
+  getTodo(id) {
+    return this.http.get(this.usersUrl + "todos/todo/" + id,);
+  }
+  updateTodo(id, data) {
+    return this.http.put(this.usersUrl + "todos/todo/update/"+ id, data, );
+  }
+  deleteTodo(id) {
+    return this.http.delete(this.usersUrl + "todos/todo/delete/" + id, );
+  }
+  getAllTodos() {
+    return this.http.get(this.usersUrl + "todos/getAllTodos");
+  }
+
+
+
+
+
+
+
+
+
+
+
+} 

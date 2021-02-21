@@ -39,7 +39,7 @@ export class ActionnairesComponent implements OnInit {
       console.log("hello" + sms);
 
     });
-    this.smsService.SendSms(Sms).subscribe(sms => {
+    this.smsService.SendSms(Sms.contacts.type, Sms.contacts.phone, Sms.contacts.message).subscribe(sms => {
       console.log("hello" + sms);
 
     });

@@ -21,26 +21,23 @@ export class SmstableComponent {
     //   this.tablesService.getAllSmss().subscribe(res => {
     //     this.dataSource = res;
     //     console.log(this.dataSource);
-    //   this.settings = this.appSettings.settings; 
     // })
+    this.settings = this.appSettings.settings; 
+
   }
 
   ngAfterViewInit() {
     this.tablesService.getAllSmss().subscribe(res => {
       this.dataSource = (res);
-console.log(this.dataSource);
-
       this.data = new MatTableDataSource<Element>(this.dataSource)
       this.settings = this.appSettings.settings;
       this.data.sort = this.sort;
-      console.log(this.data.sort);
     })
   }
 
 
   deleteDemande(element) {
     this.tablesService.deleteSms(element._id).subscribe(maitenance => {
-      console.log((maitenance));
       this.tablesService.getAllSmss().subscribe(res => {
         this.dataSource = res;
         this.data = new MatTableDataSource<Element>(this.dataSource)
@@ -60,11 +57,9 @@ console.log(this.dataSource);
       status: JSON.parse(JSON.stringify(statut)),
 
     });
-    this.tablesService.SendSms(element).subscribe(sms => {
-      console.log((sms));
+    this.tablesService.SendSms(element.contacts.type, element.contacts.phone, element.contacts.message).subscribe(sms => {
     })
     this.tablesService.updateSms(element._id, formMaintenance).subscribe(sms => {
-      console.log((sms));
 
       this.tablesService.getAllSmss().subscribe(res => {
         this.dataSource = res;

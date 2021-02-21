@@ -28,24 +28,22 @@
         </div>                          
     </div>
     <div fxFlex="100" fxFlex.gt-sm="35" fxFlex.sm="50" ngClass.xs="pb-4" class="top-contact-form col">
-        <form [formGroup]="contactForm" (ngSubmit)="onContactFormSubmit(contactForm.value)" fxLayout="row wrap" class="px-2">            
+        <form  [formGroup]="formSms" (ngSubmit)="onSubmit()" fxLayout="row wrap" class="px-2">            
+        <form formGroupName="contacts" fxLayout="row wrap" class="px-2">
             <div fxFlex="100" class="">
                 <mat-form-field class="w-100">
-                    <input matInput placeholder="Email" formControlName="email" required>
-                    <mat-error *ngIf="contactForm.controls.email.errors?.required">Email is required</mat-error>
-                    <mat-error *ngIf="contactForm.controls.email.hasError('invalidEmail')">Invalid email address</mat-error>
+                    <input matInput placeholder="phone number" formControlName="phone" >
                 </mat-form-field>
             </div>
+            <mat-form-field>
+                <mat-select placeholder="language" formControlName="type">
+                    <mat-option value="0">Francais</mat-option>
+                    <mat-option value="1">Arabe</mat-option>
+                </mat-select>
+            </mat-form-field>
             <div fxFlex="100" class="">
                 <mat-form-field class="w-100">
-                    <input matInput placeholder="Subject" formControlName="subject" required>
-                    <mat-error *ngIf="contactForm.controls.subject.errors?.required">Subject is required</mat-error>
-                </mat-form-field>
-            </div>
-            <div fxFlex="100" class="">
-                <mat-form-field class="w-100">
-                    <input matInput placeholder="Message" formControlName="message" required>
-                    <mat-error *ngIf="contactForm.controls.message.errors?.required">Message is required</mat-error>
+                    <input matInput placeholder="Message" formControlName="message" >
                 </mat-form-field>
             </div> 
             <div class="w-100 mt-1 text-center">
@@ -53,13 +51,16 @@
                     <mat-icon class="mr-2">send</mat-icon>Send
                 </button>
             </div> 
+
+        </form>
+       
         </form>
     </div>
-    <div fxFlex="50" fxFlex.gt-sm="25" fxShow="false" fxShow.gt-xs class="py-3 col">
+    <!-- <div fxFlex="50" fxFlex.gt-sm="25" fxShow="false" fxShow.gt-xs class="py-3 col">
         <div fxLayout="column" fxLayoutAlign="center start" class="controls secondary-text-color">
             <mat-checkbox *ngFor="let control of controls" class="my-1" [(ngModel)]="control.checked" labelPosition="after">
                 {{control.name}}
             </mat-checkbox>
         </div>
-    </div>    
+    </div>     -->
 </div>

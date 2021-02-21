@@ -70,9 +70,9 @@
                                     <span [ngClass]="(talk.candidat !== userId) ? 'bg-primary' : 'bg-accent'"
                                     *ngIf="talk.content != undefined && talk.content != '' " >{{talk.content}}</span>
                                 </p>
-                                <p matLine class="message" *ngIf="talk.files">
+                                <p matLine class="message" *ngIf="talk.files.length > 0">
                                     <a [href]="talk.files"
-                                        [ngClass]="(talk.candidat !== userId) ? 'bg-primary' : 'bg-accent'">{{talk.files}}</a>
+                                        [ngClass]="(talk.candidat !== userId) ? 'bg-primary' : 'bg-accent'">{{talk.files | slice:-10}}</a>
                                 </p>
                                 <p matLine class="message-date">
                                     <small *ngIf="(talk.content != undefined && talk.content != '' )|| talk.files.length >0" >{{talk.createdDate | date:"dd MMMM, yyyy 'at' HH:mm"}}</small>

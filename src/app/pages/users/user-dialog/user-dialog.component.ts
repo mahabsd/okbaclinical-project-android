@@ -56,11 +56,11 @@ export class UserDialogComponent implements OnInit {
         phone: new FormControl(''),
         address: new FormControl(''),
       }),
-      social: new FormGroup({
-        facebook: new FormControl(''),
-        twitter: new FormControl(''),
-        google: new FormControl('')
-      }),
+      // social: new FormGroup({
+      //   facebook: new FormControl(''),
+      //   twitter: new FormControl(''),
+      //   google: new FormControl('')
+      // }),
       settings: new FormGroup({
         // isActive: new FormControl(''),
         // isDeleted: new FormControl(''),
