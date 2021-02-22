@@ -8,10 +8,13 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import jwt_decode from "../../../../../node_modules/jwt-decode";
 import { LoginService } from 'src/app/services/login.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MessagesService } from 'src/app/theme/components/messages/messages.service';
 
 @Component({
   selector: 'app-filtering',
-  templateUrl: './filtering.component.html'
+  templateUrl: './filtering.component.html',
+  providers: [ MessagesService ]
+
 })
 export class FilteringComponent {
   public displayedColumns = ['user', 'requestDate', 'dateDebut', 'dateFin', 'daysNumber', 'motif', 'status', 'respond'];
@@ -55,16 +58,17 @@ export class FilteringComponent {
   soldeConge: any;
   userOwner: Object;
   user: any;
-  
+
   constructor(public appSettings: AppSettings,
     private tablesService: CongeService,
     public snackBar: MatSnackBar,
     public dialog: MatDialog,
-    public loginService: LoginService) {
+    public loginService: LoginService,
+    public messagesService : MessagesService) {
     this.settings = this.appSettings.settings;
     this.tablesService.getAllconges().subscribe(res => {
       this.dataSource = res;
-      this.data   = new MatTableDataSource<Element>( this.dataSource)
+      this.data = new MatTableDataSource<Element>(this.dataSource)
     })
   }
 
@@ -152,20 +156,25 @@ export class FilteringComponent {
         this.decoded = JSON.parse(JSON.stringify(jwt_decode(this.token)));
         this.userId = this.decoded._id;
         this.soldeConge = this.decoded.soldeConge;
-        this.loginService.getUser(this.userId).subscribe(user =>{
+        this.loginService.getUser(this.userId).subscribe(user => {
           this.user = user;
           this.form.patchValue(this.user);
-          console.log(this.form.value);
           this.form.patchValue({
-            work :{
-              soldeConge: (this.soldeConge - (conge.nbreJours) )
+            work: {
+              soldeConge: (this.soldeConge - (conge.nbreJours))
             }
-          }) 
-          console.log(this.form);
+          })
           this.loginService.updateUserConge(this.userId, this.form.value).subscribe(res => {
-            console.log(res);
           })
         })
+        let message = {
+          reciever: conge.userOwner._id,
+          text: "your vacation leaves has been approved",
+          userOwner: this.userId,
+        }
+       this.messagesService.sendNotification(message).subscribe(res => 
+        console.log(res + "notifications")
+        );
         break;
       default:
         break;
@@ -174,7 +183,7 @@ export class FilteringComponent {
     this.tablesService.updateconge(conge._id, formconge).subscribe(conge => {
       this.tablesService.getAllconges().subscribe(res => {
         this.dataSource = res;
-        this.data   = new MatTableDataSource<Element>( this.dataSource)
+        this.data = new MatTableDataSource<Element>(this.dataSource)
 
       })
       let message = "demande congé validée ";
@@ -194,10 +203,9 @@ export class FilteringComponent {
 
     });
     this.tablesService.updateconge(conge._id, formconge).subscribe(conge => {
-      console.log((conge));
       this.tablesService.getAllconges().subscribe(res => {
         this.dataSource = res;
-        this.data   = new MatTableDataSource<Element>( this.dataSource)
+        this.data = new MatTableDataSource<Element>(this.dataSource)
 
       })
       let message = "demande congé annulé ";
@@ -205,11 +213,7 @@ export class FilteringComponent {
       this.snackBar.open(message, action, {
         duration: 2000,
       });
-
-
     });
-
-
   }
 
 
@@ -232,10 +236,9 @@ export class FilteringComponent {
       if (confirm) {
         //change status depending on the role
         this.tablesService.deleteconge(conge._id).subscribe(conge => {
-          console.log((conge));
           this.tablesService.getAllconges().subscribe(res => {
             this.dataSource = res;
-                  this.data   = new MatTableDataSource<Element>( this.dataSource)
+            this.data = new MatTableDataSource<Element>(this.dataSource)
 
           })
           let message = "request deleted";

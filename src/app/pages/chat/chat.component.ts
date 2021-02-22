@@ -96,9 +96,6 @@ export class ChatComponent implements OnInit {
     Object.keys(this.messageForm.value).forEach(fieldName => {
       this.formData.append(fieldName, this.messageForm.value[fieldName]);
     })
-    // this.formData.append('content', this.messageForm.value.content);
-    // this.formData.append('logo', this.messageForm.value.logo);
-    // this.formData.append('candidat', this.messageForm.value.candidat);
 
     this.chatService.sendMessage(this.formData, this.conversation).subscribe((res) => {
     });

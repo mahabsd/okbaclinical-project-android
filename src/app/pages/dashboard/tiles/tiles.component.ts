@@ -3,6 +3,7 @@ import { ActionnairesService } from 'src/app/services/actionnaires.service';
 import { DoctorsService } from 'src/app/services/doctors.service';
 import { PatientsService } from 'src/app/services/patients.service';
 import { UsersService } from 'src/app/services/users.service';
+import jwt_decode from "../../../../../node_modules/jwt-decode";
 
 @Component({
   selector: 'app-tiles',
@@ -14,6 +15,9 @@ export class TilesComponent implements OnInit {
   public lengthAct;
   public lengthUsers;
   public lengthPatients;
+  public token = localStorage.getItem('token');
+  public decoded = JSON.parse(JSON.stringify(jwt_decode(this.token)));
+  public userId = this.decoded._id;
 
   constructor(private actionnairesService: ActionnairesService,
     private doctorsService: DoctorsService,
