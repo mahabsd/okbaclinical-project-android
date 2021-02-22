@@ -12,13 +12,11 @@ export class SmsService {
   }
 
   
-  SendSms(data) {
-    //console.log(data);
-    return this.http.get(this.usersUrl + "smsing/smssend/", data );
+  SendSms(lang, phone, message ) {
+    return this.http.get(this.usersUrl + "smsing/smssend/"+lang+"/"+phone+"/"+message);
   }
 
   addSms(data) {
-    //console.log(data);
     return this.http.post(this.usersUrl + "smsing/sms/add/", data );
   }
   getSms(id) {

@@ -1,8 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter  } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { emailValidator } from '../../utils/app-validators';
 import { UsersService } from 'src/app/services/users.service';
 import jwt_decode from "jwt-decode";
+import { SmsService } from 'src/app/services/sms.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-top-info-content',
   templateUrl: './top-info-content.component.html',
@@ -23,28 +25,26 @@ export class TopInfoContentComponent implements OnInit {
     { name: 'Updates', checked: false },
     { name: 'Settings', checked: true }
   ]
-  constructor(public UserService: UsersService,public formBuilder: FormBuilder) { }
+  formSms: FormGroup;
+  constructor(public UserService: UsersService,public smsService: SmsService , public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     let token = localStorage.getItem('token');
     var decoded = jwt_decode(token);
-    console.log(decoded);
      this.UserService.getUser(JSON.parse(JSON.stringify(decoded))._id,).subscribe(res => {
-      
-      this.data=(res);
-      
-      console.log(res);
-         console.log(this.data);
-         
-         
-         
-   
+     this.data=(res);
      })
-    this.contactForm = this.formBuilder.group({
-      email: ['', Validators.compose([Validators.required, emailValidator])],
-      subject: ['', Validators.required],
-      message: ['', Validators.required]
-    });
+     this.formSms = new FormGroup({
+      status: new FormControl(''),
+      smsOwner: new FormControl(''),
+      userOwner: new FormControl(''),
+      contacts: new FormGroup({
+        phone: new FormControl(''),
+        message: new FormControl(''),
+        type: new FormControl(''),
+      }),
+
+    })
   }
 
   public onContactFormSubmit(values:Object):void {
@@ -56,5 +56,22 @@ export class TopInfoContentComponent implements OnInit {
   public closeInfoContent(event){
     this.onCloseInfoContent.emit(event);
   }
+  public onSubmit() {
+    let token = localStorage.getItem('token');
+    var decoded = jwt_decode(token);
+    this.formSms.patchValue({
+      userOwner: JSON.parse(JSON.stringify(decoded))._id,
+      status: "envoyé"
 
+    });
+    this.smsService.addSms(this.formSms.value).subscribe(sms => {
+    });
+    this.smsService.SendSms(this.formSms.value.contacts.type, this.formSms.value.contacts.phone, this.formSms.value.contacts.message).subscribe(sms => {
+      let message = "Sms added successfully";
+      let action = "close"
+      this.snackBar.open(message, action, {
+        duration: 2000,
+      });
+    });
+  }
 }

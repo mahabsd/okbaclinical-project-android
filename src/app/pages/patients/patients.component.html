@@ -36,8 +36,7 @@
             <mat-card fxLayout="row" class="p-0 patient-content">  
                 <div fxFlex="35" fxLayout="column" fxLayoutAlign="center center" class="bg-primary" [ngClass]="(patient.settings.isDeleted) ? '' : patient.settings.bgColor">
                     <div class="patient-img">
-                        <img *ngIf="patient.profile.image" [src]="patient.profile.image" class="transition mb-2" [class.blocked]="patient.settings.isDeleted">
-                        <img *ngIf="!patient.profile.image" src="assets/img/users/default-user.jpg" class="transition mb-2" [class.blocked]="patient.settings.isDeleted">  
+                        <img src="assets/img/users/default-user.jpg" class="transition mb-2" [class.blocked]="patient.settings.isDeleted">  
                         <mat-icon *ngIf="patient.settings.isDeleted" class="warn-color block-icon">block</mat-icon>
                         <!-- <div fxLayout="row" fxLayoutAlign="center center" class="social-icons">
                             <a [href]="'https://www.facebook.com/'+patient.social.facebook" target="_blank">
@@ -116,8 +115,7 @@
             <mat-card class="p-0 patient-content"> 
                 <div fxFlex="20" fxFlex.xs="30" fxLayout="column" fxLayoutAlign="center center" class="bg-primary" [ngClass]="(patient.settings.isDeleted) ? '' : patient.settings.bgColor">
                     <div class="patient-img">
-                        <img *ngIf="patient.profile.image" [src]="patient.profile.image" class="transition mb-2" [class.blocked]="patient.settings.isDeleted">
-                        <img *ngIf="!patient.profile.image" src="assets/img/users/default-user.jpg" class="transition mb-2" [class.blocked]="patient.settings.isDeleted">  
+                        <img  src="assets/img/users/default-user.jpg" class="transition mb-2" [class.blocked]="patient.settings.isDeleted">  
                         <mat-icon *ngIf="patient.settings.isDeleted" class="warn-color block-icon">block</mat-icon>
                         <!-- <div fxLayout="row" fxLayoutAlign="center center" class="social-icons">
                             <a [href]="'https://www.facebook.com/'+patient.social.facebook" target="_blank">

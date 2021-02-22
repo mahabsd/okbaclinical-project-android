@@ -34,7 +34,14 @@ export class DatepickerComponent implements OnInit {
     this.token = localStorage.getItem('token');
     this.decoded = jwt_decode(this.token);
     this.soldeConge = JSON.parse(JSON.stringify(this.decoded)).soldeConge;
-
+    this.form = new FormGroup({
+      nbreJours: new FormControl('',),
+      dateDebut: new FormControl('', [Validators.required]),
+      dateFin: new FormControl('', [Validators.required]),
+      motif: new FormControl('', [Validators.required]),
+      status: new FormControl('',),
+      userOwner: new FormControl(''),
+    });
   }
   //Datepicker start date
   startDate = new Date(1990, 0, 1);
@@ -91,26 +98,18 @@ export class DatepickerComponent implements OnInit {
         userOwner: JSON.parse(JSON.stringify(this.decoded))._id,
         status: JSON.parse(JSON.stringify(this.decoded)).roles[0].name,
       });
-      console.log(this.form.value);
-
       this.congeService.addconge(this.form.value).subscribe(
         (val) => {
-          console.log(val);
-          
           let message = "your request has been sent successfully";
           let action = "close"
           this.snackBar.open(message, action, {
             duration: 2000,
           });
-         this.ngOnInit();
-
+          this.ngOnInit()
         },
         () => {
           console.log("The POST observable is now completed.");
-
         });
-
-
     } else {
       this.validated = true;
       //document.getElementById('validated').style.display = 'block';

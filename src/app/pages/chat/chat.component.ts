@@ -36,7 +36,7 @@ export class ChatComponent implements OnInit {
   decoded = JSON.parse(JSON.stringify(jwt_decode(this.token)))
   userId = this.decoded._id
   file;
-  formData = new FormData();
+  formData;
   myFiles: any;
 
   constructor(public appSettings: AppSettings, private socket: Socket, public chatService: ChatService, public auth: LoginService) {
@@ -52,18 +52,15 @@ export class ChatComponent implements OnInit {
     this.messageForm = new FormGroup({
       content: new FormControl(''),
       candidat: new FormControl(this.decoded._id),
-      name: new FormControl(this.decoded.username),
       logo: new FormControl(this.decoded.user.profile.image)
     });
 
     this.socket.on('newUserAdded', () => {
       this.auth.getAllUsers().subscribe((res: any[]) => {
         this.chats = this.listeCandidats = res.filter(obj => obj._id !== this.userId);
-        // console.log("listeCandidats "+this.listeCandidats)
       });
     });
     this.auth.getAllUsers().subscribe((res: any) => {
-      //  console.log(res);
       this.chats = this.listeCandidats = res.filter(obj => obj._id !== this.userId);
       this.clickUser(this.listeCandidats[0]._id);
     });
@@ -75,14 +72,12 @@ export class ChatComponent implements OnInit {
   clickUser(idCandidat) {
     this.chosenUser = idCandidat;
     this.chatService.getPrivateMessage(idCandidat, this.userId).subscribe((res: any) => {
-      console.log(res);
 
       this.conversation = res._id;
       this.currentChat = res
-      // console.log(this.currentChat._id)
 
       this.talks = this.listeMessages = res.messages;
-      //console.log(this.listeMessages);
+      console.log(this.talks);
 
       if (window.innerWidth <= 768) {
         this.sidenav.close();
@@ -90,25 +85,22 @@ export class ChatComponent implements OnInit {
     });
   }
   sendMessage() {
+    this.formData = new FormData();
+    console.log("first " + this.file);
 
     if (this.file != null) {
       this.formData.append('myFiles', this.file, this.file.name);
+
     }
 
-    // Object.keys(this.messageForm.value).forEach(fieldName => {
-    //   console.log(fieldName + " fieldName");
-    //   console.log(typeof this.messageForm.value[fieldName]);
-
-    //   this.formData.append(fieldName,this.messageForm.value[fieldName]);
-    // })
-    this.formData.append('content', this.messageForm.value.content);
-    this.formData.append('logo', this.messageForm.value.logo);
-    this.formData.append('candidat', this.messageForm.value.candidat);
-    this.formData.append('name', this.messageForm.value.name);
+    Object.keys(this.messageForm.value).forEach(fieldName => {
+      this.formData.append(fieldName, this.messageForm.value[fieldName]);
+    })
+    // this.formData.append('content', this.messageForm.value.content);
+    // this.formData.append('logo', this.messageForm.value.logo);
+    // this.formData.append('candidat', this.messageForm.value.candidat);
 
     this.chatService.sendMessage(this.formData, this.conversation).subscribe((res) => {
-      console.log(res);
-      
     });
 
     let chatContainer = document.querySelector('.chat-content');
@@ -120,14 +112,14 @@ export class ChatComponent implements OnInit {
         chatContainer.scrollTop = chatContainer.scrollHeight + newChatTextHeight.clientHeight;
       });
     }
+    console.log("second " + this.file);
+
     this.myFiles = '';
     this.messageForm.patchValue({
-      candidat: '',
       content: '',
-      logo: '',
       files: '',
-      name: ''
     });
+    this.file = null
   }
 
   selectFile(event) {
@@ -139,7 +131,6 @@ export class ChatComponent implements OnInit {
 
   deleteChat(chatId) {
     this.chatService.deleteChat(chatId).subscribe(res => {
-      console.log(res);
     })
   }
 
@@ -155,14 +146,5 @@ export class ChatComponent implements OnInit {
   }
 
 
-  //upload files :
-  // uploadFiles() {
-  //   if (this.file != null) {
-  //     this.formData.append('myFiles', this.file, this.file.name);
-  //   }
-  //   this.chatService.uploadFiles(this.formData).subscribe(files => {
-  //     console.log(files);
 
-  //   })
-  // }
 }

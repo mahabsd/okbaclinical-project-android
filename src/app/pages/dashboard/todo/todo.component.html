@@ -13,10 +13,10 @@
         </div>
         <div perfectScrollbar class="todo-list">
             <mat-selection-list>
-                <mat-list-option *ngFor="let item of getNotDeleted()" checkboxPosition="before" (mouseenter)="item.isActive=true" (mouseleave)="item.isActive=false">
+                <mat-list-option *ngFor="let item of todoList" checkboxPosition="before" (mouseenter)="item.isActive=true" (mouseleave)="item.isActive=false">
                     <div fxLayoutAlign="space-between center">
                         <span class="text-truncate">{{ item.text }}</span>
-                        <button mat-icon-button (click)="item.deleted = true" color="warn" *ngIf="item.isActive">
+                        <button mat-icon-button (click)="deleteTodo(item._id)" color="warn" *ngIf="item.isActive">
                             <mat-icon>delete_forever</mat-icon> 
                         </button>
                     </div>               

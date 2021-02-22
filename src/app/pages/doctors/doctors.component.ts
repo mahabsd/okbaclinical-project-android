@@ -24,7 +24,7 @@ export class DoctorsComponent implements OnInit {
   public viewType: string = 'grid';
   constructor(public appSettings: AppSettings,
     public dialog: MatDialog,
-    public doctorsService: DoctorsService,public smsService:SmsService , public snackBar: MatSnackBar) {
+    public doctorsService: DoctorsService, public smsService: SmsService, public snackBar: MatSnackBar) {
     this.settings = this.appSettings.settings;
   }
 
@@ -33,12 +33,10 @@ export class DoctorsComponent implements OnInit {
   }
   public AddetSendSms(Sms) {
     this.smsService.addSms(Sms).subscribe(sms => {
-      console.log("hello" + sms);
-
     });
-    this.smsService.SendSms(Sms).subscribe(sms => {
-      console.log("hello" + sms);
 
+
+    this.smsService.SendSms(Sms.contacts.type, Sms.contacts.phone, Sms.contacts.message).subscribe(sms => {
     });
   }
   public getDoctors(): void {
@@ -128,11 +126,13 @@ export class DoctorsComponent implements OnInit {
       data: Doctor
     });
     dialogRef.afterClosed().subscribe(sms => {
-      
-      if (sms) {
-        delete sms._id; 
-        // console.log("close 1"+ JSON.stringify(Doctor));
-        this.AddetSendSms(sms) 
+
+      var message = sms
+      if (message) {
+        delete message._id;
+
+        console.log(message + " hiiii from open dialog");
+        this.AddetSendSms(sms)
       }
     });
     this.showSearch = false;

@@ -43,8 +43,6 @@ export class PatientsComponent implements OnInit {
   public addPatient(patient: Patient) {
     this.patientsService.addPatient(patient).subscribe(patient => {
       this.getPatients();
-      console.log("hello" + patient);
-
     });
   }
   public updatePatient(Patient: Patient) {
@@ -63,11 +61,9 @@ export class PatientsComponent implements OnInit {
   }
   public AddetSendSms(Sms) {
     this.smsService.addSms(Sms).subscribe(sms => {
-      console.log("hello" + sms);
 
     });
-    this.smsService.SendSms(Sms).subscribe(sms => {
-      console.log("hello" + sms);
+    this.smsService.SendSms(Sms.contacts.type, Sms.contacts.phone, Sms.contacts.message).subscribe(sms => {
 
     });
   }
