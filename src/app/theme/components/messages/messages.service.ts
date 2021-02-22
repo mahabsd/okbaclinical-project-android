@@ -21,15 +21,17 @@ export class MessagesService {
     socket: any;
     constructor(private httpClient: HttpClient) {
         this.socket = io(this.url);
-       // this.decoded = jwt_decode(this.token);
-      }
+        // this.decoded = jwt_decode(this.token);
+    }
 
     public getMessages(): Array<Object> {
         return this.messages;
     }
-    public sendNotification(message, userOwner) {
-        return this.httpClient.post(this.url + '/notifications/send-notification/' + userOwner, message);
-      }
+    public sendNotification(message) {
+        return this.httpClient.post(this.url + '/notifications/send-notification/', message);
+    }
 
-
+    public getNotification() {
+        return this.httpClient.get(this.url + '/notifications/get-notification/');
+    }
 }
