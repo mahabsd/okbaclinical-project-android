@@ -118,8 +118,7 @@
             <mat-card class="p-0 actionnaire-content"> 
                 <div fxFlex="20" fxFlex.xs="30" fxLayout="column" fxLayoutAlign="center center" class="bg-primary" [ngClass]="(actionnaire.settings.isDeleted) ? '' : actionnaire.settings.bgColor">
                     <div class="actionnaire-img">
-                        <img *ngIf="actionnaire.profile.image" [src]="actionnaire.profile.image" class="transition mb-2" [class.blocked]="actionnaire.settings.isDeleted">
-                        <img *ngIf="!actionnaire.profile.image" src="assets/img/users/default-user.jpg" class="transition mb-2" [class.blocked]="actionnaire.settings.isDeleted">  
+                        <img  src="assets/img/users/default-user.jpg" class="transition mb-2" [class.blocked]="actionnaire.settings.isDeleted">  
                         <mat-icon *ngIf="actionnaire.settings.isDeleted" class="warn-color block-icon">block</mat-icon>
                         <!-- <div fxLayout="row" fxLayoutAlign="center center" class="social-icons">
                             <a [href]="'https://www.facebook.com/'+actionnaire.social.facebook" target="_blank">

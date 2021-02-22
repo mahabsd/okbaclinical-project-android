@@ -41,15 +41,22 @@
                 <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
                 <mat-cell *matCellDef="let element">
                     <!-- {{element.status}}  -->
-                        <span class="material-icons"  id="pending" *ngIf = "(element.status !== 'validated')  &&(element.status !== 'annulée') ">
+                    <button mat-mini-fab  class="m-1 " id="pending" *ngIf = "(element.status !== 'validated')  &&(element.status !== 'annulée') ">
+                        <span class="material-icons"  >
                             schedule
                             </span>
-                        <span class="material-icons" id="validated" *ngIf = "element.status === 'validated'">
+                    </button>
+                      <button mat-mini-fab  class="m-1 " id="validated" *ngIf = "element.status === 'validated'">
+                        <span class="material-icons">
                             done_all
                             </span>
-                        <span class="material-icons"  id="canceled" *ngIf = "element.status === 'annulée'">
-                            cancel_presentation
-                            </span>
+                      </button>
+                   <button mat-mini-fab  class="m-1 " id="canceled" *ngIf = "element.status === 'annulée'">
+                    <span class="material-icons">
+                        cancel_presentation
+                        </span>
+                   </button>
+                       
                 </mat-cell>
             </ng-container>      
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

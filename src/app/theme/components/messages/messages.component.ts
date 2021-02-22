@@ -16,9 +16,7 @@ export class MessagesComponent implements OnInit {
   public files:Array<Object>;
   public meetings:Array<Object>;  
   constructor(private messagesService:MessagesService) { 
-    this.messages = messagesService.getMessages();
-    this.files = messagesService.getFiles();
-    this.meetings = messagesService.getMeetings();    
+    this.messages = messagesService.getMessages(); 
   }
 
   ngOnInit() {

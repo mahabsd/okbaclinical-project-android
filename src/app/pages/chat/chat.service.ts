@@ -11,15 +11,10 @@ import jwt_decode from "../../../../node_modules/jwt-decode";
 @Injectable()
 export class ChatService {
   private url = 'http://localhost:3000';
-
-
-  //decoded: any;
   socket: any;
-  token = localStorage.getItem('token');
 
   constructor(private httpClient: HttpClient) {
     this.socket = io(this.url);
-   // this.decoded = jwt_decode(this.token);
   }
 
   getPrivateMessage(idCandidat1, idCandidat2) {
