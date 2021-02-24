@@ -36,15 +36,12 @@ export class LoginComponent {
     })
   }
   public onSubmit(values: Object): void {
-    // console.log(this.form.value);
     this.loginUser.setValue({
       password: this.form.value.password,
       contacts: { email: this.form.value.email }
     })
     this.formService.loginUser(this.form.value).subscribe((res) => {
-      console.log(res);
       this.response = res
-      console.log(this.response);
       localStorage.setItem('token', this.response.token);
       this.router.navigate(['/']);
     })

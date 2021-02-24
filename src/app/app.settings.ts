@@ -4,7 +4,7 @@ import { Settings } from './app.settings.model';
 @Injectable()
 export class AppSettings {
     public settings = new Settings(
-        'okba Clinic',   //theme name
+        'okba Clinical',   //theme name
         true,       //loadingSpinner
         true,      //fixedHeader
         true,      //fixedSidenav
