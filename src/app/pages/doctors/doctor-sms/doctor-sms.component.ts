@@ -18,7 +18,7 @@ export class DoctorsmsComponent implements OnInit {
     this.form = new FormGroup({
       _id: new FormControl(''),
       userOwner: new FormControl(''),
-      smsOwner: new FormControl(''),
+      docs: new FormControl(''),
       status: new FormControl(''),
       contacts: new FormGroup({
         phone: new FormControl(''),
@@ -37,7 +37,7 @@ export class DoctorsmsComponent implements OnInit {
 
       this.form.patchValue(this.doctor);
       this.form.patchValue({
-        smsOwner: this.doctor._id,
+        docs: this.doctor._id,
         userOwner: JSON.parse(JSON.stringify(decoded))._id,
         status: "envoyé"
 

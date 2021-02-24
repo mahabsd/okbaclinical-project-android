@@ -21,7 +21,7 @@ export class ActionnairesmsComponent implements OnInit {
                 this.form = new FormGroup({
                   _id: new FormControl(''),
                   userOwner:new FormControl(''),
-                  smsOwner:new FormControl(''),
+                  acts:new FormControl(''),
                   status:new FormControl(''),
                    contacts: new FormGroup({
                      phone: new FormControl(''),
@@ -43,7 +43,7 @@ export class ActionnairesmsComponent implements OnInit {
     if(this.actionnaire){
       this.form.patchValue(this.actionnaire);
       this.form.patchValue({
-        smsOwner:this.actionnaire._id,
+        acts:this.actionnaire._id,
         userOwner: JSON.parse(JSON.stringify(decoded))._id,
         status: "envoyé"
   
