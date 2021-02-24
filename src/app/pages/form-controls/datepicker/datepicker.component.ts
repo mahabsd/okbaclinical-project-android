@@ -6,6 +6,7 @@ import { Settings } from '../../../app.settings.model';
 import jwt_decode from "../../../../../node_modules/jwt-decode";
 import { CongeService } from 'src/app/services/conge.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-datepicker',
@@ -25,15 +26,22 @@ export class DatepickerComponent implements OnInit {
   valid = true;
   validated = false;
   decoded: any;
+  userId: any;
   soldeConge: any;
   token: string;
-  constructor(public appSettings: AppSettings, public congeService: CongeService, public snackBar: MatSnackBar) {
+  constructor(public appSettings: AppSettings, public congeService: CongeService, public snackBar: MatSnackBar, public userservice:UsersService) {
     this.settings = this.appSettings.settings;
   }
   ngOnInit() {
+
     this.token = localStorage.getItem('token');
     this.decoded = jwt_decode(this.token);
-    this.soldeConge = JSON.parse(JSON.stringify(this.decoded)).soldeConge;
+    this.userId = this.decoded._id;
+    this.userservice.getUser(this.userId).subscribe((res: any) => {
+      this.soldeConge = JSON.parse(JSON.stringify(res.work.soldeConge));
+    }
+    );
+    
     this.form = new FormGroup({
       nbreJours: new FormControl('',),
       dateDebut: new FormControl('', [Validators.required]),
