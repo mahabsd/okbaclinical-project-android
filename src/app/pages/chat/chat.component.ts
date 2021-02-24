@@ -9,12 +9,13 @@ import jwt_decode from "../../../../node_modules/jwt-decode";
 import { FormControl, FormGroup } from '@angular/forms';
 import { Socket } from 'ngx-socket-io';
 import { LoginService } from 'src/app/services/login.service';
+import { MessagesService } from 'src/app/theme/components/messages/messages.service';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
-  providers: [ChatService]
+  providers: [ChatService, MessagesService ]
 })
 export class ChatComponent implements OnInit {
   @ViewChild('sidenav') sidenav: any;
@@ -39,7 +40,11 @@ export class ChatComponent implements OnInit {
   formData;
   myFiles: any;
 
-  constructor(public appSettings: AppSettings, private socket: Socket, public chatService: ChatService, public auth: LoginService) {
+  constructor(public appSettings: AppSettings,
+     private socket: Socket, 
+     public chatService: ChatService,
+      public auth: LoginService,
+      private messagesService: MessagesService) {
     this.listeMessages = [];
     this.listeCandidats = [];
     this.settings = this.appSettings.settings;
@@ -83,6 +88,7 @@ export class ChatComponent implements OnInit {
         this.sidenav.close();
       }
     });
+
   }
   sendMessage() {
     this.formData = new FormData();
@@ -117,6 +123,15 @@ export class ChatComponent implements OnInit {
       files: '',
     });
     this.file = null
+    let message = {
+      reciever:  this.chosenUser,
+      text: "you have a new message",
+      userOwner: this.userId,
+      messages: true
+    }
+   this.messagesService.sendNotification(message).subscribe(res => 
+    console.log("notifications")
+    );
   }
 
   selectFile(event) {

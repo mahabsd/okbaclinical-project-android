@@ -42,8 +42,7 @@ export class UsersComponent implements OnInit {
         this.users = null; //for show spinner each time
         this.UserService.getAllUsers().subscribe(res => {
             this.users = res;
-           
-           this.users.forEach(user => {
+            this.users.forEach(user => {
             if (user.profile.image.indexOf('http://localhost:3000/api/') > -1)
             {
               console.log("") 
@@ -51,7 +50,6 @@ export class UsersComponent implements OnInit {
                 user.profile.image = "http://localhost:3000/api/"+ user.profile.image ;
             }
            });
-        
         })
     }
     public addUser(user) {

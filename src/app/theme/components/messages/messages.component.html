@@ -1,8 +1,8 @@
-<button mat-icon-button [matMenuTriggerFor]="messagesMenu" (click)="openMessagesMenu()">
-    <mat-icon>notifications</mat-icon>
+<button mat-icon-button [matMenuTriggerFor]="messagesMenu"   (click)="openMessagesMenu()">
+    <mat-icon [matBadge]="lengthNotif" matBadgeColor="warn">notifications</mat-icon>
 </button>
 <mat-menu #messagesMenu="matMenu" [overlapTrigger]="false" class="toolbar-dropdown-menu messages">
-    <!--<span (mouseleave)="onMouseLeave()">-->
+    <!-- <span (mouseleave)="onMouseLeave()"> -->
         <mat-tab-group (click)="stopClickPropagate($event)" [selectedIndex]="selectedTab">
             <mat-tab>
                 <ng-template mat-tab-label>
@@ -15,7 +15,7 @@
                           <div fxLayout="column" fxLayoutAlign="none" class="w-100">
                               <div fxLayout="row" fxLayoutAlign="space-between start">
                                   <span class="name">{{message.text}}</span>
-                                  <span class="info"><mat-icon>access_time</mat-icon> {{message.createdDate}}</span>
+                                  <span class="info"><mat-icon>access_time</mat-icon> {{message.createdDate |  date: 'dd/MM/yyyy'}}</span>
                               </div>
                               <span class="text secondary-text-color">{{message.text}}</span>
                           </div>

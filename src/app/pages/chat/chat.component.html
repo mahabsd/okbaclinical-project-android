@@ -9,7 +9,7 @@
     <div fxLayout="row" fxLayoutAlign="center center">
         <mat-list class="p-0">
             <mat-list-item>
-                <img matListAvatar [src]="'http://localhost:3000/api/'+currentChat.candidat1.profile.image"
+                <img matListAvatar [src]="currentChat.candidat1.profile.image"
                     class="author-img">
             </mat-list-item>
         </mat-list>
@@ -44,7 +44,7 @@
                     class="chat-sidenav mat-elevation-z1" autoFocus="false">
                     <mat-nav-list class="p-0 chat-sidenav-list" perfectScrollbar>
                         <mat-list-item *ngFor="let chat of listeCandidats" (click)="clickUser(chat._id)">
-                            <img matListAvatar [src]="'http://localhost:3000/api/'+chat.profile.image">
+                            <img matListAvatar [src]="chat.profile.image">
                             <h6 matLine> {{chat.username}} </h6>
                             <p matLine fxLayout="row" fxLayoutAlign="none center" class="secondary-text-color">
                                 <span [ngSwitch]="chat.authorStatus">
@@ -115,7 +115,7 @@
                                 </button>
                             </div>
                             <img *ngIf="currentChat"
-                                [src]="'http://localhost:3000/api/'+currentChat.candidat1.profile.image" class="py-2">
+                                [src]="currentChat.candidat1.profile.image" class="py-2">
                             <h2 *ngIf="currentChat" class="pb-3">{{currentChat.candidat1.username}}</h2>
                         </div>
                         <mat-list>

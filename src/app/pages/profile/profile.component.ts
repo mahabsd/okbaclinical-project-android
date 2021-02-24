@@ -18,17 +18,9 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     let token = localStorage.getItem('token');
     var decoded = jwt_decode(token);
-    console.log(decoded);
      this.UserService.getUser(JSON.parse(JSON.stringify(decoded))._id,).subscribe(res => {
-      
       this.dataSource=(res);
-      
-         this.data=this.dataSource;
-         console.log(this.data.profile.gender);
-         
-         
-         
-   
+      this.data=this.dataSource;
      })
   }
 

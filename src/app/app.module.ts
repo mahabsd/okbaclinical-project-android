@@ -43,6 +43,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from 'src/app/services/token.interceptor';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import {MatBadgeModule} from '@angular/material/badge';
 
 const config: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
 
@@ -64,7 +65,8 @@ const config: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
     PipesModule,
     AppRoutingModule,
     HttpClientModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
+    MatBadgeModule
   ],
   declarations: [
     AppComponent,
@@ -83,8 +85,7 @@ const config: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
     MessagesComponent,
     UserMenuComponent,
     FavoritesComponent,
- 
-
+    
   ],
   entryComponents: [
     VerticalMenuComponent

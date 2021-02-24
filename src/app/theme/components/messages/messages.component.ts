@@ -21,19 +21,22 @@ export class MessagesComponent implements OnInit {
   token = localStorage.getItem('token');
   decoded = JSON.parse(JSON.stringify(jwt_decode(this.token)))
   userId = this.decoded._id
+  lengthNotif: any;
+  notifications: Object[];
   constructor(private messagesService: MessagesService, public socket: Socket) {
+     this.socket.on('notification', (res) => {
+    this.getNotification();
+    });
   }
 
   ngOnInit() {
-    this.socket.on('notification', (res) => {
-      //this.getNotification();
-      console.log(res);
-   });
+     this.getNotification();
   }
 
   openMessagesMenu() {
     this.trigger.openMenu();
     this.selectedTab = 0;
+    this.lengthNotif = 0;
   }
 
   onMouseLeave() {
@@ -45,14 +48,10 @@ export class MessagesComponent implements OnInit {
     event.preventDefault();
   }
   getNotification() {
-
     this.messagesService.getNotification().subscribe((res: []) => {
-      console.log(res);
-      this.messages = res
-      //   this.messages = res.filter((notification : any)=>
-      //     notification.reciever ==this.userId)
-      //     console.log(this.messages + " this.messages");
-
-      }); 
-    }
+        this.messages = res.filter((notification : any)=>
+          notification.reciever === this.userId)
+          this.lengthNotif = this.messages.length
+    })
+  }
 }
