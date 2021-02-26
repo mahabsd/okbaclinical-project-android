@@ -22,7 +22,7 @@ export const routes = [
   { path: 'autocomplete', component: AutocompleteComponent, data: { breadcrumb: 'Autocomplete' } },
   { path: 'checkbox', component: CheckboxComponent, data: { breadcrumb: 'Checkbox' } },
   { path: 'datepicker', component: DatepickerComponent, data: { breadcrumb: 'Datepicker' } },
-  { path: 'form-field', component: FormFieldComponent, data: { breadcrumb: 'Form Field' } },
+ // { path: 'Demande-Maintenance', component: FormFieldComponent, data: { breadcrumb: 'Form Field' } },
   { path: 'input', component: InputComponent, data: { breadcrumb: 'Input' } },
   { path: 'radio-button', component: RadioButtonComponent, data: { breadcrumb: 'Radio Button' } },
   { path: 'select', component: SelectComponent, data: { breadcrumb: 'Select' } },
@@ -30,7 +30,8 @@ export const routes = [
   { path: 'slide-toggle', component: SlideToggleComponent, data: { breadcrumb: 'Slide Toggle' } },
   { path: 'Holidays-list', component: FilteringComponent, data: { breadcrumb: 'Filtering table' } },
   { path: 'liste-maintenance', component: SortingComponent, data: { breadcrumb: 'Sorting table' } },
-  { path: 'Envoie-sms', component: SmsSendComponent, data: { breadcrumb: 'Envoie Des SmS' } },
+//  { path: 'Envoie-sms', component: SmsSendComponent, data: { breadcrumb: 'Envoie Des SmS' } },
+  { path: 'holidays-requests-list', component: FilteringComponent, data: { breadcrumb: 'Filtering table' } },
 
 ];
 

@@ -29,17 +29,10 @@ export class SidenavComponent implements OnInit {
   ngOnInit() {
     let token = localStorage.getItem('token');
     var decoded = jwt_decode(token);
-    console.log(decoded);
-     this.UserService.getUser(JSON.parse(JSON.stringify(decoded))._id,).subscribe(res => {
-      
-      this.dataSource=(res);
-      
-         this.data=this.dataSource;
-         console.log(this.data.profile.gender);
-         
-         
-         
-   
+     this.UserService.getUser(JSON.parse(JSON.stringify(decoded)).user._id,).subscribe(res => {  
+       console.log(res);
+          
+         this.data=res
      })
     this.menuItems = this.menuService.getVerticalMenuItems();    
   }

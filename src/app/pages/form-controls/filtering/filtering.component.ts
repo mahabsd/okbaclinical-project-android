@@ -186,7 +186,7 @@ export class FilteringComponent {
         this.data = new MatTableDataSource<Element>(this.dataSource)
 
       })
-      let message = "demande congé validée ";
+      let message = "holidays request approved";
       let action = "close"
       this.snackBar.open(message, action, {
         duration: 2000,
@@ -208,7 +208,7 @@ export class FilteringComponent {
         this.data = new MatTableDataSource<Element>(this.dataSource)
 
       })
-      let message = "demande congé annulé ";
+      let message = "holidays request canceled";
       let action = "close"
       this.snackBar.open(message, action, {
         duration: 2000,

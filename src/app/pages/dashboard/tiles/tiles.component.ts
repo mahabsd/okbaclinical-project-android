@@ -17,18 +17,19 @@ export class TilesComponent implements OnInit {
   public lengthAct;
   public lengthUsers;
   public lengthPatients;
- 
+
   public lengthMaints;
 
   public lengthconges;
   public token = localStorage.getItem('token');
   public decoded = JSON.parse(JSON.stringify(jwt_decode(this.token)));
   public userId = this.decoded._id;
+  conges: any[];
 
   constructor(private actionnairesService: ActionnairesService,
     private doctorsService: DoctorsService,
-    private usersService: UsersService, private patientsService : PatientsService,
-    private maintenancesService : MaintenancesService,private congeservice : CongeService) {
+    private usersService: UsersService, private patientsService: PatientsService,
+    private maintenancesService: MaintenancesService, private congeservice: CongeService) {
 
     this.actionnairesService.getAllActionnaires().subscribe((res: []) => {
       this.lengthAct = res.length
@@ -41,21 +42,16 @@ export class TilesComponent implements OnInit {
       this.lengthUsers = res.length
     );
     this.patientsService.getAllPatients().subscribe((res: []) =>
-    this.lengthPatients = res.length
-  );
-  this.maintenancesService.getAllMaintenances().subscribe((res: [any]) =>{
-    
-    
-    this.lengthMaints = res.filter(re=> re.statut="validated").length;
-  }
- 
-   
-);
-this.congeservice.getAllconges().subscribe((res: [any]) =>{
- 
-  this.lengthconges = res.filter(re=> re.statut="validated").length;
-}
-);
+      this.lengthPatients = res.length
+    );
+    this.maintenancesService.getAllMaintenances().subscribe((res: [any]) => {
+      this.lengthMaints = res.filter(re => re.statut === "pending").length;
+    }
+    );
+    this.congeservice.getAllconges().subscribe((res: [any]) => {
+      this.lengthconges = res.filter(res => ((res.status != "validated") && ((res.status != "annulée")))).length;
+    }
+    );
   }
 
   ngOnInit() {

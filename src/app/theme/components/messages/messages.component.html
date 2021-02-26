@@ -6,21 +6,22 @@
         <mat-tab-group (click)="stopClickPropagate($event)" [selectedIndex]="selectedTab">
             <mat-tab>
                 <ng-template mat-tab-label>
-                    <mat-icon>message</mat-icon>
+                    <mat-icon>notifications</mat-icon>
                 </ng-template>
                 <mat-card class="content" perfectScrollbar>
                   <div fxLayout="column" fxLayoutAlign="none">
-                      <button mat-button *ngFor="let message of messages" >
-                          <!-- <img src="{{ ( message.image || (message.name | profilePicture)) }}" width="50">    -->
-                          <div fxLayout="column" fxLayoutAlign="none" class="w-100">
-                              <div fxLayout="row" fxLayoutAlign="space-between start">
-                                  <span class="name">{{message.text}}</span>
-                                  <span class="info"><mat-icon>access_time</mat-icon> {{message.createdDate |  date: 'dd/MM/yyyy'}}</span>
-                              </div>
-                              <span class="text secondary-text-color">{{message.text}}</span>
-                          </div>
+                      <button mat-button *ngFor="let message of messages" (click) = "notifSeen(message)">
+                            <img *ngIf = "message.userOwner.profile.image" src="{{message.userOwner.profile.image}}" width="50">   
+                            <img *ngIf = "!message.userOwner.profile.image" src="assets/img/users/default-user.jpg" width="50">   
+                            <div fxLayout="column" fxLayoutAlign="none" class="w-100">
+                                <div fxLayout="row" fxLayoutAlign="space-between start">
+                                    <span class="name">{{message.userOwner.profile.name}} {{message.userOwner.profile.surname}}</span>
+                                    <span class="info"><mat-icon>access_time</mat-icon> {{message.createdAt |  date:'short'}}</span>
+                                </div>
+                                <span class="text secondary-text-color">{{message.text}}</span>
+                            </div>
                       </button>
-                    </div>             
+                    </div>
                 </mat-card>
             </mat-tab>
             <!-- <mat-tab>
