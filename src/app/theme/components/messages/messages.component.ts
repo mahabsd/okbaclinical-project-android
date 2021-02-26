@@ -3,7 +3,8 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { Socket } from 'ngx-socket-io';
 import { MessagesService } from './messages.service';
 import jwt_decode from "../../../../../node_modules/jwt-decode";
-
+import { date } from 'date-fns/locale/af';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-messages',
@@ -23,20 +24,20 @@ export class MessagesComponent implements OnInit {
   userId = this.decoded._id
   lengthNotif: any;
   notifications: Object[];
-  constructor(private messagesService: MessagesService, public socket: Socket) {
-     this.socket.on('notification', (res) => {
-    this.getNotification();
+  constructor(private messagesService: MessagesService, public socket: Socket, public router: Router) {
+    this.socket.on('notification', (res) => {
+      this.getNotification();
     });
   }
 
   ngOnInit() {
-     this.getNotification();
+    this.getNotification();
   }
 
   openMessagesMenu() {
     this.trigger.openMenu();
     this.selectedTab = 0;
-    this.lengthNotif = 0;
+    this.lengthNotif = null;
   }
 
   onMouseLeave() {
@@ -49,9 +50,25 @@ export class MessagesComponent implements OnInit {
   }
   getNotification() {
     this.messagesService.getNotification().subscribe((res: []) => {
-        this.messages = res.filter((notification : any)=>
-          notification.reciever === this.userId)
-          this.lengthNotif = this.messages.length
+      this.messages = res
+      this.messages = this.messages.filter((notification: any) =>
+        notification.reciever._id === this.userId)
+      this.lengthNotif = this.messages.length
+      this.messages = this.messages.sort((message1: any, message2: any) => {
+        return message2.createdAt - message1.createdAt
+      })
+      this.messages = this.messages.reverse();
     })
+  }
+
+  notifSeen(message) {
+    if (message.messages == true) {
+      this.router.navigate(['/chat'])
+    }
+  //   setTimeout(()=>{
+  // console.log()
+  // , 600000
+  //   })
+    this.messagesService.deleteNotif(message._id).subscribe(res => this.getNotification()) 
   }
 }

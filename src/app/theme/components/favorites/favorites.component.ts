@@ -29,15 +29,19 @@ export class FavoritesComponent implements OnInit {
 
   ngOnInit() {
     this.menuItems = this.menuService.getVerticalMenuItems().filter(menu => menu.routerLink != null || menu.href !=null);
- 
+    this.socket.on('notification', (res) => {
+      this.getNotification();
+      });
   }
   getNotification() {
 
-    this.messagesService.getNotification().subscribe((res: []) => {
-      this.messages = res
-      this.messages = this.messages.filter((notification : any)=>
-         ((notification.text === "you have a new message") && ( notification.reciever ===this.userId)))
-          this.lengthNotif = this.messages.length
+    this.messagesService.getNotification().subscribe((res: []) => {      
+      this.messages = res.filter((notification : any)=>
+         (notification.text === "sent you a message"))
+        // && ( notification.reciever._id ===this.userId)&&(notification.userOwner._id !=this.userId)
+        this.messages =  this.messages.filter((notification : any)=>
+        (( notification.reciever._id ===this.userId)))
+         this.lengthNotif = this.messages.length          
     });
   }
 

@@ -34,4 +34,7 @@ export class MessagesService {
     public getNotification() {
         return this.httpClient.get(this.url + '/notifications/get-notification/');
     }
+    public deleteNotif(id) {
+        return this.httpClient.delete(this.url + "/notifications/delete/"+id);
+    }
 }
