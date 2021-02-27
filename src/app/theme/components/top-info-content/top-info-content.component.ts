@@ -39,9 +39,9 @@ export class TopInfoContentComponent implements OnInit {
       smsOwner: new FormControl(''),
       userOwner: new FormControl(''),
       contacts: new FormGroup({
-        phone: new FormControl(''),
-        message: new FormControl(''),
-        type: new FormControl(''),
+        phone: new FormControl('',  [Validators.required]),
+        message: new FormControl('',  [Validators.required]),
+        type: new FormControl('',  [Validators.required]),
       }),
 
     })
@@ -67,11 +67,14 @@ export class TopInfoContentComponent implements OnInit {
     this.smsService.addSms(this.formSms.value).subscribe(sms => {
     });
     this.smsService.SendSms(this.formSms.value.contacts.type, this.formSms.value.contacts.phone, this.formSms.value.contacts.message).subscribe(sms => {
-      let message = "Sms added successfully";
-      let action = "close"
-      this.snackBar.open(message, action, {
-        duration: 2000,
-      });
+
     });
+    let message = "Sms added successfully";
+    let action = "close"
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+    this.ngOnInit()
+
   }
 }

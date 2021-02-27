@@ -100,16 +100,6 @@ export class ChatComponent implements OnInit {
 
     this.chatService.sendMessage(this.formData, this.conversation).subscribe((res) => {
     });
-
-    let chatContainer = document.querySelector('.chat-content');
-
-    if (chatContainer) {
-      setTimeout(() => {
-        var nodes = chatContainer.querySelectorAll('.mat-list-item');
-        let newChatTextHeight = nodes[nodes.length - 1];
-        chatContainer.scrollTop = chatContainer.scrollHeight + newChatTextHeight.clientHeight;
-      });
-    }
     this.myFiles = '';
     this.messageForm.patchValue({
       content: '',
@@ -123,9 +113,17 @@ export class ChatComponent implements OnInit {
       messages: true,
       chatUrl : 'chat'
     }
-    this.messagesService.sendNotification(message).subscribe(res =>
-      console.log("")
-    );
+    this.messagesService.sendNotification(message).subscribe();
+    // let chatContainer = document.querySelector('.chat-content');
+
+    // if (chatContainer) {
+    //   setTimeout(() => {
+    //     var nodes = chatContainer.querySelectorAll('.mat-list-item');
+    //     let newChatTextHeight = nodes[nodes.length - 1];
+    //     chatContainer.scrollTop = chatContainer.scrollHeight + newChatTextHeight.clientHeight;
+    //   });
+    // }
+  
   }
 
   selectFile(event) {

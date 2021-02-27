@@ -5,6 +5,7 @@ import { FormsModule , ReactiveFormsModule} from '@angular/forms';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { SharedModule } from '../../shared/shared.module';
 import { ChatComponent } from './chat.component';
+import { PipesModule } from '../../theme/pipes/pipes.module';
 
 export const routes = [
   { path: '', component: ChatComponent, pathMatch: 'full' }
@@ -17,7 +18,8 @@ export const routes = [
     FormsModule,
     PerfectScrollbarModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PipesModule
   ],
   declarations: [
     ChatComponent
