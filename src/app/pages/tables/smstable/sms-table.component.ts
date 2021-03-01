@@ -13,14 +13,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class SmstableComponent {
   @ViewChild(MatSort) sort: MatSort;
-<<<<<<< Updated upstream
-  public displayedColumns = ['requestDate','SendTo', 'phone', 'message', 'status', 'action'];
-=======
   public displayedColumns = ['SendTo','requestDate', 'phone', 'message', 'status', 'action'];
   public displayedColumns1 = ['SendTo','requestDate', 'phone', 'message', 'status', 'action'];
   public displayedColumns2 = ['SendTo','requestDate', 'phone', 'message', 'status', 'action'];
   public displayedColumns3 = ['SendTo','requestDate', 'phone', 'message', 'status', 'action'];
->>>>>>> Stashed changes
   public dataSource: any;
   public dataSource1: any;
   public dataSource2: any;
