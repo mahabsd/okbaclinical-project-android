@@ -2,13 +2,16 @@
     [class]="'pb-4'"></app-content-header>
 
 <div fxLayout="column" class="p-2">
+    <h1>Patient</h1>
     <div class="p-2">
         <mat-table #table [dataSource]="data" matSort class="mat-elevation-z8">
-            <ng-container matColumnDef="name">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> User Name </mat-header-cell>
-                <mat-cell *matCellDef="let element">
-                    {{element.smsOwner.profile.name}}{{element.smsOwner.profile.prename}} </mat-cell>
+            <ng-container matColumnDef="SendTo">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Send To </mat-header-cell>
+                <mat-cell *matCellDef="let element"  > {{element.smsOwner.profile.name}}{{element.smsOwner.profile.surname}} </mat-cell>
+               
             </ng-container>
+           
+
             <ng-container matColumnDef="requestDate">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Request Date </mat-header-cell>
                 <mat-cell *matCellDef="let element">{{element.createdAt | date: 'dd/MM/yyyy'}} </mat-cell>
@@ -44,6 +47,147 @@
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row;columns: displayedColumns;"></mat-row>
+        </mat-table>
+    </div>
+<h1>Actionnaire</h1>
+    <div class="p-2">
+        <mat-table #table1 [dataSource]="data1" matSort class="mat-elevation-z8">
+            <ng-container matColumnDef="SendTo">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Send To </mat-header-cell>
+                <mat-cell *matCellDef="let elements"  > {{elements.acts.profile.name}}{{elements.acts.profile.surname}} </mat-cell>
+               
+            </ng-container>
+           
+
+            <ng-container matColumnDef="requestDate">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Request Date </mat-header-cell>
+                <mat-cell *matCellDef="let elements">{{elements.createdAt | date: 'dd/MM/yyyy'}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="phone">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> phone</mat-header-cell>
+                <mat-cell *matCellDef="let elements"> {{elements.contacts.phone}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="message">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> message </mat-header-cell>
+                <mat-cell *matCellDef="let elements"> {{elements.contacts.message}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+                <mat-cell *matCellDef="let elements"> {{elements.status}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Action</mat-header-cell>
+                <mat-cell *matCellDef="let elements">
+                    <button mat-mini-fab color="primary" class="m-1 " *ngIf="elements.status!== 'envoyé'"
+                        (click)="validerDemande(elements)">
+                        <span class="material-icons">
+                            offline_pin
+                        </span>
+                    </button>
+                    <button mat-mini-fab color="warn" class="m-1 " (click)="deleteDemande(elements)">
+                        <span class="material-icons">
+                            delete_sweep
+                        </span>
+                    </button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+            <mat-row *matRowDef="let row;columns: displayedColumns1;"></mat-row>
+        </mat-table>
+    </div>
+    <h1>doctors</h1>
+    <div class="p-2">
+        <mat-table #table2 [dataSource]="data2" matSort class="mat-elevation-z8">
+            <ng-container matColumnDef="SendTo">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Send To </mat-header-cell>
+                <mat-cell *matCellDef="let elementss"  > {{elementss.docs.profile.name}}{{elementss.docs.profile.surname}} </mat-cell>
+               
+            </ng-container>
+           
+
+            <ng-container matColumnDef="requestDate">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Request Date </mat-header-cell>
+                <mat-cell *matCellDef="let elementss">{{elementss.createdAt | date: 'dd/MM/yyyy'}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="phone">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> phone</mat-header-cell>
+                <mat-cell *matCellDef="let elementss"> {{elementss.contacts.phone}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="message">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> message </mat-header-cell>
+                <mat-cell *matCellDef="let elementss"> {{elementss.contacts.message}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+                <mat-cell *matCellDef="let elementss"> {{elementss.status}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Action</mat-header-cell>
+                <mat-cell *matCellDef="let elementss">
+                    <button mat-mini-fab color="primary" class="m-1 " *ngIf="elementss.status!== 'envoyé'"
+                        (click)="validerDemande(elementss)">
+                        <span class="material-icons">
+                            offline_pin
+                        </span>
+                    </button>
+                    <button mat-mini-fab color="warn" class="m-1 " (click)="deleteDemande(elementss)">
+                        <span class="material-icons">
+                            delete_sweep
+                        </span>
+                    </button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
+            <mat-row *matRowDef="let row;columns: displayedColumns2;"></mat-row>
+        </mat-table>
+    </div>
+    <h1>automatique</h1>
+    <div class="p-2">
+        <mat-table #table3 [dataSource]="data3" matSort class="mat-elevation-z8">
+            <ng-container matColumnDef="SendTo">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Send To </mat-header-cell>
+                <mat-cell *matCellDef="let elementsss"  > {{elementsss.userOwner.profile.name}}{{elementsss.userOwner.profile.surname}} </mat-cell>
+               
+            </ng-container>
+           
+
+            <ng-container matColumnDef="requestDate">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Request Date </mat-header-cell>
+                <mat-cell *matCellDef="let elementsss">{{elementsss.createdAt | date: 'dd/MM/yyyy'}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="phone">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> phone</mat-header-cell>
+                <mat-cell *matCellDef="let elementsss"> {{elementsss.contacts.phone}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="message">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> message </mat-header-cell>
+                <mat-cell *matCellDef="let elementsss"> {{elementsss.contacts.message}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+                <mat-cell *matCellDef="let elementsss"> {{elementsss.status}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Action</mat-header-cell>
+                <mat-cell *matCellDef="let elementss">
+                    <button mat-mini-fab color="primary" class="m-1 " *ngIf="elementsss.status!== 'envoyé'"
+                        (click)="validerDemande(elementsss)">
+                        <span class="material-icons">
+                            offline_pin
+                        </span>
+                    </button>
+                    <button mat-mini-fab color="warn" class="m-1 " (click)="deleteDemande(elementsss)">
+                        <span class="material-icons">
+                            delete_sweep
+                        </span>
+                    </button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
+            <mat-row *matRowDef="let row;columns: displayedColumns2;"></mat-row>
         </mat-table>
     </div>
 </div>
