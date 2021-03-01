@@ -1,0 +1,66 @@
+<app-content-header 
+    [icon]="'format_line_spacing'" 
+    [title]="'Holidays'" 
+    [hideBreadcrumb]="false"
+    [hasBgImage]="true" 
+    [class]="'pb-4'"></app-content-header>
+
+<div fxLayout="column" class="p-2">
+    <div class="p-2"> 
+        <div fxLayout="column" class="mat-elevation-z8">           
+            <mat-form-field class="px-3 py-1">
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Type to filter all columns">
+            </mat-form-field> 
+        </div>
+        <mat-table #table [dataSource]="data" class="mat-elevation-z8">       
+            <ng-container matColumnDef="user">
+                <mat-header-cell *matHeaderCellDef> User Name </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.userOwner.profile.name}} {{element.userOwner.profile.surname}} </mat-cell>
+            </ng-container>         
+            <ng-container matColumnDef="requestDate">
+                <mat-header-cell *matHeaderCellDef> Request Date </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.createdAt | date: 'dd/MM/yyyy'}} </mat-cell>
+            </ng-container>     
+            <ng-container matColumnDef="dateDebut">
+                <mat-header-cell *matHeaderCellDef> Start day </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.dateDebut | date: 'dd/MM/yyyy'}} </mat-cell>
+            </ng-container>        
+            <ng-container matColumnDef="dateFin">
+                <mat-header-cell *matHeaderCellDef> End date </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.dateFin  | date: 'dd/MM/yyyy'}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="daysNumber">
+                <mat-header-cell *matHeaderCellDef>Days number</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.nbreJours}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="motif">
+                <mat-header-cell *matHeaderCellDef> Vacation reason </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.motif}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <!-- {{element.status}}  -->
+                    <button mat-mini-fab  class="m-1 " id="pending" *ngIf = "(element.status !== 'validated')  &&(element.status !== 'annulée') ">
+                        <span class="material-icons"  >
+                            schedule
+                            </span>
+                    </button>
+                      <button mat-mini-fab  class="m-1 " id="validated" *ngIf = "element.status === 'validated'">
+                        <span class="material-icons">
+                            done_all
+                            </span>
+                      </button>
+                   <button mat-mini-fab  class="m-1 " id="canceled" *ngIf = "element.status === 'annulée'">
+                    <span class="material-icons">
+                        cancel_presentation
+                        </span>
+                   </button>
+                       
+                </mat-cell>
+            </ng-container>      
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table> 
+        </div>
+</div>

@@ -9,6 +9,7 @@ import { PatientSearchPipe } from './search/patient-search.pipe';
 import { ActionnaireSearchPipe } from './search/actionnaire-search.pipe';
 import { TruncatePipe } from './truncate/truncate.pipe';
 import { MailSearchPipe } from './search/mail-search.pipe';
+import { TimeAgoPipe } from './search/TimeAgoPipe';
 
 @NgModule({
     imports: [ 
@@ -22,7 +23,8 @@ import { MailSearchPipe } from './search/mail-search.pipe';
         PatientSearchPipe,
         ActionnaireSearchPipe,
         TruncatePipe,
-        MailSearchPipe
+        MailSearchPipe,
+        TimeAgoPipe
     ],
     exports: [
         PaginationPipe,
@@ -32,8 +34,8 @@ import { MailSearchPipe } from './search/mail-search.pipe';
         PatientSearchPipe,
       ActionnaireSearchPipe,
         TruncatePipe,
-        MailSearchPipe
-
+        MailSearchPipe,
+        TimeAgoPipe
     ]
 })
 export class PipesModule { }

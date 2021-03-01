@@ -69,7 +69,7 @@ export class ChatComponent implements OnInit {
       this.chats = this.listeCandidats = res.filter(obj => obj._id !== this.userId);
       this.clickUser(this.listeCandidats[0]._id);
     });
-    this.socket.on('newMessageSended', () => {
+    this.socket.on('newMessageSended', () => {     
       this.clickUser(this.chosenUser);
     });
   }
@@ -79,13 +79,14 @@ export class ChatComponent implements OnInit {
     this.chatService.getPrivateMessage(idCandidat, this.userId).subscribe((res: any) => {
       this.conversation = res._id;
       this.currentChat = res
-      this.talks = this.listeMessages = res.messages;
       if (window.innerWidth <= 768) {
         this.sidenav.close();
       }
+      this.talks = this.listeMessages = res.messages;
     });
 
   }
+
   sendMessage() {
     this.formData = new FormData();
 
@@ -100,16 +101,6 @@ export class ChatComponent implements OnInit {
 
     this.chatService.sendMessage(this.formData, this.conversation).subscribe((res) => {
     });
-
-    let chatContainer = document.querySelector('.chat-content');
-
-    if (chatContainer) {
-      setTimeout(() => {
-        var nodes = chatContainer.querySelectorAll('.mat-list-item');
-        let newChatTextHeight = nodes[nodes.length - 1];
-        chatContainer.scrollTop = chatContainer.scrollHeight + newChatTextHeight.clientHeight;
-      });
-    }
     this.myFiles = '';
     this.messageForm.patchValue({
       content: '',
@@ -123,9 +114,17 @@ export class ChatComponent implements OnInit {
       messages: true,
       chatUrl : 'chat'
     }
-    this.messagesService.sendNotification(message).subscribe(res =>
-      console.log("")
-    );
+    this.messagesService.sendNotification(message).subscribe();
+    // let chatContainer = document.querySelector('.chat-content');
+
+    // if (chatContainer) {
+    //   setTimeout(() => {
+    //     var nodes = chatContainer.querySelectorAll('.mat-list-item');
+    //     let newChatTextHeight = nodes[nodes.length - 1];
+    //     chatContainer.scrollTop = chatContainer.scrollHeight + newChatTextHeight.clientHeight;
+    //   });
+    // }
+
   }
 
   selectFile(event) {
