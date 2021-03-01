@@ -25,7 +25,6 @@ export const routes = [
  // { path: 'liste-sms', component: SmstableComponent, data: { breadcrumb: 'Sorting table' } },
   { path: 'Demande-Maintenance', component: FormFieldComponent, data: { breadcrumb: 'Form Field' } },
 
-
 ];
 
 @NgModule({
@@ -38,11 +37,11 @@ export const routes = [
   declarations: [
     BasicComponent, 
     PagingComponent, 
-    SortingComponent, 
-    FilteringComponent, 
+    SortingComponent,  
     NgxTableComponent, 
     SelectingComponent,
-    SmstableComponent
+    SmstableComponent,
+    FilteringComponent
   ],
   providers: [
     TablesService

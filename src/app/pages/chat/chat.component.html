@@ -17,11 +17,11 @@
     <div fxLayout="row" fxLayoutAlign="center center">
         <mat-list class="p-0">
             <mat-list-item>
-                <img matListAvatar [src]="currentChat.candidat1.profile.image"
+                <img matListAvatar [src]="currentChat.candidat1._id != userId ?currentChat.candidat1.profile.image : currentChat.candidat2.profile.image "
                     class="author-img">
             </mat-list-item>
         </mat-list>
-        <span class="author-name">{{currentChat.candidat1.profile.name}} {{currentChat.candidat1.profile.surname}}</span>
+        <span class="author-name">{{currentChat.candidat1._id != userId ?currentChat.candidat1.profile.name :currentChat.candidat2.profile.name }} {{currentChat.candidat1._id != userId ?currentChat.candidat1.profile.surname :currentChat.candidat2.profile.surname}}</span>
         <button mat-icon-button [matMenuTriggerFor]="personMenu" #personMenuTrigger="matMenuTrigger">
             <mat-icon>more_vert</mat-icon>
         </button>
@@ -70,7 +70,7 @@
                 </mat-drawer>
 
                 <div>
-                    <div class="chat-content" [class.actions-visible]="talks" perfectScrollbar>
+                    <div class="chat-content" [class.actions-visible]="talks" perfectScrollbar >
                         <mat-list *ngIf="talks" class="p-0">
                             <mat-list-item *ngFor="let talk of talks " class="talk-item">
                                 <img matListAvatar [src]="talk.logo"  *ngIf="(talk.content != undefined && talk.content != '' )|| talk.files.length >0">
