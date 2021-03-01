@@ -1,8 +1,4 @@
-<app-content-header 
-    [icon]="'sort'" 
-    [title]="'Liste Des SmS'" 
-    [hideBreadcrumb]="false"
-    [hasBgImage]="true" 
+<app-content-header [icon]="'sort'" [title]="'Liste Des SmS'" [hideBreadcrumb]="false" [hasBgImage]="true"
     [class]="'pb-4'"></app-content-header>
 
 <div fxLayout="column" class="p-2">
@@ -19,38 +15,38 @@
             <ng-container matColumnDef="requestDate">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Request Date </mat-header-cell>
                 <mat-cell *matCellDef="let element">{{element.createdAt | date: 'dd/MM/yyyy'}} </mat-cell>
-            </ng-container>         
+            </ng-container>
             <ng-container matColumnDef="phone">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> phone</mat-header-cell>
                 <mat-cell *matCellDef="let element"> {{element.contacts.phone}} </mat-cell>
-            </ng-container>     
+            </ng-container>
             <ng-container matColumnDef="message">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> message </mat-header-cell>
                 <mat-cell *matCellDef="let element"> {{element.contacts.message}} </mat-cell>
-            </ng-container>        
+            </ng-container>
             <ng-container matColumnDef="status">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
                 <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="action">
-                <mat-header-cell *matHeaderCellDef> Action</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Action</mat-header-cell>
                 <mat-cell *matCellDef="let element">
-                    <button mat-mini-fab  color="primary" class="m-1 " *ngIf="element.status!== 'envoyé'"
-                    (click) = "validerDemande(element)">
+                    <button mat-mini-fab color="primary" class="m-1 " *ngIf="element.status!== 'envoyé'"
+                        (click)="validerDemande(element)">
                         <span class="material-icons">
                             offline_pin
-                            </span>
+                        </span>
                     </button>
-                    <button mat-mini-fab  color="warn" class="m-1 "  (click) = "deleteDemande(element)" >
+                    <button mat-mini-fab color="warn" class="m-1 " (click)="deleteDemande(element)">
                         <span class="material-icons">
                             delete_sweep
-                            </span>
+                        </span>
                     </button>
-                 </mat-cell>
+                </mat-cell>
             </ng-container>
- 
+
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; displayedColumns;"></mat-row>
+            <mat-row *matRowDef="let row;columns: displayedColumns;"></mat-row>
         </mat-table>
     </div>
 <h1>Actionnaire</h1>

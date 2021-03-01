@@ -5,15 +5,23 @@
         <button mat-icon-button (click)="sidenav.toggle()">
             <mat-icon>list</mat-icon>
         </button>
+        <button mat-icon-button (click)="showSearch = !showSearch" class="mx-2">
+            <mat-icon>search</mat-icon>
+        </button>
     </div>
+    <form class="user-search" [class.show]="showSearch">
+        <mat-form-field class="user-search-input">
+            <input matInput placeholder="Search user by name..." [(ngModel)]="searchText" name="search">
+        </mat-form-field>
+    </form>
     <div fxLayout="row" fxLayoutAlign="center center">
         <mat-list class="p-0">
             <mat-list-item>
-                <img matListAvatar [src]="currentChat.candidat1.profile.image"
+                <img matListAvatar [src]="currentChat.candidat1._id != userId ?currentChat.candidat1.profile.image : currentChat.candidat2.profile.image "
                     class="author-img">
             </mat-list-item>
         </mat-list>
-        <span class="author-name">{{currentChat.candidat1.profile.name}}</span>
+        <span class="author-name">{{currentChat.candidat1._id != userId ?currentChat.candidat1.profile.name :currentChat.candidat2.profile.name }} {{currentChat.candidat1._id != userId ?currentChat.candidat1.profile.surname :currentChat.candidat2.profile.surname}}</span>
         <button mat-icon-button [matMenuTriggerFor]="personMenu" #personMenuTrigger="matMenuTrigger">
             <mat-icon>more_vert</mat-icon>
         </button>
@@ -43,9 +51,9 @@
                 <mat-drawer #sidenav [opened]="sidenavOpen" [mode]="sidenavOpen ? 'side' : 'over'"
                     class="chat-sidenav mat-elevation-z1" autoFocus="false">
                     <mat-nav-list class="p-0 chat-sidenav-list" perfectScrollbar>
-                        <mat-list-item *ngFor="let chat of listeCandidats" (click)="clickUser(chat._id)">
+                        <mat-list-item *ngFor="let chat of listeCandidats |  UserSearchPipe : searchText" (click)="clickUser(chat._id)" >
                             <img matListAvatar [src]="chat.profile.image">
-                            <h6 matLine> {{chat.username}} </h6>
+                            <h6 matLine> {{chat.profile.name}} {{chat.profile.surname}}  </h6>
                             <p matLine fxLayout="row" fxLayoutAlign="none center" class="secondary-text-color">
                                 <span [ngSwitch]="chat.authorStatus">
                                     <mat-icon *ngSwitchCase="'Online'" class="chat-status-icon">check_circle</mat-icon>
@@ -62,7 +70,7 @@
                 </mat-drawer>
 
                 <div>
-                    <div class="chat-content" [class.actions-visible]="talks" perfectScrollbar>
+                    <div class="chat-content" [class.actions-visible]="talks" perfectScrollbar >
                         <mat-list *ngIf="talks" class="p-0">
                             <mat-list-item *ngFor="let talk of talks " class="talk-item">
                                 <img matListAvatar [src]="talk.logo"  *ngIf="(talk.content != undefined && talk.content != '' )|| talk.files.length >0">
@@ -75,7 +83,7 @@
                                         [ngClass]="(talk.candidat !== userId) ? 'bg-primary' : 'bg-accent'">{{talk.files | slice:0:7}}</a>
                                 </p>
                                 <p matLine class="message-date">
-                                    <small *ngIf="(talk.content != undefined && talk.content != '' )|| talk.files.length >0" >{{talk.createdDate | date:"dd MMMM, yyyy 'at' HH:mm"}}</small>
+                                    <small *ngIf="(talk.content != undefined && talk.content != '' )|| talk.files.length >0" >{{talk.createdDate |timeAgo}}</small>
                                 </p>
                             </mat-list-item>
                         </mat-list>

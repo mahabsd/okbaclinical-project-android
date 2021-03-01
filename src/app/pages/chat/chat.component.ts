@@ -15,7 +15,7 @@ import { MessagesService } from 'src/app/theme/components/messages/messages.serv
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
-  providers: [ChatService, MessagesService ]
+  providers: [ChatService, MessagesService]
 })
 export class ChatComponent implements OnInit {
   @ViewChild('sidenav') sidenav: any;
@@ -41,17 +41,17 @@ export class ChatComponent implements OnInit {
   myFiles: any;
 
   constructor(public appSettings: AppSettings,
-     private socket: Socket, 
-     public chatService: ChatService,
-      public auth: LoginService,
-      private messagesService: MessagesService) {
+    private socket: Socket,
+    public chatService: ChatService,
+    public auth: LoginService,
+    private messagesService: MessagesService) {
     this.listeMessages = [];
     this.listeCandidats = [];
     this.settings = this.appSettings.settings;
   }
 
   ngOnInit() {
-    if (window.innerWidth <= 768) {
+      if (window.innerWidth <= 768) {
       this.sidenavOpen = false;
     }
     this.messageForm = new FormGroup({
@@ -69,7 +69,7 @@ export class ChatComponent implements OnInit {
       this.chats = this.listeCandidats = res.filter(obj => obj._id !== this.userId);
       this.clickUser(this.listeCandidats[0]._id);
     });
-    this.socket.on('newMessageSended', () => {
+    this.socket.on('newMessageSended', () => {     
       this.clickUser(this.chosenUser);
     });
   }
@@ -77,22 +77,18 @@ export class ChatComponent implements OnInit {
   clickUser(idCandidat) {
     this.chosenUser = idCandidat;
     this.chatService.getPrivateMessage(idCandidat, this.userId).subscribe((res: any) => {
-
       this.conversation = res._id;
       this.currentChat = res
-
-      this.talks = this.listeMessages = res.messages;
-      console.log(this.talks);
-
       if (window.innerWidth <= 768) {
         this.sidenav.close();
       }
+      this.talks = this.listeMessages = res.messages;
     });
 
   }
+
   sendMessage() {
     this.formData = new FormData();
-    console.log("first " + this.file);
 
     if (this.file != null) {
       this.formData.append('myFiles', this.file, this.file.name);
@@ -105,18 +101,6 @@ export class ChatComponent implements OnInit {
 
     this.chatService.sendMessage(this.formData, this.conversation).subscribe((res) => {
     });
-
-    let chatContainer = document.querySelector('.chat-content');
-
-    if (chatContainer) {
-      setTimeout(() => {
-        var nodes = chatContainer.querySelectorAll('.mat-list-item');
-        let newChatTextHeight = nodes[nodes.length - 1];
-        chatContainer.scrollTop = chatContainer.scrollHeight + newChatTextHeight.clientHeight;
-      });
-    }
-    console.log("second " + this.file);
-
     this.myFiles = '';
     this.messageForm.patchValue({
       content: '',
@@ -124,14 +108,23 @@ export class ChatComponent implements OnInit {
     });
     this.file = null
     let message = {
-      reciever:  this.chosenUser,
-      text: "you have a new message",
+      reciever: this.chosenUser,
+      text: "sent you a message",
       userOwner: this.userId,
-      messages: true
+      messages: true,
+      chatUrl : 'chat'
     }
-   this.messagesService.sendNotification(message).subscribe(res => 
-    console.log("notifications")
-    );
+    this.messagesService.sendNotification(message).subscribe();
+    // let chatContainer = document.querySelector('.chat-content');
+
+    // if (chatContainer) {
+    //   setTimeout(() => {
+    //     var nodes = chatContainer.querySelectorAll('.mat-list-item');
+    //     let newChatTextHeight = nodes[nodes.length - 1];
+    //     chatContainer.scrollTop = chatContainer.scrollHeight + newChatTextHeight.clientHeight;
+    //   });
+    // }
+
   }
 
   selectFile(event) {

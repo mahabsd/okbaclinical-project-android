@@ -32,7 +32,7 @@ export class UserDialogComponent implements OnInit {
   submitted: boolean;
   choosen: boolean;
   formData = new FormData();
-
+password
   constructor(public dialogRef: MatDialogRef<UserDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public user: User, public userService: LoginService, public snackBar: MatSnackBar) {
     this.form = new FormGroup({
@@ -74,6 +74,7 @@ export class UserDialogComponent implements OnInit {
   ngOnInit() {
     if (this.user) {
       this.form.patchValue(this.user);
+      this.form.patchValue({password:''});
     }
     else {
       this.user = new User();

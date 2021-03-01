@@ -42,21 +42,13 @@ export class UsersComponent implements OnInit {
         this.users = null; //for show spinner each time
         this.UserService.getAllUsers().subscribe(res => {
             this.users = res;
-            this.users.forEach(user => {
-            if (user.profile.image.indexOf('http://localhost:3000/api/') > -1)
-            {
-              console.log("") 
-            }else{
-                user.profile.image = "http://localhost:3000/api/"+ user.profile.image ;
-            }
-           });
         })
     }
     public addUser(user) {
         this.UserService.addUser(user).subscribe(res =>
             this.getUsers()
         )
-   }
+    }
     public updateUser(user) {
         this.UserService.updateUser(JSON.parse(user.get("_id")), user).subscribe(user => this.getUsers());
     }
@@ -80,14 +72,15 @@ export class UsersComponent implements OnInit {
             let user = formData
 
             if (formData) {
-               if (JSON.parse(user.get("_id"))!= '') {
-                   console.log(formData);
-                   
-                this.updateUser(formData);
-               }else{
-               formData.delete("_id");
-                this.addUser(formData);
-               }
+                if (JSON.parse(user.get("_id")) != '') {
+                    if (JSON.parse(user.get("password")) === '') {
+                        formData.delete("password");
+                    }
+                    this.updateUser(formData);
+                } else {
+                    formData.delete("_id");
+                    this.addUser(formData);
+                }
             }
         });
         this.showSearch = false;
@@ -135,15 +128,6 @@ export class DialogOverviewExampleDialog {
     constructor(
         public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
         @Inject(MAT_DIALOG_DATA) public data: any) { }
-    // if(data) {
-    //     this.message = data.message || this.message;
-    //     if (data.buttonText) {
-    //         console.log("data.buttonText" + data.buttonText);
-
-    //         this.confirmButtonText = data.buttonText.ok || this.confirmButtonText;
-    //         this.cancelButtonText = data.buttonText.cancel || this.cancelButtonText;
-    //     }
-    // }
     onNoClick(): void {
         this.dialogRef.close();
     }
