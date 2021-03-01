@@ -41,7 +41,7 @@ export class DoctorsmsComponent implements OnInit {
         userOwner: JSON.parse(JSON.stringify(decoded))._id,
         status: "envoyé"
 
-      });;
+      });
 
     }
     else {

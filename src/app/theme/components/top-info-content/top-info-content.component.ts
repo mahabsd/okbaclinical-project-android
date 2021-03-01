@@ -36,7 +36,7 @@ export class TopInfoContentComponent implements OnInit {
      })
      this.formSms = new FormGroup({
       status: new FormControl(''),
-      smsOwner: new FormControl(''),
+      user: new FormControl(''),
       userOwner: new FormControl(''),
       contacts: new FormGroup({
         phone: new FormControl(''),
@@ -61,6 +61,7 @@ export class TopInfoContentComponent implements OnInit {
     var decoded = jwt_decode(token);
     this.formSms.patchValue({
       userOwner: JSON.parse(JSON.stringify(decoded))._id,
+      user: JSON.parse(JSON.stringify(decoded))._id,
       status: "envoyé"
 
     });
