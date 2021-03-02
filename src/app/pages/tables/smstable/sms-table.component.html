@@ -7,10 +7,11 @@
         <mat-table #table [dataSource]="data" matSort class="mat-elevation-z8">
             <ng-container matColumnDef="SendTo">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> Send To </mat-header-cell>
-                <mat-cell *matCellDef="let element"  > {{element.smsOwner.profile.name}}{{element.smsOwner.profile.surname}} </mat-cell>
-               
+                <mat-cell *matCellDef="let element">
+                    {{element.smsOwner.profile.name}}{{element.smsOwner.profile.surname}} </mat-cell>
+
             </ng-container>
-           
+
 
             <ng-container matColumnDef="requestDate">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Request Date </mat-header-cell>
@@ -49,15 +50,16 @@
             <mat-row *matRowDef="let row;columns: displayedColumns;"></mat-row>
         </mat-table>
     </div>
-<h1>Actionnaire</h1>
+    <h1>Actionnaire</h1>
     <div class="p-2">
         <mat-table #table1 [dataSource]="data1" matSort class="mat-elevation-z8">
             <ng-container matColumnDef="SendTo">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> Send To </mat-header-cell>
-                <mat-cell *matCellDef="let elements"  > {{elements.acts.profile.name}}{{elements.acts.profile.surname}} </mat-cell>
-               
+                <mat-cell *matCellDef="let elements"> {{elements.acts.profile.name}}{{elements.acts.profile.surname}}
+                </mat-cell>
+
             </ng-container>
-           
+
 
             <ng-container matColumnDef="requestDate">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Request Date </mat-header-cell>
@@ -101,10 +103,11 @@
         <mat-table #table2 [dataSource]="data2" matSort class="mat-elevation-z8">
             <ng-container matColumnDef="SendTo">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> Send To </mat-header-cell>
-                <mat-cell *matCellDef="let elementss"  > {{elementss.docs.profile.name}}{{elementss.docs.profile.surname}} </mat-cell>
-               
+                <mat-cell *matCellDef="let elementss"> {{elementss.docs.profile.name}}{{elementss.docs.profile.surname}}
+                </mat-cell>
+
             </ng-container>
-           
+
 
             <ng-container matColumnDef="requestDate">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Request Date </mat-header-cell>
@@ -148,10 +151,11 @@
         <mat-table #table3 [dataSource]="data3" matSort class="mat-elevation-z8">
             <ng-container matColumnDef="SendTo">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> Send To </mat-header-cell>
-                <mat-cell *matCellDef="let elementsss"  > {{elementsss.userOwner.profile.name}}{{elementsss.userOwner.profile.surname}} </mat-cell>
-               
+                <mat-cell *matCellDef="let elementsss">
+                    {{elementsss.userOwner.profile.name}}{{elementsss.userOwner.profile.surname}} </mat-cell>
+
             </ng-container>
-           
+
 
             <ng-container matColumnDef="requestDate">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Request Date </mat-header-cell>

@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './sms-table.component.html'
 })
 export class SmstableComponent {
-  @ViewChild(MatSort) sort: MatSort;
+  // @ViewChild(MatSort) sort: MatSort;
   public displayedColumns = ['SendTo','requestDate', 'phone', 'message', 'status', 'action'];
   public displayedColumns1 = ['SendTo','requestDate', 'phone', 'message', 'status', 'action'];
   public displayedColumns2 = ['SendTo','requestDate', 'phone', 'message', 'status', 'action'];
@@ -34,31 +34,90 @@ export class SmstableComponent {
     this.settings = this.appSettings.settings; 
 
   }
-
+  // ngOnInit() {
+  //   this.tablesService.getAllSmssPatient().subscribe(res => {
+  //     this.dataSource = (res);
+  //     this.dataSource = this.dataSource.sort((data1: any, data2: any) => {
+  //       return data2.createdAt - data1.createdAt
+  //     })
+     
+  //      this.dataSource.reverse();
+  //     this.data = new MatTableDataSource<Element>(this.dataSource)
+  //     this.settings = this.appSettings.settings;
+      
+  //   })
+  //   this.tablesService.getAllSmssacts().subscribe(res => {
+  //     this.dataSource1 = (res);
+  //     this.dataSource1 = this.dataSource2.sort((data1: any, data2: any) => {
+  //       return data2.createdAt - data1.createdAt
+  //     })
+     
+  //      this.dataSource1.reverse();
+  //     this.data1 = new MatTableDataSource<Element>(this.dataSource1)
+  //     this.settings = this.appSettings.settings;
+  //   })
+  //   this.tablesService.getAllSmssdocs().subscribe(res => {
+  //     this.dataSource2 = (res);
+  //     this.dataSource2 = this.dataSource2.sort((data1: any, data2: any) => {
+  //       return data2.createdAt - data1.createdAt
+  //     })
+     
+  //      this.dataSource2.reverse();
+  //     this.data2 = new MatTableDataSource<Element>(this.dataSource2)
+  //     this.settings = this.appSettings.settings;
+  //   })
+  //   this.tablesService.getAllSmssauto().subscribe(res => {
+  //     this.dataSource3 = (res);
+  //     this.dataSource3 = this.dataSource3.sort((data1: any, data2: any) => {
+  //       return data2.createdAt - data1.createdAt
+  //     })
+     
+  //      this.dataSource3.reverse();
+  //     this.data3 = new MatTableDataSource<Element>(this.dataSource3)
+  //     this.settings = this.appSettings.settings;
+  //   })
+  // }
   ngAfterViewInit() {
     this.tablesService.getAllSmssPatient().subscribe(res => {
       this.dataSource = (res);
+      this.dataSource = this.dataSource.sort((data1: any, data2: any) => {
+        return data2.createdAt - data1.createdAt
+      })
+     
+       this.dataSource.reverse();
       this.data = new MatTableDataSource<Element>(this.dataSource)
       this.settings = this.appSettings.settings;
-      this.data.sort = this.sort;
+      
     })
     this.tablesService.getAllSmssacts().subscribe(res => {
       this.dataSource1 = (res);
+      this.dataSource1 = this.dataSource2.sort((data1: any, data2: any) => {
+        return data2.createdAt - data1.createdAt
+      })
+     
+       this.dataSource1.reverse();
       this.data1 = new MatTableDataSource<Element>(this.dataSource1)
       this.settings = this.appSettings.settings;
-      this.data1.sort = this.sort;
     })
     this.tablesService.getAllSmssdocs().subscribe(res => {
       this.dataSource2 = (res);
+      this.dataSource2 = this.dataSource2.sort((data1: any, data2: any) => {
+        return data2.createdAt - data1.createdAt
+      })
+     
+       this.dataSource2.reverse();
       this.data2 = new MatTableDataSource<Element>(this.dataSource2)
       this.settings = this.appSettings.settings;
-      this.data2.sort = this.sort;
     })
     this.tablesService.getAllSmssauto().subscribe(res => {
       this.dataSource3 = (res);
+      this.dataSource3 = this.dataSource3.sort((data1: any, data2: any) => {
+        return data2.createdAt - data1.createdAt
+      })
+     
+       this.dataSource3.reverse();
       this.data3 = new MatTableDataSource<Element>(this.dataSource3)
       this.settings = this.appSettings.settings;
-      this.data3.sort = this.sort;
     })
   }
 
