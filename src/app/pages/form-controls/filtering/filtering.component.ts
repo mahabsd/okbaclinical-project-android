@@ -171,6 +171,7 @@ export class FilteringComponent {
           reciever: conge.userOwner._id,
           text: "your vacation leaves has been approved",
           userOwner: this.userId,
+          conge: true
         }
        this.messagesService.sendNotification(message).subscribe(res => 
         console.log(res + "notifications")
