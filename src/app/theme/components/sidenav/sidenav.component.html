@@ -1,8 +1,8 @@
-<div class="sidenav-menu-outer" [perfectScrollbar]="psConfig" [disabled]="settings.fixedSidenavUserContent">    
+<div class="sidenav-menu-outer" [perfectScrollbar]="psConfig" [disabled]="settings.fixedSidenavUserContent" >    
     <div fxLayout="column" fxLayoutAlign="center center" class="user-block" [class.py-3]="settings.menuType != 'mini'" [class.py-2]="settings.menuType == 'mini'">
         <img [src]="data.profile.image" alt="user-image">
-        <h2 *ngIf="settings.menuType != 'mini'" class="mt-2">{{data.profile.name}} {{data.profile.surname}}</h2>
-        <p *ngIf="settings.menuType == 'default'" class="secondary-text-color">{{data.contacts.email}} </p>
+        <!-- <h2 *ngIf="settings.menuType != 'mini'" class="mt-2"> {{data.profile.name}} {{data.profile.surname}}</h2>
+        <p *ngIf="settings.menuType == 'default'" class="secondary-text-color">{{data.contacts.email}} </p> -->
     </div>
     <mat-divider></mat-divider>
     <div id="vertical-menu" [perfectScrollbar]="psConfig" [disabled]="!settings.fixedSidenavUserContent">

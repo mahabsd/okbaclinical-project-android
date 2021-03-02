@@ -32,7 +32,7 @@ export class TopInfoContentComponent implements OnInit {
     let token = localStorage.getItem('token');
     var decoded = jwt_decode(token);
      this.UserService.getUser(JSON.parse(JSON.stringify(decoded))._id,).subscribe(res => {
-     this.data=(res);
+     this.data=res;
      })
      this.formSms = new FormGroup({
       status: new FormControl(''),
@@ -45,12 +45,6 @@ export class TopInfoContentComponent implements OnInit {
       }),
 
     })
-  }
-
-  public onContactFormSubmit(values:Object):void {
-    if (this.contactForm.valid) {
-      console.log(values);
-    }
   }
 
   public closeInfoContent(event){

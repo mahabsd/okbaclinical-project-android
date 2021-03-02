@@ -5,7 +5,7 @@
 <mat-menu #userMenu="matMenu" [overlapTrigger]="false" class="toolbar-dropdown-menu user-menu">
     <!--<span (mouseleave)="userMenuTrigger.closeMenu()">-->        
         <mat-card fxLayout="row" fxLayoutAlign="space-around center" class="user-info p-0">
-            <img src="{{data.profile.image}}"  alt="user-image">
+            <img [src]="data.profile.image"  alt="user-image">
             <div fxLayout="column" fxLayoutAlign="center center">
                 <h2>{{data.profile.name}} {{data.profile.surname}}</h2>
                 <h3 class="secondary-text-color">{{data.work.company}}</h3>
