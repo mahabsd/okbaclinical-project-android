@@ -3,7 +3,6 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { Socket } from 'ngx-socket-io';
 import { MessagesService } from './messages.service';
 import jwt_decode from "../../../../../node_modules/jwt-decode";
-import { date } from 'date-fns/locale/af';
 import { Router } from '@angular/router';
 
 @Component({

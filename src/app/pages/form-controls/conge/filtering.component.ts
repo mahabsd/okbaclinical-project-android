@@ -58,6 +58,11 @@ export class CongeComponent implements OnInit {
 
     this.tablesService.getAllconges().subscribe(conges => {
       this.dataSource = conges;
+      this.dataSource = this.dataSource.sort((data1: any, data2: any) => {
+        return data2.createdAt - data1.createdAt
+      })
+     
+       this.dataSource.reverse();
       this.userConges = this.dataSource.filter(conge => conge.userOwner._id === this.userId)
       console.log(this.dataSource);
       this.data = new MatTableDataSource<Element>(this.userConges);

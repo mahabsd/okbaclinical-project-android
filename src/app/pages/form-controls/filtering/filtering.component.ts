@@ -68,6 +68,11 @@ export class FilteringComponent {
     this.settings = this.appSettings.settings;
     this.tablesService.getAllconges().subscribe(res => {
       this.dataSource = res;
+      this.dataSource = this.dataSource.sort((data1: any, data2: any) => {
+        return data2.createdAt - data1.createdAt
+      })
+     
+       this.dataSource.reverse();
       this.data = new MatTableDataSource<Element>(this.dataSource)
     })
   }
