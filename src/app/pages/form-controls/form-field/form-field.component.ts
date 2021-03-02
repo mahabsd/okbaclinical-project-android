@@ -45,60 +45,44 @@ export class FormFieldComponent implements OnInit {
       userOwner: JSON.parse(JSON.stringify(decoded))._id,
 
     });
-    console.log(this.formMaintenance);
     this.maintenancesService.addMaintenance(this.formMaintenance.value).subscribe(
       (val) => {
         console.log("POST call successful value returned in body", val);
         let message = "Maintenance added successfully";
-        ///action va etre changé
         let action = "close"
         this.snackBar.open(message, action, {
           duration: 2000,
         });
-         //for show spinner each time
-         
         if (this.formMaintenance.value.type === "informatique") {
           this.UserService.getAllUsers().subscribe((res: any[any]) => {
             let user = res.find(x => x.work.roles[0].name === 'Responsable-info')
-            console.log(user);
-            console.log(user._id);
-            
-            
             this.messages = {
               reciever: user._id,
-              text: "your vacation leaves has been approved0",
+              text: "you have new maintenance",
               userOwner: JSON.parse(JSON.stringify(decoded))._id,
+              maintenance : true
             }
-            console.log(this.messages);
+            this.messagesService.sendNotification(this.messages).subscribe();
           })
         }
+        if (this.formMaintenance.value.type === "autres") {
+          this.UserService.getAllUsers().subscribe((res: any[any]) => {
+            let user1 = res.find(x => x.work.roles[0].name === 'respon-maintenance')
+            this.messages = {
+              reciever: user1._id,
+              text: "you have new maintenance",
+              userOwner: JSON.parse(JSON.stringify(decoded))._id,
+              maintenance : true
+            }
+            this.messagesService.sendNotification(this.messages).subscribe();
+          })
+        }
+        this.ngOnInit();
+      },
+      () => {
+        console.log("The POST observable is now completed.");
 
-          if (this.formMaintenance.value.type === "autres") {
-            this.UserService.getAllUsers().subscribe((res: any[any]) => {
-              let user1 = res.find(x => x.work.roles[0].name === 'respon-maintenance')
-              console.log("autre"+user1);
-            console.log("autre"+user1._id);
-            
-              this.messages = {
-                reciever: user1._id,
-                text: "your vacation leaves has been approved1",
-                userOwner: JSON.parse(JSON.stringify(decoded))._id,
-              }
-              console.log(this.messages);
-              
-            })
-          }
-
-
-    this.messagesService.sendNotification(this.messages).subscribe(res =>
-      console.log(res + "notifications")
-    );
-    this.ngOnInit()
-  },
-        () => {
-  console.log("The POST observable is now completed.");
-
-});
+      });
 
   }
 

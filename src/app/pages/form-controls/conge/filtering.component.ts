@@ -14,6 +14,7 @@ import jwt_decode from "../../../../../node_modules/jwt-decode";
   styleUrls: ['./filtering.component.scss'],
 
 })
+
 export class CongeComponent implements OnInit {
   public displayedColumns = ['user', 'requestDate', 'dateDebut', 'dateFin', 'daysNumber', 'motif', 'status'];
   public dataSource: any;
