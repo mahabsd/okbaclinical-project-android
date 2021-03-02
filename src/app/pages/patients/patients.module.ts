@@ -11,9 +11,10 @@ import { PatientsComponent } from './patients.component';
 import { PatientsData } from './patients.data';
 import { PatientDialogComponent } from './patient-dialog/patient-dialog.component';
 import { PatientsmsComponent } from "./patient-sms/patient-sms.component";
+import { AuthActivateGuard } from 'src/app/services/canActivateDocsPats.guard';
 
 export const routes = [
-  { path: '', component: PatientsComponent, pathMatch: 'full' }
+  { path: '', canActivate:[AuthActivateGuard],component: PatientsComponent, pathMatch: 'full' }
 ];
 
 @NgModule({
