@@ -31,10 +31,6 @@
                     <mat-icon>account_circle</mat-icon>
                     <span>Contact info</span>
                 </button>
-                <!-- <button mat-menu-item>
-                    <mat-icon>volume_mute</mat-icon>
-                    <span>Mute</span>
-                </button> -->
                 <button mat-menu-item (click)="deleteChat(currentChat._id)">
                     <mat-icon>delete_forever</mat-icon>
                     <span>Clear chat</span>
@@ -80,7 +76,7 @@
                                 </p>
                                 <p matLine class="message" *ngIf="talk.files.length > 0">
                                     <a [href]="talk.files"
-                                        [ngClass]="(talk.candidat !== userId) ? 'bg-primary' : 'bg-accent'">{{talk.files | slice:0:7}}</a>
+                                        [ngClass]="(talk.candidat !== userId) ? 'bg-primary' : 'bg-accent'">{{talk.files | slice:-20}}</a>
                                 </p>
                                 <p matLine class="message-date">
                                     <small *ngIf="(talk.content != undefined && talk.content != '' )|| talk.files.length >0" >{{talk.createdDate |timeAgo}}</small>

@@ -60,8 +60,8 @@ export class MessagesComponent implements OnInit {
         return message2.createdAt - message1.createdAt
       })
       this.messages = this.messages.reverse();
-     // this.messages.forEach((notif: any) =>{if(notif.messages === true){this.notifMesg.push(notif)}else{this.notifMesg = []}})
-     // this.messages.forEach((note: any) =>{if(note.conge === true){this.notifOthers.push(note)}else{  this.notifOthers = []}})
+      this.notifMesg =  this.messages.filter((notif: any) =>notif.messages === true);
+      this.notifOthers =  this.messages.filter((notif: any) =>notif.messages === false);
     })
   }
 
