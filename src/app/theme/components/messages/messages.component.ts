@@ -71,7 +71,7 @@ export class MessagesComponent implements OnInit {
     }else if (message.maintenance == true){
       this.router.navigate(['/Maintenances/liste-maintenance'])
     }else{
-      this.router.navigate(['/Holydays/Holidays-list'])
+      this.router.navigate(['/Holidays/Holidays-list'])
     }
     this.messagesService.deleteNotif(message._id).subscribe(res => this.getNotification()) 
   }
