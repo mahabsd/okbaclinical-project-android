@@ -11,10 +11,11 @@ import { DoctorsComponent } from './doctors.component';
 import { DoctorsData } from './doctors.data';
 import { DoctorDialogComponent } from './doctor-dialog/doctor-dialog.component';
 import { DoctorsmsComponent } from "./doctor-sms/doctor-sms.component";
+import { AuthActivateGuard } from 'src/app/services/canActivateDocsPats.guard';
 
 
 export const routes = [
-  { path: '', component: DoctorsComponent, pathMatch: 'full' }
+  { path: '',canActivate:[AuthActivateGuard], component: DoctorsComponent, pathMatch: 'full' }
 ];
 
 @NgModule({

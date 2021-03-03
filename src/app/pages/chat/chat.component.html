@@ -31,10 +31,6 @@
                     <mat-icon>account_circle</mat-icon>
                     <span>Contact info</span>
                 </button>
-                <!-- <button mat-menu-item>
-                    <mat-icon>volume_mute</mat-icon>
-                    <span>Mute</span>
-                </button> -->
                 <button mat-menu-item (click)="deleteChat(currentChat._id)">
                     <mat-icon>delete_forever</mat-icon>
                     <span>Clear chat</span>
@@ -80,7 +76,7 @@
                                 </p>
                                 <p matLine class="message" *ngIf="talk.files.length > 0">
                                     <a [href]="talk.files"
-                                        [ngClass]="(talk.candidat !== userId) ? 'bg-primary' : 'bg-accent'">{{talk.files | slice:0:7}}</a>
+                                        [ngClass]="(talk.candidat !== userId) ? 'bg-primary' : 'bg-accent'">{{talk.files | slice:-20}}</a>
                                 </p>
                                 <p matLine class="message-date">
                                     <small *ngIf="(talk.content != undefined && talk.content != '' )|| talk.files.length >0" >{{talk.createdDate |timeAgo}}</small>
@@ -123,17 +119,17 @@
                                 </button>
                             </div>
                             <img *ngIf="currentChat"
-                                [src]="currentChat.candidat1.profile.image" class="py-2">
-                            <h2 *ngIf="currentChat" class="pb-3">{{currentChat.candidat1.username}}</h2>
+                                [src]="currentChat.candidat1._id != userId ?currentChat.candidat1.profile.image :currentChat.candidat2.profile.image" class="py-2">
+                            <h2 *ngIf="currentChat" class="pb-3">{{currentChat.candidat1._id != userId ?currentChat.candidat1.profile.surname :currentChat.candidat2.profile.surname }} {{currentChat.candidat1._id != userId ?currentChat.candidat1.profile.name :currentChat.candidat2.profile.name }}</h2>
                         </div>
                         <mat-list>
                             <mat-list-item>
                                 <mat-icon matListIcon class="secondary-text-color">mail_outline</mat-icon>
-                                <h3 matLine>{{currentChat.candidat1.contacts.email}}</h3>
+                                <h3 matLine>{{currentChat.candidat1._id != userId ?currentChat.candidat1.contacts.email:currentChat.candidat2.contacts.email}}</h3>
                             </mat-list-item>
                             <mat-list-item>
                                 <mat-icon matListIcon class="secondary-text-color">call</mat-icon>
-                                <h3 matLine>{{currentChat.candidat1.contacts.phone}}</h3>
+                                <h3 matLine>{{currentChat.candidat1._id != userId ?currentChat.candidat1.contacts.phone:currentChat.candidat2.contacts.phone}}</h3>
                             </mat-list-item>
                             <mat-list-item>
                                 <mat-icon matListIcon class="secondary-text-color">location_on</mat-icon>
