@@ -13,7 +13,7 @@ import { MessagesService } from 'src/app/theme/components/messages/messages.serv
 @Component({
   selector: 'app-filtering',
   templateUrl: './filtering.component.html',
-  providers: [ MessagesService ]
+  providers: [MessagesService]
 
 })
 export class FilteringComponent {
@@ -58,21 +58,28 @@ export class FilteringComponent {
   soldeConge: any;
   userOwner: Object;
   user: any;
+  userRole: any;
+  concat: string;
 
   constructor(public appSettings: AppSettings,
     private tablesService: CongeService,
     public snackBar: MatSnackBar,
     public dialog: MatDialog,
     public loginService: LoginService,
-    public messagesService : MessagesService) {
+    public messagesService: MessagesService) {
+    this.token = localStorage.getItem('token');
+    this.decoded = JSON.parse(JSON.stringify(jwt_decode(this.token)));
+    this.userRole = this.decoded.roles[0].name;
+    this.concat = this.userRole + "1"
     this.settings = this.appSettings.settings;
+
     this.tablesService.getAllconges().subscribe(res => {
       this.dataSource = res;
       this.dataSource = this.dataSource.sort((data1: any, data2: any) => {
         return data2.createdAt - data1.createdAt
       })
-     
-       this.dataSource.reverse();
+      this.dataSource.reverse();
+      //this.dataSource.filter()
       this.data = new MatTableDataSource<Element>(this.dataSource)
     })
   }
@@ -178,8 +185,8 @@ export class FilteringComponent {
           userOwner: this.userId,
           conge: true
         }
-       this.messagesService.sendNotification(message).subscribe(res => 
-        console.log(res + "notifications")
+        this.messagesService.sendNotification(message).subscribe(res =>
+          console.log(res + "notifications")
         );
         break;
       default:
