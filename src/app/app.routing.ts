@@ -31,7 +31,7 @@ export const routes: Routes = [
             //{ path: 'charts', loadChildren: () => import('./pages/charts/charts.module').then(m => m.ChartsModule), data: { breadcrumb: 'Charts' } },
             //{ path: 'drag-drop', loadChildren: () => import('./pages/drag-drop/drag-drop.module').then(m => m.DragDropModule), data: { breadcrumb: 'Drag & Drop' } },
             //{ path: 'icons', loadChildren: () => import('./pages/icons/icons.module').then(m => m.IconsModule), data: { breadcrumb: 'Material Icons' } },
-            // { path: 'profile', loadChildren: () => import ('./pages/profile/profile.module').then(m => m.ProfileModule), data: { breadcrumb: 'Profile' } }, 
+             { path: 'profile', loadChildren: () => import ('./pages/profile/profile.module').then(m => m.ProfileModule), data: { breadcrumb: 'Profile' } }, 
             // { path: 'blank', component: BlankComponent, data: { breadcrumb: 'Blank page' } },
             // { path: 'search', component: SearchComponent, data: { breadcrumb: 'Search' } },
             // { path: 'search/:name', component: SearchComponent, data: { breadcrumb: 'Search' } },

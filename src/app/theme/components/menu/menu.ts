@@ -3,7 +3,7 @@ import { Menu } from './menu.model';
 export const verticalMenuItems = [
   new Menu(1, 'Dashboard', '/', null, 'dashboard', null, false, 0),
   new Menu(55, 'Schedule', '/schedule', null, 'event_note', null, false, 0),
-  new Menu(2, 'Users', '/users', null, 'supervisor_account', null, false, 0),
+  new Menu(2,  'Users', '/users', null, 'supervisor_account', null, false, 0),
   new Menu(19, 'Doctors', '/doctors', null, 'groups', null, false, 0),
   new Menu(18, 'Patients', '/patients', null, 'people', null, false, 0),
   new Menu(37, 'Actionnaires', '/actionnaires', null, 'supervisor_account', null, false, 0),

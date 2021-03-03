@@ -13,7 +13,7 @@ export const routes = [
       component: ProfileComponent,
       children:[
         { path: '', redirectTo: 'user-info', pathMatch: 'full'},
-       // { path: 'projects', component: ProjectsComponent, data: { breadcrumb: 'Projects' } },
+        //{ path: 'projects', component: ProjectsComponent, data: { breadcrumb: 'Projects' } },
         { path: 'user-info', component: UserInfoComponent, data: { breadcrumb: 'User Information' } }
       ]
   }
