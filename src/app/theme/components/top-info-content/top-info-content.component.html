@@ -33,7 +33,7 @@
             </div>
         </div>
     </div>
-    <div fxFlex="100" fxFlex.gt-sm="35" fxFlex.sm="50" ngClass.xs="pb-4" class="top-contact-form col">
+    <div fxFlex="100" fxFlex.gt-sm="35" fxFlex.sm="50" ngClass.xs="pb-4" class="top-contact-form col" *ngIf="(role === 'admin' || role === 'Pdg' || role === 'Responsable-info' || role === 'cassier-principale')">
         <form [formGroup]="formSms"  fxLayout="row wrap" class="px-2">
             <form formGroupName="contacts" fxLayout="row wrap" class="px-2" (ngSubmit)="onSubmit()">
                 <div fxFlex="100" class="">

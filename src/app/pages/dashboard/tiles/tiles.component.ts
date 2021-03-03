@@ -24,12 +24,16 @@ export class TilesComponent implements OnInit {
   public token = localStorage.getItem('token');
   public decoded = JSON.parse(JSON.stringify(jwt_decode(this.token)));
   public userId = this.decoded._id;
+  public role = this.decoded.roles[0].name;
   conges: any[];
 
   constructor(private actionnairesService: ActionnairesService,
     private doctorsService: DoctorsService,
     private usersService: UsersService, private patientsService: PatientsService,
     private maintenancesService: MaintenancesService, private congeservice: CongeService) {
+
+
+
 
     this.actionnairesService.getAllActionnaires().subscribe((res: []) => {
       this.lengthAct = res.length
@@ -55,6 +59,7 @@ export class TilesComponent implements OnInit {
   }
 
   ngOnInit() {
+    
   }
 
 }

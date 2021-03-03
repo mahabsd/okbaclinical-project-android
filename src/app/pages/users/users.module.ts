@@ -10,9 +10,10 @@ import { PipesModule } from '../../theme/pipes/pipes.module';
 import { UsersComponent } from './users.component';
 import { UsersData } from './users.data';
 import { UserDialogComponent } from './user-dialog/user-dialog.component';
+import { AutheactivateGuard } from "src/app/services/AuthDeactivateGuard";
 
 export const routes = [
-  { path: '', component: UsersComponent, pathMatch: 'full' }
+  { path: '',canActivate:[AutheactivateGuard], component: UsersComponent, pathMatch: 'full' }
 ];
 
 @NgModule({
