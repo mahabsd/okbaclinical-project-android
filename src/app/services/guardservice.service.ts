@@ -11,6 +11,7 @@ export class GuardserviceService {
   isLoginSubject = new BehaviorSubject<boolean>(this.isAuthenticated());
 decoded: any;
 
+
   constructor() { }
 
   logout(): void {
@@ -90,4 +91,70 @@ decoded: any;
     return this.isLoginSubject.asObservable();
   }
 
+  public isAllowed(): boolean {
+
+    const token = localStorage.getItem('token');
+    this.decoded = JSON.parse(JSON.stringify(jwt_decode(token)))
+
+    if ((this.decoded.roles[0].name === 'admin')
+      || (this.decoded.roles[0].name === 'pdg')
+      || (this.decoded.roles[0].name === 'cassiers principale')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  public isAllowedActs(): boolean {
+
+    const token = localStorage.getItem('token');
+    this.decoded = JSON.parse(JSON.stringify(jwt_decode(token)))
+
+    if ((this.decoded.roles[0].name === 'admin')
+      || (this.decoded.roles[0].name === 'pdg')
+      || (this.decoded.roles[0].name === 'secritaire personnelle')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  public isAllowedSMS(): boolean {
+
+    const token = localStorage.getItem('token');
+    this.decoded = JSON.parse(JSON.stringify(jwt_decode(token)))
+
+    if ((this.decoded.roles[0].name === 'admin')
+      || (this.decoded.roles[0].name === 'pdg')
+      || (this.decoded.roles[0].name === 'Responsable-info')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public isAllowedHolidays(): boolean {
+
+    const token = localStorage.getItem('token');
+    this.decoded = JSON.parse(JSON.stringify(jwt_decode(token)))
+
+    if ((this.decoded.roles[0].name === 'services')
+      || (this.decoded.roles[0].name === 'cassiers principale')) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+  public isAllowedMaintenance(): boolean {
+
+    const token = localStorage.getItem('token');
+    this.decoded = JSON.parse(JSON.stringify(jwt_decode(token)))
+
+    if ((this.decoded.roles[0].name === 'Responsable-info')
+      || (this.decoded.roles[0].name === 'respon-maintenance')
+      || (this.decoded.roles[0].name === 'admin')
+      || (this.decoded.roles[0].name === 'pdg')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

@@ -34,7 +34,7 @@ export class CongeComponent implements OnInit {
     status: new FormControl('',),
     userOwner: new FormControl(''),
   });
-  userConges: [];
+  userConges: any[];
   congeUser: any;
   constructor(public appSettings: AppSettings, private tablesService: CongeService) {
     this.settings = this.appSettings.settings;
@@ -65,7 +65,6 @@ export class CongeComponent implements OnInit {
      
        this.dataSource.reverse();
       this.userConges = this.dataSource.filter(conge => conge.userOwner._id === this.userId)
-      console.log(this.dataSource);
       this.data = new MatTableDataSource<Element>(this.userConges);
     })
   }

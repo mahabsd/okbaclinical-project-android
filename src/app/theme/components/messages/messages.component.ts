@@ -60,8 +60,8 @@ export class MessagesComponent implements OnInit {
         return message2.createdAt - message1.createdAt
       })
       this.messages = this.messages.reverse();
-      this.messages.forEach((notif: any) =>{notif.messages?this.notifMesg.push(notif):this.notifMesg = []})
-      this.messages.forEach((note: any) =>{note.conge?this.notifOthers.push(note):this.notifOthers = []})    
+      this.notifMesg =  this.messages.filter((notif: any) =>notif.messages === true);
+      this.notifOthers =  this.messages.filter((notif: any) =>notif.messages === false);
     })
   }
 
@@ -71,7 +71,7 @@ export class MessagesComponent implements OnInit {
     }else if (message.maintenance == true){
       this.router.navigate(['/Maintenances/liste-maintenance'])
     }else{
-      this.router.navigate(['/Holydays/Holidays-list'])
+      this.router.navigate(['/Holidays/Holidays-list'])
     }
     this.messagesService.deleteNotif(message._id).subscribe(res => this.getNotification()) 
   }
