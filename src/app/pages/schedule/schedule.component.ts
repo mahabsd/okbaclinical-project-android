@@ -44,11 +44,14 @@ export class ScheduleComponent implements OnInit {
     label: '<i class="material-icons icon-sm white">edit</i>',
     onClick: ({ event }: { event: CalendarEvent }): void => {
       this.openScheduleDialog(event);
+     
+      
     }
   }, {
     label: '<i class="material-icons icon-sm white">close</i>',
     onClick: ({ event }: { event: CalendarEvent }): void => {
       this.events = this.events.filter(iEvent => iEvent !== event);
+      this.deleteSchedule(event);
       this.snackBar.open('Event deleted successfully!', null, {
         duration: 1500
       });
@@ -90,10 +93,13 @@ export class ScheduleComponent implements OnInit {
     this.schedules = null; //for show spinner each time
     this.scheduleService.getAllSchedules().subscribe((schedule: CalendarEvent[]) => {
       this.tab = []
+      
       schedule.forEach((event: any) => {
         if (event.userOwner == this.userId) {
           event.start = new Date(event.start)
           event.actions = this.actions;
+          event._id=event._id;
+          event.descrip=event.description;
           this.tab.push(event);
 
         }
@@ -112,6 +118,15 @@ export class ScheduleComponent implements OnInit {
       this.getAllSchedules();
     });
   }
+  public deleteSchedule(schedule) {
+    console.log(schedule);
+    
+    this.scheduleService.deleteSchedule(schedule._id).subscribe(schedule => {
+      
+      this.getAllSchedules();
+
+    });
+  }
 
   openScheduleDialog(event) {
     let dialogRef = this.dialog.open(ScheduleDialogComponent, {
@@ -119,17 +134,19 @@ export class ScheduleComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-
-      if (result) {
+      let pati = result
+      
         if (!result.isEdit) {
+          delete pati._id;
+          this.addSchedule(pati)
+         
 
-          this.addSchedule(result)
+         
         } else {
-
           this.updateSchedule(result);
         }
 
-      }
+      
     });
   }
 

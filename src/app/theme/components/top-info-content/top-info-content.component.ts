@@ -16,6 +16,7 @@ export class TopInfoContentComponent implements OnInit {
   @Input('showInfoContent') showInfoContent:boolean = false;
   @Output() onCloseInfoContent: EventEmitter<any> = new EventEmitter();
   contactForm: FormGroup;
+  role:any;
   controls = [
     { name: 'Notifications', checked: true },
     { name: 'Tasks', checked: true },
@@ -31,6 +32,7 @@ export class TopInfoContentComponent implements OnInit {
   ngOnInit() {
     let token = localStorage.getItem('token');
     var decoded = jwt_decode(token);
+   this.role=JSON.parse(JSON.stringify(decoded)).roles[0].name
      this.UserService.getUser(JSON.parse(JSON.stringify(decoded))._id,).subscribe(res => {
      this.data=res;
      })

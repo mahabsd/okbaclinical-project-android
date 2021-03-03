@@ -18,6 +18,8 @@ import { SortingComponent, } from './sorting/sorting.component';
 import { SmsSendComponent } from "./SmsSend/sms-send.component";
 import { CongeComponent } from './conge/filtering.component';
 import { MatTableModule } from '@angular/material/table' 
+import { activateholiadayslist } from "src/app/services/activateholiadayslist";
+
 import { AuthActivateHolidaysGuard } from 'src/app/services/canActivateHolidays.guard';
 
 export const routes = [
@@ -25,7 +27,8 @@ export const routes = [
   { path: 'datepicker', canActivate:[AuthActivateHolidaysGuard], component: DatepickerComponent, data: { breadcrumb: 'Datepicker' } },
   { path: 'Holidays-list',canActivate:[AuthActivateHolidaysGuard] , component: CongeComponent, data: { breadcrumb: 'Holidays list' } },
   { path: 'liste-maintenance', component: SortingComponent, data: { breadcrumb: 'Sorting table' } },
-  { path: 'holidays-requests-list', component: FilteringComponent, data: { breadcrumb: 'holidays requests list' } },
+ //{ path: 'Envoie-sms',, component: SmsSendComponent, data: { breadcrumb: 'Envoie Des SmS' } },
+  { path: 'holidays-requests-list',canActivate:[activateholiadayslist], component: FilteringComponent, data: { breadcrumb: 'holidays requests list' } },
 
 ];
 

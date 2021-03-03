@@ -9,6 +9,7 @@ import { ErrorComponent } from './pages/errors/error/error.component';
 import { AuthGuard } from './services/auth.guard';
 import { SmsSendComponent } from './pages/form-controls/SmsSend/sms-send.component';
 import { SmstableComponent } from './pages/tables/smstable/sms-table.component';
+import { activateSmsMessage } from "src/app/services/activatesmsmessage";
 import { AuthActivateSMSGuard } from './services/canActivateSMS.guard';
 
 export const routes: Routes = [
@@ -36,7 +37,8 @@ export const routes: Routes = [
             // { path: 'search/:name', component: SearchComponent, data: { breadcrumb: 'Search' } },
             { path: 'doctors', loadChildren: () => import('./pages/doctors/doctors.module').then(m => m.DoctorsModule), data: { breadcrumb: 'Doctors' } },
             { path: 'actionnaires', loadChildren: () => import('./pages/actionnaires/actionnaires.module').then(m => m.ActionnairesModule), data: { breadcrumb: 'Actionnaires' } },
-            { path: 'Envoie-sms', component: SmsSendComponent, data: { breadcrumb: 'Envoie Des SMS' } },
+            { path: 'Envoie-sms',canActivate:[activateSmsMessage], component: SmsSendComponent, data: { breadcrumb: 'Envoie Des SmS' } },
+          
             { path: 'liste-sms', canActivate: [AuthActivateSMSGuard], component: SmstableComponent, data: { breadcrumb: 'SMS List' } },
 
         ]
@@ -52,7 +54,7 @@ export const routes: Routes = [
 @NgModule({
     imports: [
         RouterModule.forRoot(routes, {
-            // preloadingStrategy: PreloadAllModules, // <- comment this line for activate lazy load
+             preloadingStrategy: PreloadAllModules, // <- comment this line for activate lazy load
             relativeLinkResolution: 'legacy',
             // useHash: true
         })

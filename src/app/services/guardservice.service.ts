@@ -9,7 +9,7 @@ import jwt_decode from "../../../node_modules/jwt-decode";
 })
 export class GuardserviceService {
   isLoginSubject = new BehaviorSubject<boolean>(this.isAuthenticated());
-  decoded: any;
+decoded: any;
 
 
   constructor() { }
@@ -29,6 +29,60 @@ export class GuardserviceService {
       return false;
     } else {
       return true;
+    }
+
+  }
+  public isNotAllowed(): boolean {
+    let token = localStorage.getItem('token');
+    this.decoded = JSON.parse(JSON.stringify(jwt_decode(token)));
+    
+
+    if (this.decoded.roles[0].name === 'admin' 
+    || this.decoded.roles[0].name === 'Pdg' 
+    || this.decoded.roles[0].name === 'Responsable-info' 
+    || this.decoded.roles[0].name === 'responsable-RH') {
+      return true;
+    } else {
+      return false;
+    }
+
+  }
+  public isAllowedrequestlist(): boolean {
+    let token = localStorage.getItem('token');
+    this.decoded = JSON.parse(JSON.stringify(jwt_decode(token)));
+    
+
+    if (this.decoded.roles[0].name === 'admin' 
+    || this.decoded.roles[0].name === 'Pdg' 
+    || this.decoded.roles[0].name === 'Responsable-info' 
+    || this.decoded.roles[0].name === 'responsable-RH'
+    || this.decoded.roles[0].name === 'directeur-technique'
+    || this.decoded.roles[0].name === 'surveillant Générale'
+    || this.decoded.roles[0].name === 'responsable facturation'
+    || this.decoded.roles[0].name === 'Respnsable Pharmacie'
+    || this.decoded.roles[0].name === 'respon-financier'
+    || this.decoded.roles[0].name === 'gouvernantes'
+    || this.decoded.roles[0].name === 'hyginiste'
+    || this.decoded.roles[0].name === 'respon-maintenance') {
+      return true;
+    } else {
+      return false;
+    }
+
+  }
+  public isAllowedsmsmessage(): boolean {
+    let token = localStorage.getItem('token');
+    this.decoded = JSON.parse(JSON.stringify(jwt_decode(token)));
+    
+
+    if (this.decoded.roles[0].name === 'admin' 
+    || this.decoded.roles[0].name === 'Pdg' 
+    || this.decoded.roles[0].name === 'Responsable-info' 
+    || this.decoded.roles[0].name === 'cassier-principale'
+    ) {
+      return true;
+    } else {
+      return false;
     }
 
   }
