@@ -38,7 +38,7 @@ decoded: any;
     
 
     if (this.decoded.roles[0].name === 'admin' 
-    || this.decoded.roles[0].name === 'Pdg' 
+    || this.decoded.roles[0].name === 'pdg' 
     || this.decoded.roles[0].name === 'Responsable-info' 
     || this.decoded.roles[0].name === 'responsable-RH') {
       return true;
@@ -53,7 +53,7 @@ decoded: any;
     
 
     if (this.decoded.roles[0].name === 'admin' 
-    || this.decoded.roles[0].name === 'Pdg' 
+    || this.decoded.roles[0].name === 'pdg' 
     || this.decoded.roles[0].name === 'Responsable-info' 
     || this.decoded.roles[0].name === 'responsable-RH'
     || this.decoded.roles[0].name === 'directeur-technique'
@@ -76,7 +76,7 @@ decoded: any;
     
 
     if (this.decoded.roles[0].name === 'admin' 
-    || this.decoded.roles[0].name === 'Pdg' 
+    || this.decoded.roles[0].name === 'pdg' 
     || this.decoded.roles[0].name === 'Responsable-info' 
     || this.decoded.roles[0].name === 'cassier-principale'
     ) {

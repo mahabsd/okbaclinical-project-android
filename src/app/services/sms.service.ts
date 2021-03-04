@@ -28,8 +28,8 @@ export class SmsService {
   deleteSms(id) {
     return this.http.delete(this.usersUrl + "smsing/sms/delete/" + id, );
   }
-  getAllSmssPatient() {
-    return this.http.get(this.usersUrl + "smsing/getAllsmssPatient");
+  getAllSmss() {
+    return this.http.get(this.usersUrl + "smsing/getAllsmss");
   }
   getAllSmssacts() {
     return this.http.get(this.usersUrl + "smsing/getAllsmssacts");

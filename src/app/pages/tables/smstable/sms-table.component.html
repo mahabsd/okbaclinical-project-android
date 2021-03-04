@@ -2,7 +2,7 @@
     [class]="'pb-4'"></app-content-header>
 
 <div fxLayout="column" class="p-2">
-    <h1>Patient</h1>
+
     <div class="p-2">
         <mat-table #table [dataSource]="data" matSort class="mat-elevation-z8">
             <ng-container matColumnDef="SendTo">
@@ -50,7 +50,7 @@
             <mat-row *matRowDef="let row;columns: displayedColumns;"></mat-row>
         </mat-table>
     </div>
-    <h1>Actionnaire</h1>
+    <!-- <h1>Actionnaire</h1>
     <div class="p-2">
         <mat-table #table1 [dataSource]="data1" matSort class="mat-elevation-z8">
             <ng-container matColumnDef="SendTo">
@@ -193,5 +193,5 @@
             <mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
             <mat-row *matRowDef="let row;columns: displayedColumns2;"></mat-row>
         </mat-table>
-    </div>
+    </div> -->
 </div>
