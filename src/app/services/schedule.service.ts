@@ -14,7 +14,6 @@ export class SchedulesService {
   ScheduleUrl: string = environment.basUrl;
  
   addSchedule(data) {
-    console.log(data);
     return this.http.post(this.ScheduleUrl + "rendezvous/rendezVous/add", data );
   }
   getSchedule(id) {

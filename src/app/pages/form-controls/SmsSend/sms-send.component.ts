@@ -47,10 +47,8 @@ export class SmsSendComponent implements OnInit {
       status: "envoyé"
       
     });
-    console.log(this.formSms.value);
-    
+  
     this.smsService.addSms(this.formSms.value).subscribe(sms => {  
-      console.log("POST call successful value returned in body", sms);
       let message = "sms added successfully";
       ///action va etre changé
       let action = "close"
@@ -58,10 +56,6 @@ export class SmsSendComponent implements OnInit {
         duration: 2000,
       });
       this.ngOnInit()
-    },
-    () => {
-      console.log("The POST observable is now completed.");
-
     });
     
     this.smsService.SendSms(this.formSms.value.contacts.type, this.formSms.value.contacts.phone, this.formSms.value.contacts.message).subscribe(sms => {

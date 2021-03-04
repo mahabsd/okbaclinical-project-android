@@ -47,8 +47,6 @@ export class CongeComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    console.log(this.dataSource);
-
     this.data.filter = filterValue.trim().toLowerCase();
   }
 

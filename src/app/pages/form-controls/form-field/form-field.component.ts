@@ -47,7 +47,6 @@ export class FormFieldComponent implements OnInit {
     });
     this.maintenancesService.addMaintenance(this.formMaintenance.value).subscribe(
       (val) => {
-        console.log("POST call successful value returned in body", val);
         let message = "Maintenance added successfully";
         let action = "close"
         this.snackBar.open(message, action, {
@@ -78,10 +77,6 @@ export class FormFieldComponent implements OnInit {
           })
         }
         this.ngOnInit();
-      },
-      () => {
-        console.log("The POST observable is now completed.");
-
       });
 
   }

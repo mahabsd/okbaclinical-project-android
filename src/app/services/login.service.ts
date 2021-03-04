@@ -16,7 +16,6 @@ export class LoginService {
   }
 
   addUser(data) {
-    //console.log(data);
     return this.http.post(this.usersUrl + "users/user/add/", data );
   }
   getUser(id) {

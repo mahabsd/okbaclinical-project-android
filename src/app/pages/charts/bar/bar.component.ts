@@ -28,8 +28,8 @@ export class BarComponent {
     Object.assign(this, {single, multi}); 
   }
   
-  public onSelect(event) {
-    console.log(event);
-  }
+  // public onSelect(event) {
+  //   console.log(event);
+  // }
 
 }

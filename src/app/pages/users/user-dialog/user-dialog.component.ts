@@ -101,7 +101,6 @@ password
     }
 
     Object.keys(this.form.value).forEach(fieldName => {
-    //  console.log(fieldName, JSON.stringify(this.form.value[fieldName]));
       this.formData.append(fieldName, JSON.stringify(this.form.value[fieldName]));
     })
     let message = "User updated successfully"
@@ -117,7 +116,6 @@ password
   selectImage(event) {
     if (event.target.value) {
       this.image = <File>event.target.files[0];
-      console.log("event " + this.image);
     }
   }
   openSnackBarAdd() {
@@ -126,12 +124,8 @@ password
     }
 
     Object.keys(this.form.value).forEach(fieldName => {
-     console.log(fieldName, JSON.stringify(this.form.value[fieldName]));
       this.formData.append(fieldName, JSON.stringify(this.form.value[fieldName]));
     })
-
-    console.log(this.formData + " this.formData");
-
     let message = "User added successfully";
     let action = "close"
     this.snackBar.open(message, action, {

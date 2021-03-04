@@ -33,8 +33,6 @@ export class DoctorsmsComponent implements OnInit {
     var decoded = jwt_decode(token);
 
     if (this.doctor) {
-      console.log(this.doctor);
-
       this.form.patchValue(this.doctor);
       this.form.patchValue({
         docs: this.doctor._id,

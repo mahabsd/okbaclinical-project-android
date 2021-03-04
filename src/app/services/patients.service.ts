@@ -14,7 +14,6 @@ export class PatientsService {
   patientsUrl: string = environment.basUrl;
  
   addPatient(data) {
-    console.log(data);
     return this.http.post(this.patientsUrl + "patients/patient/add", data );
   }
   getPatient(id) {

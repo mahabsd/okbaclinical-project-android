@@ -18,7 +18,6 @@ export class SortingComponent {
   constructor(public appSettings:AppSettings, private tablesService:MaintenancesService) {
     this.tablesService.getAllMaintenances().subscribe(res => {
       this.dataSource = res;
-      console.log(this.dataSource);
     this.settings = this.appSettings.settings; 
   })
   }

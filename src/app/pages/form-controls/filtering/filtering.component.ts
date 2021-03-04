@@ -79,7 +79,6 @@ export class FilteringComponent {
         return data2.createdAt - data1.createdAt
       })
       this.dataSource.reverse();
-      //this.dataSource.filter()
       this.data = new MatTableDataSource<Element>(this.dataSource)
     })
   }
@@ -185,9 +184,7 @@ export class FilteringComponent {
           userOwner: this.userId,
           conge: true
         }
-        this.messagesService.sendNotification(message).subscribe(res =>
-          console.log(res + "notifications")
-        );
+        this.messagesService.sendNotification(message).subscribe();
         break;
       default:
         break;
@@ -196,6 +193,10 @@ export class FilteringComponent {
     this.tablesService.updateconge(conge._id, formconge).subscribe(conge => {
       this.tablesService.getAllconges().subscribe(res => {
         this.dataSource = res;
+        this.dataSource = this.dataSource.sort((data1: any, data2: any) => {
+          return data2.createdAt - data1.createdAt
+        })
+        this.dataSource.reverse();
         this.data = new MatTableDataSource<Element>(this.dataSource)
 
       })
@@ -218,6 +219,10 @@ export class FilteringComponent {
     this.tablesService.updateconge(conge._id, formconge).subscribe(conge => {
       this.tablesService.getAllconges().subscribe(res => {
         this.dataSource = res;
+        this.dataSource = this.dataSource.sort((data1: any, data2: any) => {
+          return data2.createdAt - data1.createdAt
+        })
+        this.dataSource.reverse();
         this.data = new MatTableDataSource<Element>(this.dataSource)
 
       })
@@ -251,6 +256,10 @@ export class FilteringComponent {
         this.tablesService.deleteconge(conge._id).subscribe(conge => {
           this.tablesService.getAllconges().subscribe(res => {
             this.dataSource = res;
+            this.dataSource = this.dataSource.sort((data1: any, data2: any) => {
+              return data2.createdAt - data1.createdAt
+            })
+            this.dataSource.reverse();
             this.data = new MatTableDataSource<Element>(this.dataSource)
 
           })

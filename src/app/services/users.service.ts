@@ -18,7 +18,6 @@ export class UsersService {
  
  
   addUser(data) {
-    //console.log(data);
     return this.http.post(this.usersUrl + "users/user/add/", data );
   }
   getUser(id) {
@@ -34,7 +33,6 @@ export class UsersService {
     return this.http.get(this.usersUrl + "users/getAllusers");
   }
   postImage(data) {
-    //console.log(data);
     return this.http.post(this.usersUrl + "users/user/add/'", data );
   }
 }

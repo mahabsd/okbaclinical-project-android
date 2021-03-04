@@ -34,8 +34,8 @@ export class BubbleComponent {
     Object.assign(this, {bubble})   
   }
   
-  onSelect(event) {
-    console.log(event);
-  }
+  // onSelect(event) {
+  //   console.log(event);
+  // }
 
 }

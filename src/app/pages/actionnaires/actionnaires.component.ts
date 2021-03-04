@@ -35,14 +35,8 @@ export class ActionnairesComponent implements OnInit {
     this.getActionnaires();
   }
   public AddetSendSms(Sms) {
-    this.smsService.addSms(Sms).subscribe(sms => {
-      console.log("hello" + sms);
-
-    });
-    this.smsService.SendSms(Sms.contacts.type, Sms.contacts.phone, Sms.contacts.message).subscribe(sms => {
-      console.log("hello" + sms);
-
-    });
+    this.smsService.addSms(Sms).subscribe();
+    this.smsService.SendSms(Sms.contacts.type, Sms.contacts.phone, Sms.contacts.message).subscribe();
   }
   public getActionnaires(): void {
     this.actionnaires = null; //for show spinner each time
@@ -53,8 +47,6 @@ export class ActionnairesComponent implements OnInit {
   public addActionnaire(actionnaire: Actionnaire) {
     this.actionnairesService.addActionnaire(actionnaire).subscribe(actionnaire => {
       this.getActionnaires()
-      console.log("hello" + actionnaire);
-
     });
   }
   public updateActionnaire(Actionnaire: Actionnaire) {
@@ -92,7 +84,6 @@ export class ActionnairesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(actionnaire => {
       let pati = actionnaire
       if (pati._id) {
-        // console.log("close 1"+ JSON.stringify(actionnaire));
         this.updateActionnaire(pati) 
       }else{
          delete pati._id;
@@ -108,12 +99,9 @@ export class ActionnairesComponent implements OnInit {
       data: actionnaire
     });
     dialogRef.afterClosed().subscribe(sms => {
-      console.log(sms);
-      
+     
       if (sms) {
         delete sms._id; 
-        
-        // console.log("close 1"+ JSON.stringify(actionnaire));
         this.AddetSendSms(sms) 
       }
     });

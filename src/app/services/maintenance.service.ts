@@ -14,7 +14,6 @@ export class MaintenancesService {
   MaintenanceUrl: string = environment.basUrl;
  
   addMaintenance(data) {
-    console.log(data);
     return this.http.post(this.MaintenanceUrl + "maintenances/maintenance/add", data );
   }
   getMaintenance(id) {

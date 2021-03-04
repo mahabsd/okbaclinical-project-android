@@ -48,20 +48,11 @@ export class DoctorsComponent implements OnInit {
   public addDoctor(doctor: Doctor) {
     this.doctorsService.addDoctor(doctor).subscribe(doctor => {
       this.getDoctors()
-      console.log("hello" + doctor);
-
     });
   }
   public updateDoctor(doctor: Doctor) {
     this.doctorsService.updateDoctor(doctor._id, doctor).subscribe(doctor => this.getDoctors());
   }
-  // public deleteDoctor(doctor: Doctor) {
-
-  //   this.doctorsService.deleteDoctor(doctor._id).subscribe(doctor => {
-  //     this.getDoctors();
-  //   });
-  // }
-
   public changeView(viewType) {
     this.viewType = viewType;
     this.showSearch = false;

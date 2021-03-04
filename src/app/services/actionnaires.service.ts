@@ -14,7 +14,6 @@ export class ActionnairesService {
   actionnairesUrl: string = environment.basUrl;
  
   addActionnaire(data) {
-    console.log(data);
     return this.http.post(this.actionnairesUrl + "actionnaires/actionnaire/add", data );
   }
   getActionnaire(id) {
