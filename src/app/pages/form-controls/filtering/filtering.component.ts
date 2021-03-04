@@ -13,7 +13,7 @@ import { MessagesService } from 'src/app/theme/components/messages/messages.serv
 @Component({
   selector: 'app-filtering',
   templateUrl: './filtering.component.html',
-  providers: [ MessagesService ]
+  providers: [MessagesService]
 
 })
 export class FilteringComponent {
@@ -72,6 +72,7 @@ export class FilteringComponent {
       this.decoded = JSON.parse(JSON.stringify(jwt_decode(this.token)));
       this.compare = this.decoded.roles[0].name;
     this.settings = this.appSettings.settings;
+
     this.tablesService.getAllconges().subscribe(res => {
       this.dataSource = res;
       this.dataSource = this.dataSource.sort((data1: any, data2: any) => {
@@ -254,8 +255,8 @@ export class FilteringComponent {
           userOwner: this.userId,
           conge: true
         }
-       this.messagesService.sendNotification(message).subscribe(res => 
-        console.log(res + "notifications")
+        this.messagesService.sendNotification(message).subscribe(res =>
+          console.log(res + "notifications")
         );
         break;
       default:
