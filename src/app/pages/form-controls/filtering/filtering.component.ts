@@ -255,9 +255,7 @@ export class FilteringComponent {
           userOwner: this.userId,
           conge: true
         }
-        this.messagesService.sendNotification(message).subscribe(res =>
-          console.log(res + "notifications")
-        );
+        this.messagesService.sendNotification(message).subscribe();
         break;
       default:
         break;

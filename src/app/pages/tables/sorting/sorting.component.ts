@@ -33,7 +33,6 @@ export class SortingComponent {
   }
   deleteDemande(element) {
     this.tablesService.deleteMaintenance(element._id).subscribe(maitenance => {
-      console.log((maitenance));
       this.tablesService.getAllMaintenances().subscribe(res => {
         this.dataSource = res;
         this.data = new MatTableDataSource<Element>(this.dataSource)

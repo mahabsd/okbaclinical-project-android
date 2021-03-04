@@ -86,8 +86,6 @@ export class ScheduleComponent implements OnInit {
         this.viewDate = date;
       }
     }
-    console.log(this.events);
-
   }
   public getAllSchedules(): void {
     this.schedules = null; //for show spinner each time
@@ -119,12 +117,8 @@ export class ScheduleComponent implements OnInit {
     });
   }
   public deleteSchedule(schedule) {
-    console.log(schedule);
-    
     this.scheduleService.deleteSchedule(schedule._id).subscribe(schedule => {
-      
       this.getAllSchedules();
-
     });
   }
 
@@ -139,9 +133,7 @@ export class ScheduleComponent implements OnInit {
         if (!result.isEdit) {
           delete pati._id;
           this.addSchedule(pati)
-         
-
-         
+ 
         } else {
           this.updateSchedule(result);
         }

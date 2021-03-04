@@ -25,7 +25,6 @@ import { AppRoutingModule } from './app.routing';
 import { AppSettings } from './app.settings';
 import { AppComponent } from './app.component';
 import { PagesComponent } from './pages/pages.component';
-import { BlankComponent } from './pages/blank/blank.component';
 import { SearchComponent } from './pages/search/search.component';
 import { NotFoundComponent } from './pages/errors/not-found/not-found.component';
 import { ErrorComponent } from './pages/errors/error/error.component';
@@ -71,7 +70,6 @@ const config: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
   declarations: [
     AppComponent,
     PagesComponent,
-    BlankComponent,
     SearchComponent,
     NotFoundComponent,
     ErrorComponent,

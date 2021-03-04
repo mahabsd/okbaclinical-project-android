@@ -36,26 +36,18 @@ export class PatientsmsComponent implements OnInit {
     var decoded = jwt_decode(token);
     
       if(this.patient){
-        console.log(this.patient);
         this.form.patchValue(this.patient);
         this.form.patchValue({
           smsOwner: this.patient._id,
           onModel: 'Patient',
           userOwner: JSON.parse(JSON.stringify(decoded))._id,
           status: "envoyé"
-    
-        });;
-        console.log(this.form);
-        
+        });      
       } 
       else{
         this.patient = new Patient();
         this.patient.contacts = new PatientContacts();
-        
-      } 
-     
-
-     
+      }
   }
   openSnackBarAdd() {
     let message = "sms added successfully";

@@ -86,20 +86,14 @@ let action = "Annuler"
     this.dialogRef.close();
   }
   selectImage(event) {
-    console.log(event + "event ");
-    
+
     if (event.target.value) {
       this.form.patchValue({
         profile : {
           image : event
         }
       })
-
-      console.log("event.target.files[0] " + event.target.files[0]);
-      
-       this.image = <File>event.target.files[0];
-      console.log( this.image)
-       
+      this.image = <File>event.target.files[0];
     }
     
   }
@@ -117,10 +111,7 @@ let action = "Annuler"
       }
     })
 
-        this.doctorsService.postImage(fd).subscribe(res => {
-    console.log(res);
-    
-    });
+        this.doctorsService.postImage(fd).subscribe();
 
   }
 }

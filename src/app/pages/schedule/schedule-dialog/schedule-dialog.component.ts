@@ -31,8 +31,6 @@ export class ScheduleDialogComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log(this.form);
-    
 
     if (this.data){
       this.form.patchValue({
@@ -44,7 +42,6 @@ export class ScheduleDialogComponent implements OnInit {
         'userOwner': JSON.parse(JSON.stringify(this.decoded))._id,
       })
     }
-    console.log(this.form);
   }
 
   close(): void {

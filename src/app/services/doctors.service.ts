@@ -12,7 +12,6 @@ export class DoctorsService {
   }
 
   addDoctor(data) {
-    //console.log(data);
     return this.http.post(this.doctorsUrl + "doctors/doctor/add/", data );
   }
   getDoctor(id) {
@@ -28,7 +27,6 @@ export class DoctorsService {
     return this.http.get(this.doctorsUrl + "doctors/getAllDoctors");
   }
   postImage(data) {
-    //console.log(data);
     return this.http.post(this.doctorsUrl + "users/upload/", data );
   }
 }

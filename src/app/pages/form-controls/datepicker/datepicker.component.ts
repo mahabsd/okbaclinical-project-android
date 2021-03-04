@@ -114,13 +114,9 @@ export class DatepickerComponent implements OnInit {
             duration: 2000,
           });
           this.ngOnInit()
-        },
-        () => {
-          console.log("The POST observable is now completed.");
         });
     } else {
       this.validated = true;
-      //document.getElementById('validated').style.display = 'block';
       let message = "please be sure that the end and start date are correct ";
       let action = "close"
       this.snackBar.open(message, action, {
