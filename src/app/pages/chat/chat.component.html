@@ -76,7 +76,7 @@
                                 </p>
                                 <p matLine class="message" *ngIf="talk.files.length > 0">
                                     <a [href]="talk.files"
-                                        [ngClass]="(talk.candidat == userId) ? 'bg-primary' : 'bg-accent'">{{talk.files[0] | slice:-17}}</a>
+                                        [ngClass]="(talk.candidat != userId) ? 'bg-primary' : 'bg-accent'">{{talk.files[0] | slice:-17}}</a>
                                 </p>
                                 <p matLine class="message-date">
                                     <small *ngIf="(talk.content != undefined && talk.content != '' )|| talk.files.length >0" >{{talk.createdDate |timeAgo}}</small>
