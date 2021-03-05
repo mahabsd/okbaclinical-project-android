@@ -4,9 +4,8 @@
 
 export const environment = {
   production: true,
-  basUrl : "https://okbaclinical.herokuapp.com/api/",
- // SOCKET_ENDPOINT: 'http: // localhost: 3000' 
-
+  basUrl : "http://localhost:3000/api/",
+  socketBaseUrl : "http://localhost:8080"
 };
 
 /*
