@@ -7,7 +7,6 @@ import { SharedModule } from '../../shared/shared.module';
 import { DatepickerComponent } from './datepicker/datepicker.component';
 import { FormFieldComponent } from './form-field/form-field.component';
 import { FilteringComponent } from './filtering/filtering.component';
-import { SortingComponent, } from './sorting/sorting.component';
 import { SmsSendComponent } from "./SmsSend/sms-send.component";
 import { CongeComponent } from './conge/filtering.component';
 import { MatTableModule } from '@angular/material/table' 
@@ -19,8 +18,6 @@ export const routes = [
   { path: '', redirectTo: 'datepicker', pathMatch: 'full'},
   { path: 'datepicker', canActivate:[AuthActivateHolidaysGuard], component: DatepickerComponent, data: { breadcrumb: 'Datepicker' } },
   { path: 'Holidays-list',canActivate:[AuthActivateHolidaysGuard] , component: CongeComponent, data: { breadcrumb: 'Holidays list' } },
-  { path: 'liste-maintenance', component: SortingComponent, data: { breadcrumb: 'Sorting table' } },
- //{ path: 'Envoie-sms',, component: SmsSendComponent, data: { breadcrumb: 'Envoie Des SmS' } },
   { path: 'holidays-requests-list',canActivate:[activateholiadayslist], component: FilteringComponent, data: { breadcrumb: 'holidays requests list' } },
 
 ];
