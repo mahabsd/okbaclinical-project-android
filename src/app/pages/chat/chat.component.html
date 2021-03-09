@@ -69,7 +69,7 @@
                     <div class="chat-content" [class.actions-visible]="talks" perfectScrollbar >
                         <mat-list *ngIf="talks" class="p-0">
                             <mat-list-item *ngFor="let talk of talks " class="talk-item">
-                                <img matListAvatar [src]="talk.logo"  *ngIf="(talk.content != undefined && talk.content != '' )||(talk.files != undefined && talk.files != '' )">
+                                <img matListAvatar [src]="talk.logo"  *ngIf="(talk.content != undefined && talk.content != '' )">
                                 <p matLine class="message" >
                                     <span [ngClass]="(talk.candidat !== userId) ? 'bg-primary' : 'bg-accent'"
                                     *ngIf="talk.content != undefined && talk.content != '' " >{{talk.content}}</span>
