@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core'
 import * as io from 'socket.io-client';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable()
 export class MessagesService {
@@ -17,7 +18,7 @@ export class MessagesService {
             time: '2 hrs ago'
         },
     ];
-    private url = 'http://localhost:3000';
+    private url = environment.socketBaseUrl;
     socket: any;
     constructor(private httpClient: HttpClient) {
         this.socket = io(this.url);
