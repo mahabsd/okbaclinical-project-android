@@ -6,11 +6,12 @@ import { Observable } from 'rxjs/internal/Observable';
 import * as io from 'socket.io-client';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import jwt_decode from "../../../../node_modules/jwt-decode";
+import { environment } from 'src/environments/environment';
 
 
 @Injectable()
 export class ChatService {
-  private url = 'http://localhost:3000';
+  private url = environment.socketBaseUrl;
   socket: any;
 
   constructor(private httpClient: HttpClient) {
