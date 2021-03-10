@@ -43,7 +43,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from 'src/app/services/token.interceptor';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import {MatBadgeModule} from '@angular/material/badge';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 
 const socketBaseUrl = environment.socketBaseUrl
 const config: SocketIoConfig = { url: socketBaseUrl, options: {} };
