@@ -29,13 +29,13 @@ export class MessagesService {
         return this.messages;
     }
     public sendNotification(message) {
-        return this.httpClient.post(this.url + '/notifications/send-notification/', message);
+        return this.httpClient.post(this.url + 'notifications/send-notification/', message);
     }
 
     public getNotification() {
-        return this.httpClient.get(this.url + '/notifications/get-notification/');
+        return this.httpClient.get(this.url + 'notifications/get-notification/');
     }
     public deleteNotif(id) {
-        return this.httpClient.delete(this.url + "/notifications/delete/"+id);
+        return this.httpClient.delete(this.url + "notifications/delete/"+id);
     }
 }
