@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment.prod';
 
 @Injectable()
 export class ChatService {
-  private url = environment.socketBaseUrl;
+  private url = environment.basUrl;
   socket: any;
 
   constructor(private httpClient: HttpClient) {
