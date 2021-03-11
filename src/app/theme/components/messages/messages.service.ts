@@ -19,9 +19,10 @@ export class MessagesService {
         },
     ];
     private url = environment.basUrl;
+    private websocket = environment.socketBaseUrl;
     socket: any;
     constructor(private httpClient: HttpClient) {
-        this.socket = io(this.url);
+        this.socket = io(this.websocket);
         // this.decoded = jwt_decode(this.token);
     }
 
