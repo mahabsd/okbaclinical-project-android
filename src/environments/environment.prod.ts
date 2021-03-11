@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  basUrl :  "http://okbaclinical-backend.herokuapp.com/api/",
-  socketBaseUrl : "ws://okbaclinical-backend.herokuapp.com"
+  basUrl :  "https://okbaclinical-backend.herokuapp.com/api/",
+  socketBaseUrl : "https://okbaclinical-backend.herokuapp.com:8080"
 };
