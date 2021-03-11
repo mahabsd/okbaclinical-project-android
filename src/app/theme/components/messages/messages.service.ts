@@ -22,7 +22,7 @@ export class MessagesService {
     private websocket = environment.socketBaseUrl;
     socket: any;
     constructor(private httpClient: HttpClient) {
-        this.socket = io(this.websocket);
+        this.socket = io(this.websocket, {transports: ['websocket']});
         // this.decoded = jwt_decode(this.token);
     }
 
