@@ -18,7 +18,7 @@ export class MessagesService {
             time: '2 hrs ago'
         },
     ];
-    private url = environment.socketBaseUrl;
+    private url = environment.basUrl;
     socket: any;
     constructor(private httpClient: HttpClient) {
         this.socket = io(this.url);
