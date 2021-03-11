@@ -19,13 +19,13 @@ export class ChatService {
   }
 
   getPrivateMessage(idCandidat1, idCandidat2) {
-    return this.httpClient.get(this.url + '/chat/getPrivateMessage/' + idCandidat1 + '/' + idCandidat2);
+    return this.httpClient.get(this.url + 'chat/getPrivateMessage/' + idCandidat1 + '/' + idCandidat2);
   }
   sendMessage(message, idChat) {
-    return this.httpClient.post(this.url + '/chat/sendMessage/' + idChat, message);
+    return this.httpClient.post(this.url + 'chat/sendMessage/' + idChat, message);
   }
   deleteChat(chatId) {
-    return this.httpClient.get(this.url + '/chat/deleteChat/' + chatId);
+    return this.httpClient.get(this.url + 'chat/deleteChat/' + chatId);
   }
 
 }
