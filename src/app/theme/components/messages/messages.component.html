@@ -2,7 +2,7 @@
     <mat-icon [matBadge]="lengthNotif" matBadgeColor="warn">notifications</mat-icon>
 </button>
 <mat-menu #messagesMenu="matMenu" [overlapTrigger]="false" class="toolbar-dropdown-menu messages">
-    <!-- <span (mouseleave)="onMouseLeave()"> -->
+     <span (mouseleave)="onMouseLeave()"> 
         <mat-tab-group (click)="stopClickPropagate($event)" [selectedIndex]="selectedTab">
             <mat-tab>
                 <ng-template mat-tab-label>
@@ -87,5 +87,5 @@
                 </mat-card>
             </mat-tab> -->
         </mat-tab-group>
-    <!--</span>-->
+    </span>
 </mat-menu>
