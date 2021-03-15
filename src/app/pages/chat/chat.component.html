@@ -96,8 +96,9 @@
                                 </mat-form-field>
 
                             </form>
+                            <input type="file" name="myFiles" [(ngModel)]="myFiles" (change)="selectFile($event)" accept="file/*">
+
                             <div fxLayout="row" fxLayoutAlign="scenter center">
-                                <input type="file" name="myFiles" [(ngModel)]="myFiles" (change)="selectFile($event)" accept="file/*">
                                 <!-- <mat-icon>attach_file</mat-icon> -->
                                 <button mat-mini-fab color="primary" type="button" (click)="sendMessage()">
                                     <mat-icon>send</mat-icon>
