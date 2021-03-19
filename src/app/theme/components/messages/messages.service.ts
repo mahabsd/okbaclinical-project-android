@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core'
 import * as io from 'socket.io-client';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable()
 export class MessagesService {
@@ -17,10 +18,11 @@ export class MessagesService {
             time: '2 hrs ago'
         },
     ];
-    private url = 'http://localhost:3000';
+    private url = environment.basUrl;
+    private websocket = environment.socketBaseUrl;
     socket: any;
     constructor(private httpClient: HttpClient) {
-        this.socket = io(this.url);
+        this.socket = io(this.websocket, {transports: ['websocket']});
         // this.decoded = jwt_decode(this.token);
     }
 
@@ -28,13 +30,13 @@ export class MessagesService {
         return this.messages;
     }
     public sendNotification(message) {
-        return this.httpClient.post(this.url + '/notifications/send-notification/', message);
+        return this.httpClient.post(this.url + 'notifications/send-notification/', message);
     }
 
     public getNotification() {
-        return this.httpClient.get(this.url + '/notifications/get-notification/');
+        return this.httpClient.get(this.url + 'notifications/get-notification/');
     }
     public deleteNotif(id) {
-        return this.httpClient.delete(this.url + "/notifications/delete/"+id);
+        return this.httpClient.delete(this.url + "notifications/delete/"+id);
     }
 }
