@@ -1,0 +1,7 @@
+{
+  "name": "ProjetClinique-Frontend",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

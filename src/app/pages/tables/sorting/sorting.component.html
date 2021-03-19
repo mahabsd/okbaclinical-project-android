@@ -1,6 +1,6 @@
 <app-content-header 
     [icon]="'sort'" 
-    [title]="'Sorting'" 
+    [title]="'Maintenances'" 
     [hideBreadcrumb]="false"
     [hasBgImage]="true" 
     [class]="'pb-4'"></app-content-header>
@@ -13,7 +13,7 @@
                 <mat-cell *matCellDef="let element"> {{element.userOwner}} {{element.userOwner}} </mat-cell>
             </ng-container>             -->
             <ng-container matColumnDef="requestDate">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Request Date </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef>Request Date </mat-header-cell>
                 <mat-cell *matCellDef="let element">{{element.createdAt | date: 'dd/MM/yyyy'}} </mat-cell>
             </ng-container>    
             <ng-container matColumnDef="updatedDate">

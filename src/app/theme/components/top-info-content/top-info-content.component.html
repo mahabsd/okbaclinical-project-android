@@ -4,8 +4,8 @@
         <mat-icon>close</mat-icon>
     </button>
     <div fxFlex="100" fxFlex.gt-sm="40" class="py-3 col">
-        <div fxLayout="row" fxLayoutAlign="center center" [dataSource]="data">
-            <img src="{{data.profile.image}}" class="mat-elevation-z2" alt="">
+        <div fxLayout="row" fxLayoutAlign="center center">
+            <img [src]="data.profile.image" class="mat-elevation-z2" alt="">
             <div class="user-details px-4">
                 <h2>{{data.profile.name}} {{data.profile.surname}}</h2>
                 <h3 class="secondary-text-color">{{data.work.company}}</h3>
@@ -33,7 +33,7 @@
             </div>
         </div>
     </div>
-    <div fxFlex="100" fxFlex.gt-sm="35" fxFlex.sm="50" ngClass.xs="pb-4" class="top-contact-form col">
+    <div fxFlex="100" fxFlex.gt-sm="35" fxFlex.sm="50" ngClass.xs="pb-4" class="top-contact-form col" *ngIf="(role === 'admin' || role === 'Pdg' || role === 'Responsable-info' || role === 'cassier-principale')">
         <form [formGroup]="formSms"  fxLayout="row wrap" class="px-2">
             <form formGroupName="contacts" fxLayout="row wrap" class="px-2" (ngSubmit)="onSubmit()">
                 <div fxFlex="100" class="">

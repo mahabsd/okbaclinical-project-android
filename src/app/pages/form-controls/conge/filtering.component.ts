@@ -14,6 +14,7 @@ import jwt_decode from "../../../../../node_modules/jwt-decode";
   styleUrls: ['./filtering.component.scss'],
 
 })
+
 export class CongeComponent implements OnInit {
   public displayedColumns = ['user', 'requestDate', 'dateDebut', 'dateFin', 'daysNumber', 'motif', 'status'];
   public dataSource: any;
@@ -33,7 +34,7 @@ export class CongeComponent implements OnInit {
     status: new FormControl('',),
     userOwner: new FormControl(''),
   });
-  userConges: [];
+  userConges: any[];
   congeUser: any;
   constructor(public appSettings: AppSettings, private tablesService: CongeService) {
     this.settings = this.appSettings.settings;
@@ -46,8 +47,6 @@ export class CongeComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    console.log(this.dataSource);
-
     this.data.filter = filterValue.trim().toLowerCase();
   }
 
@@ -58,8 +57,11 @@ export class CongeComponent implements OnInit {
 
     this.tablesService.getAllconges().subscribe(conges => {
       this.dataSource = conges;
+      this.dataSource = this.dataSource.sort((data1: any, data2: any) => {
+        return data2.createdAt - data1.createdAt
+      })
+      this.dataSource.reverse();
       this.userConges = this.dataSource.filter(conge => conge.userOwner._id === this.userId)
-      console.log(this.dataSource);
       this.data = new MatTableDataSource<Element>(this.userConges);
     })
   }

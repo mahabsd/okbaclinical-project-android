@@ -86,7 +86,6 @@ export class PatientsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(patient => {
       let pati = patient
       if (pati._id) {
-        // console.log("close 1"+ JSON.stringify(patient));
         this.updatePatient(pati) 
       }else{
         delete pati._id; 
@@ -104,7 +103,6 @@ export class PatientsComponent implements OnInit {
       
       if (sms) {
         delete sms._id; 
-        // console.log("close 1"+ JSON.stringify(patient));
         this.AddetSendSms(sms) 
       }
     });

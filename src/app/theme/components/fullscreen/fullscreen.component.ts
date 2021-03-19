@@ -26,8 +26,6 @@ export class FullScreenComponent {
             elem.mozRequestFullScreen();
         } else if (elem.msRequestFullscreen) {
             elem.msRequestFullscreen();
-        } else {
-            console.log('Fullscreen API is not supported.');
         }
     };
 
@@ -40,8 +38,6 @@ export class FullScreenComponent {
             document.mozCancelFullScreen();
         } else if (document.msExitFullscreen) {
             document.msExitFullscreen();
-        } else {
-            console.log('Fullscreen API is not supported.');
         }
     };
 

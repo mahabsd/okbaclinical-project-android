@@ -27,6 +27,7 @@ export class SmsSendComponent implements OnInit {
   ngOnInit() {
     this.formSms = new FormGroup({
       status: new FormControl(''),
+      onModel: new FormControl(''),
       smsOwner: new FormControl(''),
       userOwner: new FormControl(''),
       contacts: new FormGroup({
@@ -44,11 +45,12 @@ export class SmsSendComponent implements OnInit {
     this.formSms.patchValue({
       userOwner: JSON.parse(JSON.stringify(decoded))._id,
       smsOwner: JSON.parse(JSON.stringify(decoded))._id,
+      onModel: 'User',
       status: "envoyé"
       
     });
+  
     this.smsService.addSms(this.formSms.value).subscribe(sms => {  
-      console.log("POST call successful value returned in body", sms);
       let message = "sms added successfully";
       ///action va etre changé
       let action = "close"
@@ -56,10 +58,6 @@ export class SmsSendComponent implements OnInit {
         duration: 2000,
       });
       this.ngOnInit()
-    },
-    () => {
-      console.log("The POST observable is now completed.");
-
     });
     
     this.smsService.SendSms(this.formSms.value.contacts.type, this.formSms.value.contacts.phone, this.formSms.value.contacts.message).subscribe(sms => {

@@ -13,7 +13,7 @@ import { MessagesService } from 'src/app/theme/components/messages/messages.serv
 @Component({
   selector: 'app-filtering',
   templateUrl: './filtering.component.html',
-  providers: [ MessagesService ]
+  providers: [MessagesService]
 
 })
 export class FilteringComponent {
@@ -58,20 +58,102 @@ export class FilteringComponent {
   soldeConge: any;
   userOwner: Object;
   user: any;
+  compare: any;
+  userConges: any;
 
   constructor(public appSettings: AppSettings,
     private tablesService: CongeService,
     public snackBar: MatSnackBar,
     public dialog: MatDialog,
     public loginService: LoginService,
-    public messagesService : MessagesService) {
+    public messagesService : MessagesService) {  }
+    ngOnInit() {
+      this.token = localStorage.getItem('token');
+      this.decoded = JSON.parse(JSON.stringify(jwt_decode(this.token)));
+      this.compare = this.decoded.roles[0].name;
     this.settings = this.appSettings.settings;
+
     this.tablesService.getAllconges().subscribe(res => {
       this.dataSource = res;
-      this.data = new MatTableDataSource<Element>(this.dataSource)
+      this.dataSource = this.dataSource.sort((data1: any, data2: any) => {
+        return data2.createdAt - data1.createdAt
+      })
+     
+       this.dataSource.reverse();
+       switch (this.compare) {
+         case "surveillant Générale":
+          this.userConges = this.dataSource.filter(conge => conge.status === "infirmiers et aide" 
+          || conge.status === "surveillant Maternité"
+          || conge.status === "surveillant Bloc"
+          || conge.status === "surveillant Anesthésie"
+          || conge.status === "surveillant chirurgie"
+          || conge.status === "anesthesistes");
+           break;
+           case"responsable facturation":
+           this.userConges = this.dataSource.filter(conge => conge.status=== "acceuil+cassiers+facturations"
+           || conge.status === "cassiers principale")
+           break;
+           case"respon-maintenance":
+           this.userConges = this.dataSource.filter(conge => conge.status=== "team-matenaince")
+           break;
+           case"hyginiste":
+           this.userConges = this.dataSource.filter(conge => conge.status=== "cuisine")
+           break;
+           case"Respnsable Pharmacie":
+           this.userConges = this.dataSource.filter(conge => conge.status=== "pharmaciens"
+           || conge.status === "cassiers principale")
+           break;
+           case"gouvernantes":
+           this.userConges = this.dataSource.filter(conge => conge.status=== "ouvriers")
+           break;
+           case"respon-financier":
+           this.userConges = this.dataSource.filter(conge => conge.status=== "comptable")
+           break;
+           case"gouvernantes":
+           this.userConges = this.dataSource.filter(conge => conge.status=== "ouvriers")
+           break;
+          case"gouvernantes":
+           this.userConges = this.dataSource.filter(conge => conge.status=== "ouvriers")
+           break; 
+           case"Pdg":
+           this.userConges = this.dataSource.filter(conge => conge.status === "econome" 
+           || conge.status === "respon-financier"
+           || conge.status === "gouvernantes"
+           || conge.status === "Respnsable Pharmacie"
+           || conge.status === "hyginiste"
+           || conge.status === "respon-maintenance"
+           || conge.status === "responsable facturation"
+           || conge.status === "responsable-RH"
+           || conge.status === "secritaire personnelle"
+           || conge.status === "secritaire générale"
+           || conge.status === "surveillant Générale"
+           || conge.status === "Responsable-info"
+           || conge.status === "directeur-technique");
+           break;
+           case"directeur-technique":
+           this.userConges = this.dataSource.filter(conge => conge.status=== "surveillant Générale1")
+           break;
+           case"responsable-RH":
+           this.userConges = this.dataSource.filter(conge => conge.status === "directeur-technique1" 
+           || conge.status === "gouvernantes1"
+           || conge.status === "Respnsable Pharmacie1"
+           || conge.status === "hyginiste1"
+           || conge.status === "respon-maintenance1"
+           || conge.status === "responsable facturation1"
+           || conge.status === "Pdg1"
+           || conge.status === "respon-financier1"
+           || conge.status === "responsable-RH1"
+           || conge.status === "validated"
+          );
+           break;
+           
+         default:
+          this.userConges = this.dataSource
+       }
+      this.data = new MatTableDataSource<Element>(this.userConges)
     })
   }
-
+  // this.userConges = this.dataSource.filter(conge => conge.userOwner._id === this.userId)
   applyFilter(filterValue: string) {
     this.data.filter = filterValue.trim().toLowerCase();
   }
@@ -87,7 +169,7 @@ export class FilteringComponent {
           status: JSON.parse(JSON.stringify(statut)),
         });
         break;
-      case "acceuil+cassiers+facturations": case "cassiers principale":
+      case "acceuil+cassiers+facturations": 
         var statut = "responsable facturation1";
         var formconge = ({
           status: JSON.parse(JSON.stringify(statut)),
@@ -135,7 +217,7 @@ export class FilteringComponent {
         break;
       case "directeur-technique1": case "gouvernantes1": case "Respnsable Pharmacie1": case "hyginiste1":
       case "respon-maintenance1": case "responsable facturation1": case "Pdg1": case "respon-financier1":
-      case "responsable facturation1": case "admin":
+       case "admin":
         var statut = "responsable-RH1";
         var formconge = ({
           status: JSON.parse(JSON.stringify(statut)),
@@ -171,21 +253,16 @@ export class FilteringComponent {
           reciever: conge.userOwner._id,
           text: "your vacation leaves has been approved",
           userOwner: this.userId,
+          conge: true
         }
-       this.messagesService.sendNotification(message).subscribe(res => 
-        console.log(res + "notifications")
-        );
+        this.messagesService.sendNotification(message).subscribe();
         break;
       default:
         break;
     }
 
     this.tablesService.updateconge(conge._id, formconge).subscribe(conge => {
-      this.tablesService.getAllconges().subscribe(res => {
-        this.dataSource = res;
-        this.data = new MatTableDataSource<Element>(this.dataSource)
-
-      })
+      this.ngOnInit() ;
       let message = "holidays request approved";
       let action = "close"
       this.snackBar.open(message, action, {
@@ -203,11 +280,7 @@ export class FilteringComponent {
 
     });
     this.tablesService.updateconge(conge._id, formconge).subscribe(conge => {
-      this.tablesService.getAllconges().subscribe(res => {
-        this.dataSource = res;
-        this.data = new MatTableDataSource<Element>(this.dataSource)
-
-      })
+      this.ngOnInit() ;
       let message = "holidays request canceled";
       let action = "close"
       this.snackBar.open(message, action, {
@@ -236,11 +309,7 @@ export class FilteringComponent {
       if (confirm) {
         //change status depending on the role
         this.tablesService.deleteconge(conge._id).subscribe(conge => {
-          this.tablesService.getAllconges().subscribe(res => {
-            this.dataSource = res;
-            this.data = new MatTableDataSource<Element>(this.dataSource)
-
-          })
+          this.ngOnInit() ;
           let message = "request deleted";
           let action = "close"
           this.snackBar.open(message, action, {

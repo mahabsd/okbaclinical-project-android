@@ -39,7 +39,7 @@ export class ChatComponent implements OnInit {
   file;
   formData;
   myFiles: any;
-
+  searchText : any;
   constructor(public appSettings: AppSettings,
     private socket: Socket,
     public chatService: ChatService,

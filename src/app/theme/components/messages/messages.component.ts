@@ -3,7 +3,6 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { Socket } from 'ngx-socket-io';
 import { MessagesService } from './messages.service';
 import jwt_decode from "../../../../../node_modules/jwt-decode";
-import { date } from 'date-fns/locale/af';
 import { Router } from '@angular/router';
 
 @Component({
@@ -24,6 +23,9 @@ export class MessagesComponent implements OnInit {
   userId = this.decoded._id
   lengthNotif: any;
   notifications: Object[];
+  notifMesg: any[];
+  notifOthers: any[];
+  otherNotif: Object[];
   constructor(private messagesService: MessagesService, public socket: Socket, public router: Router) {
     this.socket.on('notification', (res) => {
       this.getNotification();
@@ -58,17 +60,19 @@ export class MessagesComponent implements OnInit {
         return message2.createdAt - message1.createdAt
       })
       this.messages = this.messages.reverse();
+      this.notifMesg =  this.messages.filter((notif: any) =>notif.messages === true);
+      this.notifOthers =  this.messages.filter((notif: any) =>notif.messages === false);
     })
   }
 
   notifSeen(message) {
     if (message.messages == true) {
       this.router.navigate(['/chat'])
+    }else if (message.maintenance == true){
+      this.router.navigate(['/Maintenances/liste-maintenance'])
+    }else{
+      this.router.navigate(['/Holidays/Holidays-list'])
     }
-  //   setTimeout(()=>{
-  // console.log()
-  // , 600000
-  //   })
     this.messagesService.deleteNotif(message._id).subscribe(res => this.getNotification()) 
   }
 }

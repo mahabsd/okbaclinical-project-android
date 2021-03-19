@@ -15,6 +15,7 @@ export class ScheduleDialogComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any,
               ) {
     this.form = new FormGroup({
+      _id:new FormControl(''),
       title: new FormControl('', [Validators.required, Validators.minLength(5)]),
       start: new FormControl('', [Validators.required]),
       descrip: new FormControl('', [Validators.required]),
@@ -30,11 +31,10 @@ export class ScheduleDialogComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log(this.form);
-    
 
     if (this.data){
       this.form.patchValue({
+        '_id':this.data._id,
         'title': this.data.title,
         'start': this.data.start,
         'descrip': this.data.descrip,
@@ -42,7 +42,6 @@ export class ScheduleDialogComponent implements OnInit {
         'userOwner': JSON.parse(JSON.stringify(this.decoded))._id,
       })
     }
-    console.log(this.form);
   }
 
   close(): void {

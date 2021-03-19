@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { UsersService } from 'src/app/services/users.service';
 import jwt_decode from "jwt-decode";
 
@@ -9,32 +9,23 @@ import jwt_decode from "jwt-decode";
   styleUrls: ['./user-info.component.scss']
 })
 export class UserInfoComponent implements OnInit {
-  
+
   public data: any;
-  constructor( public UserService: UsersService, ) {
-   
-    
-   }
+  constructor(public UserService: UsersService,) {
+
+
+  }
 
   ngOnInit() {
-   
+
     let token = localStorage.getItem('token');
     var decoded = jwt_decode(token);
-    console.log(decoded);
-     this.UserService.getUser(JSON.parse(JSON.stringify(decoded))._id,).subscribe(res => {
-      
-      this.data=(res);
-      
-         
-         
-         
-         
-         
-   
-     })
-   }
+    this.UserService.getUser(JSON.parse(JSON.stringify(decoded))._id,).subscribe(res => {
+      this.data = (res);
+    })
   }
-  
+}
+
 
 
 

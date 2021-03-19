@@ -12,40 +12,31 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './sorting.component.html'
 })
 export class SortingComponent {
-  @ViewChild(MatSort) sort: MatSort;
-  public displayedColumns = ['requestDate','updatedDate', 'title', 'description', 'type', 'status', 'action'];
+  public displayedColumns = ['requestDate', 'updatedDate', 'title', 'description', 'type', 'status', 'action'];
   public dataSource: any;
   public data: any;
   public settings: Settings;
-  constructor(public appSettings:AppSettings, private tablesService:MaintenancesService, public snackBar: MatSnackBar) {
-  //   this.tablesService.getAllMaintenances().subscribe(res => {
-  //     this.dataSource = res;
-  //     console.log(this.dataSource);
-  //   this.settings = this.appSettings.settings; 
-  
-    
-  // })
+  constructor(public appSettings: AppSettings, private tablesService: MaintenancesService, public snackBar: MatSnackBar) {
   }
-  
+
   ngAfterViewInit() {
     this.tablesService.getAllMaintenances().subscribe(res => {
-    
       this.dataSource = (res);
-      this.data=new MatTableDataSource<Element>(this.dataSource) 
-    this.settings = this.appSettings.settings; 
-    this.data.sort = this.sort;
-    console.log(this.data.sort);
-    
-  })
-    
+      this.settings = this.appSettings.settings;
+      this.dataSource.sort((data1: any, data2: any) => {
+        return data2.createdAt - data1.createdAt
+      })
+      this.dataSource.reverse();
+      this.data = new MatTableDataSource<Element>(this.dataSource)
+    })
+
   }
-  deleteDemande(element){
+  deleteDemande(element) {
     this.tablesService.deleteMaintenance(element._id).subscribe(maitenance => {
-      console.log((maitenance));
       this.tablesService.getAllMaintenances().subscribe(res => {
-        this.dataSource = res;  
-        this.data=new MatTableDataSource<Element>(this.dataSource) 
-            
+        this.dataSource = res;
+        this.data = new MatTableDataSource<Element>(this.dataSource)
+
       })
       let message = "demande maintenance supprimer ";
       let action = "close"
@@ -54,21 +45,15 @@ export class SortingComponent {
       });
     });
   }
-  validerDemande(element){
+  validerDemande(element) {
     var statut = "validated";
-    var formMaintenance=({
-    
+    var formMaintenance = ({
       statut: JSON.parse(JSON.stringify(statut)),
-      
     });
-    this.tablesService.updateMaintenance(element._id,formMaintenance).subscribe(maitenance => {
-      console.log((maitenance));
+    this.tablesService.updateMaintenance(element._id, formMaintenance).subscribe(maitenance => {
       this.tablesService.getAllMaintenances().subscribe(res => {
-        this.dataSource = res;  
-        this.data=new MatTableDataSource<Element>(this.dataSource) 
-        
-        
-            
+        this.dataSource = res;
+        this.data = new MatTableDataSource<Element>(this.dataSource)
       })
       let message = "demande maintenance validée ";
       let action = "close"
@@ -77,7 +62,6 @@ export class SortingComponent {
       });
     });
   }
+}
 
-  }
-    
 

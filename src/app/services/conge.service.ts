@@ -12,7 +12,6 @@ export class CongeService {
   }
 
   addconge(data) {
-    //console.log(data);
     return this.http.post(this.congesUrl + "conges/conge/add/", data );
   }
   getconge(id) {

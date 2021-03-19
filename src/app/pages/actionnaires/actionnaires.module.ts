@@ -11,8 +11,9 @@ import { ActionnairesComponent } from './actionnaires.component';
 import { ActionnairesData } from './actionnaires.data';
 import { ActionnaireDialogComponent } from './actionnaire-dialog/actionnaire-dialog.component';
 import { ActionnairesmsComponent } from "./actionnaire-sms/actionnaire-sms.component";
+import { AuthActivateActsGuard } from 'src/app/services/canActivateActs.guard';
 export const routes = [
-  { path: '', component: ActionnairesComponent, pathMatch: 'full' }
+  { path: '', canActivate:[AuthActivateActsGuard] , component: ActionnairesComponent, pathMatch: 'full' }
 ];
 
 @NgModule({

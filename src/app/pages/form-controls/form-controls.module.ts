@@ -4,36 +4,21 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { SharedModule } from '../../shared/shared.module';
-import { AutocompleteComponent } from './autocomplete/autocomplete.component';
-import { CheckboxComponent } from './checkbox/checkbox.component';
 import { DatepickerComponent } from './datepicker/datepicker.component';
 import { FormFieldComponent } from './form-field/form-field.component';
-import { InputComponent } from './input/input.component';
-import { RadioButtonComponent } from './radio-button/radio-button.component';
-import { SelectComponent } from './select/select.component';
-import { SliderComponent } from './slider/slider.component';
-import { SlideToggleComponent } from './slide-toggle/slide-toggle.component';
 import { FilteringComponent } from './filtering/filtering.component';
-import { SortingComponent, } from './sorting/sorting.component';
 import { SmsSendComponent } from "./SmsSend/sms-send.component";
 import { CongeComponent } from './conge/filtering.component';
 import { MatTableModule } from '@angular/material/table' 
+import { activateholiadayslist } from "src/app/services/activateholiadayslist";
+
+import { AuthActivateHolidaysGuard } from 'src/app/services/canActivateHolidays.guard';
 
 export const routes = [
   { path: '', redirectTo: 'datepicker', pathMatch: 'full'},
-  { path: 'autocomplete', component: AutocompleteComponent, data: { breadcrumb: 'Autocomplete' } },
-  { path: 'checkbox', component: CheckboxComponent, data: { breadcrumb: 'Checkbox' } },
-  { path: 'datepicker', component: DatepickerComponent, data: { breadcrumb: 'Datepicker' } },
- // { path: 'Demande-Maintenance', component: FormFieldComponent, data: { breadcrumb: 'Form Field' } },
-  { path: 'input', component: InputComponent, data: { breadcrumb: 'Input' } },
-  { path: 'radio-button', component: RadioButtonComponent, data: { breadcrumb: 'Radio Button' } },
-  { path: 'select', component: SelectComponent, data: { breadcrumb: 'Select' } },
-  { path: 'slider', component: SliderComponent, data: { breadcrumb: 'Slider' } },
-  { path: 'slide-toggle', component: SlideToggleComponent, data: { breadcrumb: 'Slide Toggle' } },
-  { path: 'Holidays-list', component: CongeComponent, data: { breadcrumb: 'Filtering table' } },
-  { path: 'liste-maintenance', component: SortingComponent, data: { breadcrumb: 'Sorting table' } },
-//  { path: 'Envoie-sms', component: SmsSendComponent, data: { breadcrumb: 'Envoie Des SmS' } },
-  { path: 'holidays-requests-list', component: FilteringComponent, data: { breadcrumb: 'Filtering table' } },
+  { path: 'datepicker', canActivate:[AuthActivateHolidaysGuard], component: DatepickerComponent, data: { breadcrumb: 'Datepicker' } },
+  { path: 'Holidays-list',canActivate:[AuthActivateHolidaysGuard] , component: CongeComponent, data: { breadcrumb: 'Holidays list' } },
+  { path: 'holidays-requests-list',canActivate:[activateholiadayslist], component: FilteringComponent, data: { breadcrumb: 'holidays requests list' } },
 
 ];
 
@@ -48,15 +33,8 @@ export const routes = [
     MatTableModule
   ],
   declarations: [
-    AutocompleteComponent, 
-    CheckboxComponent, 
     DatepickerComponent, 
     FormFieldComponent, 
-    InputComponent, 
-    RadioButtonComponent, 
-    SelectComponent, 
-    SliderComponent, 
-    SlideToggleComponent,
     FilteringComponent,
     SmsSendComponent,
     CongeComponent

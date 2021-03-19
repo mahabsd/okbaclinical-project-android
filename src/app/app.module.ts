@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OverlayContainer } from '@angular/cdk/overlay';
@@ -25,7 +25,6 @@ import { AppRoutingModule } from './app.routing';
 import { AppSettings } from './app.settings';
 import { AppComponent } from './app.component';
 import { PagesComponent } from './pages/pages.component';
-import { BlankComponent } from './pages/blank/blank.component';
 import { SearchComponent } from './pages/search/search.component';
 import { NotFoundComponent } from './pages/errors/not-found/not-found.component';
 import { ErrorComponent } from './pages/errors/error/error.component';
@@ -44,8 +43,11 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from 'src/app/services/token.interceptor';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import {MatBadgeModule} from '@angular/material/badge';
+import { environment } from 'src/environments/environment';
+import { IonicModule } from '@ionic/angular';
 
-const config: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
+const socketBaseUrl = environment.socketBaseUrl
+const config: SocketIoConfig = { url: socketBaseUrl, options: {} };
 
 @NgModule({
   imports: [
@@ -66,12 +68,12 @@ const config: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
     AppRoutingModule,
     HttpClientModule,
     SocketIoModule.forRoot(config),
-    MatBadgeModule
+    MatBadgeModule,
+    IonicModule.forRoot()
   ],
   declarations: [
     AppComponent,
     PagesComponent,
-    BlankComponent,
     SearchComponent,
     NotFoundComponent,
     ErrorComponent,
@@ -103,6 +105,7 @@ const config: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
   ],
   bootstrap: [
     AppComponent
-  ]
+  ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class AppModule { }
